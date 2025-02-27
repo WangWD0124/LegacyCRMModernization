@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="process" />
+        <module name="common" />
+        <module name="web" />
+        <module name="gateway" />
+        <module name="order" />
+        <module name="customer" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name=".mvn (1)" target="1.5" />
+      <module name=".mvn (2)" target="1.5" />
+      <module name="interGateway" target="8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

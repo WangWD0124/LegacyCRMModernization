@@ -5,21 +5,21 @@
     <parent>
         <artifactId>crm</artifactId>
         <groupId>com.wwd</groupId>
-        <version>2025.2.1</version>
+        <version>2025.1.1</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>web</artifactId>
     <packaging>war</packaging>
 
-    <name>web Maven Webapp</name>
+    <name>web</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
     </properties>
 
     <dependencies>

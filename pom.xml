@@ -6,11 +6,12 @@
 
   <groupId>com.wwd</groupId>
   <artifactId>crm</artifactId>
-  <version>2025.2.1</version>
+  <version>2025.1.1</version>
+
+  <!-- 所有子模块 -->
   <modules>
     <module>web</module>
     <module>process</module>
-    <module>interGateway</module>
     <module>gateway</module>
     <module>customer</module>
     <module>order</module>
@@ -18,59 +19,99 @@
   </modules>
   <packaging>pom</packaging>
 
-  <name>crm Maven Webapp</name>
+  <name>crm</name>
   <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <url>http://www.wwd.com</url>
 
+  <!-- 所有属性配置 -->
   <properties>
+    <java.version>8</java.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
+
+    <!-- 第三方依赖版本管理 -->
+    <mybatis.version>3.0.3</mybatis.version>
+    <mysql.version>8.0.33</mysql.version>
   </properties>
 
+  <!-- spring boot帮助管理spring官方维护的依赖、插件，实现版本兼容和自动配置 -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.7.1</version>
+  </parent>
+
+
+  <!-- 所有子模块共享的依赖 -->
   <dependencies>
+    <!-- spring boot的web启动器，帮助快速引入web应用开发所需的依赖-->
+    <!-- 其中包括spring-core、spring-context、spring-beans、spring-aop、spring-web、spring-webmvc、spring-boot-starter-tomcat、spring-boot-starter-json -->
     <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.13.1</version>
-      <scope>test</scope>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-web</artifactId>
     </dependency>
+
+    <!-- mybatis维护的spring boot的mybatis启动器，帮助快速引入mybatis持久层开发所需的依赖 -->
+    <!-- 其中包括mybatis、mybatis-spring -->
+    <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+      <version>${mybatis.version}</version>
+    </dependency>
+
+    <!--  MySQL依赖  -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>${mysql.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+
+    <!-- Lombok帮助简化代码编写，通过注解自动生成类中常见的方法 -->
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+    </dependency>
+
   </dependencies>
+
+
+
+  <!-- 所有子模块可选的依赖 -->
+  <dependencyManagement>
+    <dependencies>
+
+    </dependencies>
+  </dependencyManagement>
 
   <build>
     <finalName>crm</finalName>
+    <resources>
+
+    </resources>
     <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
       <plugins>
         <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.4.0</version>
-        </plugin>
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.3.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.13.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.3.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.4.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>3.1.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-deploy-plugin</artifactId>
-          <version>3.1.2</version>
+          <groupId>org.springframework.boot</groupId>
+          <artifactId>spring-boot-maven-plugin</artifactId>
         </plugin>
       </plugins>
     </pluginManagement>
   </build>
 </project>
+        <!--    // Spring Boot自动配置了：
+        // 1. 数据源和连接池
+        // 2. MyBatis SqlSessionFactory
+        // 3. MyBatis映射器扫描
+        // 4. 事务管理
+        // 5. Spring MVC配置
+        // 6. 静态资源处理
+        // 7. 等等...-->

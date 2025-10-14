@@ -1,0 +1,5 @@
+com\wwd\customer\entity\User.class
+com\wwd\customer\controller\UserController.class
+com\wwd\customer\service\UserService.class
+com\wwd\customer\mapper\UserMapper.class
+com\wwd\customer\service\UserServiceImpl.class

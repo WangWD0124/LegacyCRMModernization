@@ -5,35 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3f19885-1e59-467c-b558-f09b0af34cc0" name="Default Changelist" comment="提交工程目录">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/User.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/UserMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/src/main/resources/UserMapper.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/test/java/com/wwd/gateway/CustomerApplicationTests.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/common/src/main/webapp/index.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/src/main/webapp/index.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/webapp/index.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/order/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/order/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/order/src/main/webapp/index.jsp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/chcp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/process/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/process/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/process/src/main/webapp/index.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/web/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,9 +36,6 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
-  <component name="GithubDefaultAccount">
-    <option name="defaultAccountId" value="4eb67ca0-3059-4316-b018-a9a76e7b2aaf" />
-  </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/web/pom.xml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/pom.xml" root0="FORCE_HIGHLIGHTING" />
@@ -84,22 +57,24 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="21" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/customer/src" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.40342054" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RebelAgentSelection">
     <selection>jr</selection>
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\P\workSpace\LegacyCRMModernization\customer\src" />
       <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\customer\src\main\java\com\wwd\customer" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.CustomerApplication">
+  <component name="RunManager" selected="JUnit.CustomerApplicationTests.testQuery">
     <configuration name="CustomerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wwd.customer.CustomerApplication" />
       <module name="customer" />
@@ -113,13 +88,31 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="CustomerApplicationTests.testQuery" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="customer" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wwd.gateway.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.wwd.gateway" />
+      <option name="MAIN_CLASS_NAME" value="com.wwd.gateway.CustomerApplicationTests" />
+      <option name="METHOD_NAME" value="testQuery" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -224,9 +217,11 @@
       <item itemvalue="Spring Boot.GatewayApplication" />
       <item itemvalue="Spring Boot.OrderApplication" />
       <item itemvalue="Spring Boot.CustomerApplication" />
+      <item itemvalue="JUnit.CustomerApplicationTests.testQuery" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.CustomerApplicationTests.testQuery" />
         <item itemvalue="Spring Boot.CustomerApplication" />
         <item itemvalue="Application.CustomerApplication" />
       </list>
@@ -251,6 +246,7 @@
       <workItem from="1760273300509" duration="3281000" />
       <workItem from="1760277473913" duration="967000" />
       <workItem from="1760278576509" duration="4788000" />
+      <workItem from="1760445147753" duration="1381000" />
     </task>
     <task id="LOCAL-00001" summary="提交工程目录">
       <created>1740664357152</created>

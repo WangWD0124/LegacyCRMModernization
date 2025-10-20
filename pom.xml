@@ -20,18 +20,17 @@
   <packaging>pom</packaging>
 
   <name>crm</name>
-  <!-- FIXME change it to the project's website -->
   <url>http://www.wwd.com</url>
 
   <!-- 所有属性配置 -->
   <properties>
     <java.version>8</java.version>
+    <maven.compiler.source>8</maven.compiler.source>
+    <maven.compiler.target>8</maven.compiler.target>
+    <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-    <maven.compiler.source>8</maven.compiler.source>
-    <maven.compiler.target>8</maven.compiler.target>
 
     <!-- 第三方依赖版本管理 -->
     <mybatis.version>2.3.1</mybatis.version>
@@ -70,6 +69,12 @@
       <version>${mysql.version}</version>
     </dependency>
 
+    <!--
+      1、支持 Java Bean 合法验证：可以使用注解（如 @NotNull, @Size, @Min, @Max 等）对字段进行验证。
+      2、自动验证请求数据：在 Spring MVC 或 RESTful API 控制器中，你可以通过 @Valid 或 @Validated 注解标记请求体参数，让 Spring 自动进行数据验证。
+      3、结合 Spring 表单数据绑定：（如 @ModelAttribute）一起使用，自动验证用户提交的表单数据。
+      4、验证错误处理：Spring 会抛出 MethodArgumentNotValidException 异常。可以通过 @ControllerAdvice 或 @ExceptionHandler 来处理这些验证错误，并返回适当的错误信息给客户端。
+         -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>

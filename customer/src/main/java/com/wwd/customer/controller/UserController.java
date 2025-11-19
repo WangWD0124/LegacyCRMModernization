@@ -39,23 +39,23 @@ public class UserController {
     }
 
     // 根据ID获取用户
-    @GetMapping("/{id}")
-    public ResponseEntity<User> getUserById(@PathVariable Long id) {
-        User user = userService.findById(id);
+    @GetMapping("/userId/{userId}")
+    public ResponseEntity<User> getUserByUserId(@PathVariable Long userId) {
+        User user = userService.findByUserId(userId);
         return ResponseEntity.ok(user);
     }
 
     // 根据用户名获取用户
-    @GetMapping("/username/{username}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String username) {
-        User user = userService.findByUsername(username);
+    @GetMapping("/userName/{userName}")
+    public ResponseEntity<User> getUserByUsername(@PathVariable String userName) {
+        User user = userService.findByUsername(userName);
         return ResponseEntity.ok(user);
     }
 
     // 创建用户
     @PostMapping
     public ResponseEntity<String> createUser(@Valid @RequestBody User user) {
-        boolean success = userService.save(user);
+        boolean success = userService.saveUser(user);
         if (success) {
             return ResponseEntity.ok("用户创建成功");
         } else {
@@ -64,10 +64,10 @@ public class UserController {
     }
 
     // 更新用户
-    @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Long id, @Valid @RequestBody User user) {
-        user.setId(id);
-        boolean success = userService.update(user);
+    @PutMapping("/{userId}")
+    public ResponseEntity<String> updateUser(@PathVariable Long userId, @Valid @RequestBody User user) {
+        user.setId(userId);
+        boolean success = userService.updateUser(user);
         if (success) {
             return ResponseEntity.ok("用户更新成功");
         } else {
@@ -76,9 +76,9 @@ public class UserController {
     }
 
     // 删除用户
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long id) {
-        boolean success = userService.delete(id);
+    @DeleteMapping("/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
+        boolean success = userService.deleteUser(userId);
         if (success) {
             return ResponseEntity.ok("用户删除成功");
         } else {

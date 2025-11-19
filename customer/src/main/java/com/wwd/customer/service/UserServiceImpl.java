@@ -1,8 +1,11 @@
 package com.wwd.customer.service;
 
 import com.wwd.customer.entity.User;
+import com.wwd.customer.mapper.RoleMapper;
 import com.wwd.customer.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,7 +31,14 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
-    private final UserMapper userMapper;
+    @Autowired
+    private UserMapper userMapper;
+
+    @Autowired
+    private RoleMapper roleMapper;
+
+    @Value("${app.default-user-status:ACTIVE}")
+    private String defaultUserStatus;
 
     @Override
     public List<User> findAll() {
@@ -36,20 +46,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Long id) {
-        return userMapper.findById(id);
+    public User findByUserId(Long userId) {
+        return userMapper.findByUserId(userId);
     }
 
     @Override
-    public User findByUsername(String username) {
-        return userMapper.findByUsername(username);
+    public User findByUsername(String userName) {
+        return userMapper.findByUserName(userName);
     }
 
     @Override
     @Transactional
-    public boolean save(User user) {
+    public boolean saveUser(User user) {
         // 检查用户名是否已存在
-        User existingUser = userMapper.findByUsername(user.getUsername());
+        User existingUser = userMapper.findByUserName(user.getUsername());
         if (existingUser != null) {
             throw new RuntimeException("用户名已存在");
         }
@@ -59,9 +69,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean update(User user) {
+    public boolean updateUser(User user) {
         // 检查用户是否存在
-        User existingUser = userMapper.findById(user.getId());
+        User existingUser = userMapper.findByUserId(user.getId());
         if (existingUser == null) {
             throw new RuntimeException("用户不存在");
         }
@@ -71,14 +81,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public boolean delete(Long id) {
+    public boolean deleteUser(Long userId) {
         // 检查用户是否存在
-        User existingUser = userMapper.findById(id);
+        User existingUser = userMapper.findByUserId(userId);
         if (existingUser == null) {
             throw new RuntimeException("用户不存在");
         }
 
-        return userMapper.delete(id) > 0;
+        return userMapper.delete(userId) > 0;
     }
 
     @Override

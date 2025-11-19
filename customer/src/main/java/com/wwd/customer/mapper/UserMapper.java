@@ -2,6 +2,7 @@ package com.wwd.customer.mapper;
 
 import com.wwd.customer.entity.User;
 import org.apache.ibatis.annotations.*;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
  * ---------------------------------------------------------*
  * 2025-10-12     wangwd7          v1.0.0               创建
  */
+@Repository
 @Mapper
 public interface UserMapper {
 
@@ -27,12 +29,12 @@ public interface UserMapper {
     List<User> findAll();
 
     // 根据ID查询用户
-    @Select("SELECT * FROM user WHERE id = #{id}")
-    User findById(Long id);
+    @Select("SELECT * FROM user WHERE id = #{userId}")
+    User findByUserId(Long userId);
 
     // 根据用户名查询用户
-    @Select("SELECT * FROM user WHERE username = #{username}")
-    User findByUsername(String username);
+    @Select("SELECT * FROM user WHERE username = #{userName}")
+    User findByUserName(String userName);
 
     // 插入用户
     @Insert("INSERT INTO user (username, password, email, phone, status) " +

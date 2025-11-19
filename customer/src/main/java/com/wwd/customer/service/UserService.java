@@ -1,6 +1,7 @@
 package com.wwd.customer.service;
 
 import com.wwd.customer.entity.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
@@ -19,19 +20,20 @@ import java.util.Map;
  * ---------------------------------------------------------*
  * 2025-10-12     wangwd7          v1.0.0               创建
  */
+@Service
 public interface UserService {
 
     List<User> findAll();
 
-    User findById(Long id);
+    User findByUserId(Long userId);
 
     User findByUsername(String username);
 
-    boolean save(User user);
+    boolean saveUser(User user);
 
-    boolean update(User user);
+    boolean updateUser(User user);
 
-    boolean delete(Long id);
+    boolean deleteUser(Long id);
 
     Map<String, Object> findByPage(String username, Integer status, Integer page, Integer size);
 }

@@ -25,7 +25,7 @@ import java.util.Map;
  * 2025-10-12     wangwd7          v1.0.0               创建
  */
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 

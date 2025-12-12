@@ -1,11 +1,13 @@
 server:
-  port: 8080
-  servlet:
-    context-path: /api
+  port: 20001
 
 spring:
   application:
-    name: customer
+    name: CUSTOMER-SERVICE
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.31.50:10001,192.168.31.50:10002,192.168.31.50:10003
   datasource:
     url: jdbc:mysql://localhost:3306/customer_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai
     username: root

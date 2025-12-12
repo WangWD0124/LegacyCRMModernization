@@ -10,7 +10,6 @@
 
   <!-- 所有子模块 -->
   <modules>
-    <module>web</module>
     <module>process</module>
     <module>gateway</module>
     <module>customer</module>
@@ -81,12 +80,6 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-validation</artifactId>
     </dependency>
-    <!-- 明确添加 validation-api -->
-    <dependency>
-      <groupId>javax.validation</groupId>
-      <artifactId>validation-api</artifactId>
-      <version>${validation-api.version}</version>
-    </dependency>
 
     <!-- Spring Boot AOP Starter -->
     <dependency>
@@ -112,7 +105,22 @@
   <!-- 所有子模块可选的依赖 -->
   <dependencyManagement>
     <dependencies>
-
+      <!-- Spring Cloud 官方依赖管理 -->
+      <dependency>
+        <groupId>org.springframework.cloud</groupId>
+        <artifactId>spring-cloud-dependencies</artifactId>
+        <version>2021.0.8</version> <!-- 请根据你的Spring Boot版本选择 -->
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- Spring Cloud Alibaba 依赖管理 -->
+      <dependency>
+        <groupId>com.alibaba.cloud</groupId>
+        <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+        <version>2021.0.1.0</version> <!-- 请选择与Spring Boot版本对应的版本 -->
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
     </dependencies>
   </dependencyManagement>
 

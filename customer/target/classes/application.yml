@@ -21,19 +21,21 @@ spring:
       idle-timeout: 600000
       max-lifetime: 1800000
 
-# MyBatis配置
-mybatis:
-  # mapper.xml文件位置
+
+mybatis-plus:
+  # 类型别名包配置
+  type-aliases-package: com.wwd.customer.entity
+  # 或者指定具体实体类（如果有多个包）
+  type-aliases-super-type: java.lang.Object
   mapper-locations: classpath:mapper/*.xml
-  # 实体类包路径
-  type-aliases-package: com.example.demo.entity
+  global-config:
+    db-config:
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
   configuration:
-    # 开启驼峰命名自动映射
     map-underscore-to-camel-case: true
-    # 日志实现
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-    # 开启二级缓存
-    cache-enabled: true
 
 # 日志配置
 logging:

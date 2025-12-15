@@ -10,11 +10,11 @@
 
   <!-- 所有子模块 -->
   <modules>
+    <module>common</module>
     <module>process</module>
     <module>gateway</module>
     <module>customer</module>
     <module>order</module>
-    <module>common</module>
   </modules>
   <packaging>pom</packaging>
 
@@ -32,7 +32,7 @@
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
     <!-- 第三方依赖版本管理 -->
-    <mybatis.version>2.3.1</mybatis.version>
+    <mybatis-plus.version>3.5.3.1</mybatis-plus.version>
     <mysql.version>8.0.33</mysql.version>
 
     <validation-api.version>2.0.1.Final</validation-api.version>
@@ -57,10 +57,11 @@
 
     <!-- mybatis维护的spring boot的mybatis启动器，帮助快速引入mybatis持久层开发所需的依赖 -->
     <!-- 其中包括mybatis、mybatis-spring -->
+    <!-- MyBatis Plus 核心依赖 -->
     <dependency>
-      <groupId>org.mybatis.spring.boot</groupId>
-      <artifactId>mybatis-spring-boot-starter</artifactId>
-      <version>${mybatis.version}</version>
+      <groupId>com.baomidou</groupId>
+      <artifactId>mybatis-plus-boot-starter</artifactId>
+      <version>${mybatis-plus.version}</version>
     </dependency>
 
     <!--  MySQL依赖  -->

@@ -1,10 +1,15 @@
 package com.wwd.customer.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.wwd.customer.entity.User;
+import com.wwd.customerapi.dto.UserQueryDTO;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright: Copyright (c) 2025 Asiainfo
@@ -20,42 +25,22 @@ import java.util.List;
  * ---------------------------------------------------------*
  * 2025-10-12     wangwd7          v1.0.0               创建
  */
-@Repository
 @Mapper
-public interface UserMapper {
+public interface UserMapper extends BaseMapper<User> {
 
-    // 查询所有用户
-    @Select("SELECT * FROM user")
-    List<User> findAll();
+    // ========== 继承 BaseMapper 已有方法 ==========
+    // selectById, selectBatchIds, selectByMap, selectOne, selectList, selectPage
+    // insert, updateById, deleteById, deleteByMap, deleteBatchIds
 
-    // 根据ID查询用户
-    @Select("SELECT * FROM user WHERE id = #{userId}")
-    User findByUserId(Long userId);
+    /**
+     * 复杂查询：使用XML配置
+     * 参数使用 @Param 注解，XML中通过 condition.xxx 访问
+     */
+    List<User> selectListByCondition(@Param("condition") UserQueryDTO condition);
 
-    // 根据用户名查询用户
-    @Select("SELECT * FROM user WHERE username = #{userName}")
-    User findByUserName(String userName);
+    /**
+     * 分页查询：使用XML配置
+     */
+    IPage<User> selectPageByCondition(Page<User> page, @Param("condition") UserQueryDTO condition);
 
-    // 插入用户
-    @Insert("INSERT INTO user (username, password, email, phone, status) " +
-            "VALUES (#{username}, #{password}, #{email}, #{phone}, #{status})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    int insert(User user);
-
-    // 更新用户
-    @Update("UPDATE user SET username=#{username}, password=#{password}, " +
-            "email=#{email}, phone=#{phone}, status=#{status} WHERE id=#{id}")
-    int update(User user);
-
-    // 删除用户
-    @Delete("DELETE FROM user WHERE id = #{id}")
-    int delete(Long id);
-
-    // 分页查询用户（使用XML配置）
-    List<User> findByPage(@Param("username") String username,
-                          @Param("status") Integer status);
-
-    // 统计用户数量
-    Long countByCondition(@Param("username") String username,
-                          @Param("status") Integer status);
 }

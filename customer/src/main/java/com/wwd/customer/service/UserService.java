@@ -1,6 +1,8 @@
 package com.wwd.customer.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wwd.customer.entity.User;
+import com.wwd.customerapi.dto.UserQueryDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,17 +25,16 @@ import java.util.Map;
 @Service
 public interface UserService {
 
-    List<User> findAll();
+    Long createUser(User user);
 
-    User findByUserId(Long userId);
+    int updateUser(User user);
 
-    User findByUsername(String username);
+    int deleteUserByUserId(Long userId);
 
-    boolean saveUser(User user);
+    User queryUserByUserId(Long userId);
 
-    boolean updateUser(User user);
+    List<User> queryUserListByCondition(UserQueryDTO userQueryDTO);
 
-    boolean deleteUser(Long id);
+    IPage<User> queryUserPageByCondition(UserQueryDTO userQueryDTO);
 
-    Map<String, Object> findByPage(String username, Integer status, Integer page, Integer size);
 }

@@ -1,14 +1,20 @@
 package com.wwd.customer.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wwd.customer.entity.User;
 import com.wwd.customer.mapper.RoleMapper;
 import com.wwd.customer.mapper.UserMapper;
+import com.wwd.customerapi.dto.UserQueryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +35,7 @@ import java.util.Map;
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
 
     @Autowired
     private UserMapper userMapper;
@@ -40,76 +46,51 @@ public class UserServiceImpl implements UserService {
     @Value("${app.default-user-status:ACTIVE}")
     private String defaultUserStatus;
 
+    //private final PasswordEncoder passwordEncoder;
+
     @Override
-    public List<User> findAll() {
-        return userMapper.findAll();
+    public Long createUser(User user) {
+
+        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setStatus(defaultUserStatus);
+        user.setCreateTime(LocalDateTime.now());
+        user.setUpdateTime(LocalDateTime.now());
+
+        baseMapper.insert(user);
+        return user.getUserId();
     }
 
     @Override
-    public User findByUserId(Long userId) {
-        return userMapper.findByUserId(userId);
+    public int updateUser(User user) {
+
+        user.setUpdateTime(LocalDateTime.now());
+
+        return baseMapper.updateById(user);
     }
 
     @Override
-    public User findByUsername(String userName) {
-        return userMapper.findByUserName(userName);
+    public int deleteUserByUserId(Long userId) {
+        return baseMapper.deleteById(userId);
     }
 
     @Override
-    @Transactional
-    public boolean saveUser(User user) {
-        // 检查用户名是否已存在
-        User existingUser = userMapper.findByUserName(user.getUsername());
-        if (existingUser != null) {
-            throw new RuntimeException("用户名已存在");
-        }
-
-        return userMapper.insert(user) > 0;
+    public User queryUserByUserId(Long userId) {
+        return baseMapper.selectById(userId);
     }
 
     @Override
-    @Transactional
-    public boolean updateUser(User user) {
-        // 检查用户是否存在
-        User existingUser = userMapper.findByUserId(user.getId());
-        if (existingUser == null) {
-            throw new RuntimeException("用户不存在");
-        }
-
-        return userMapper.update(user) > 0;
+    public List<User> queryUserListByCondition(UserQueryDTO condition) {
+        return baseMapper.selectListByCondition(condition);
     }
 
     @Override
-    @Transactional
-    public boolean deleteUser(Long userId) {
-        // 检查用户是否存在
-        User existingUser = userMapper.findByUserId(userId);
-        if (existingUser == null) {
-            throw new RuntimeException("用户不存在");
-        }
+    public IPage<User> queryUserPageByCondition(UserQueryDTO condition) {
 
-        return userMapper.delete(userId) > 0;
+        Page<User> page = new Page<>(condition.getPageNum(), condition.getPageSize());
+        return baseMapper.selectPageByCondition(page, condition);
     }
 
-    @Override
-    public Map<String, Object> findByPage(String username, Integer status, Integer page, Integer size) {
-        // 计算分页参数
-        int pageNum = page == null ? 1 : page;
-        int pageSize = size == null ? 10 : size;
-        int offset = (pageNum - 1) * pageSize;
 
-        // 查询数据
-        List<User> users = userMapper.findByPage(username, status);
-        Long total = userMapper.countByCondition(username, status);
 
-        // 构建返回结果
-        Map<String, Object> result = new HashMap<>();
-        result.put("users", users);
-        result.put("total", total);
-        result.put("page", pageNum);
-        result.put("size", pageSize);
-        result.put("pages", (total + pageSize - 1) / pageSize);
 
-        return result;
-    }
 }

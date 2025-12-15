@@ -15,10 +15,4 @@ class CustomerApplicationTests {
     @Autowired
     private UserService userService;
 
-    @Test
-    void testQuery() {
-        List<User> userList = userService.findAll();
-        System.out.println(userList);
-    }
-
 }

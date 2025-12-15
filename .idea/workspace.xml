@@ -5,73 +5,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3f19885-1e59-467c-b558-f09b0af34cc0" name="Default Changelist" comment="更新">
-      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/config/AppConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/config/WebConfig.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/exception/GlobalExceptionHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/constant/ServiceNamesConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/dto/PageResult.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/dto/Result.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/api/UserServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserOperateDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserQueryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/main/resources/mapper/UserMapper.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/.gitattributes" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/CustomerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/CustomerApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/aspect/LoggingAspect.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/aspect/LoggingAspect.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/resources/UserMapper.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/test/java/com/wwd/gateway/CustomerApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/test/java/com/wwd/gateway/CustomerApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/classes/UserMapper.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/test-classes/com/wwd/gateway/CustomerApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/customer/target/test-classes/com/wwd/gateway/CustomerApplicationTests.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/webapp/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/src/main/webapp/index.jsp" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web.war" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/HikariCP-4.0.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/classmate-1.5.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/hibernate-validator-6.2.3.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/jackson-annotations-2.13.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/jackson-core-2.13.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/jackson-databind-2.13.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/jackson-datatype-jdk8-2.13.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/jackson-datatype-jsr310-2.13.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/jackson-module-parameter-names-2.13.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/jakarta.annotation-api-1.3.5.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/jakarta.validation-api-2.0.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/jboss-logging-3.4.3.Final.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/jul-to-slf4j-1.7.36.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/log4j-api-2.17.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/log4j-to-slf4j-2.17.2.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/logback-classic-1.2.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/logback-core-1.2.11.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/lombok-1.18.24.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/mybatis-3.5.14.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/mybatis-spring-3.0.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/mybatis-spring-boot-autoconfigure-3.0.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/mybatis-spring-boot-starter-3.0.3.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/mysql-connector-j-8.0.33.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/slf4j-api-1.7.36.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/snakeyaml-1.30.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-aop-5.3.21.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-beans-5.3.21.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-boot-2.7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-boot-autoconfigure-2.7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-boot-starter-2.7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-boot-starter-jdbc-2.7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-boot-starter-json-2.7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-boot-starter-logging-2.7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-boot-starter-tomcat-2.7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-boot-starter-validation-2.7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-boot-starter-web-2.7.1.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-context-5.3.21.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-core-5.3.21.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-expression-5.3.21.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-jcl-5.3.21.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-jdbc-5.3.21.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-tx-5.3.21.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-web-5.3.21.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/spring-webmvc-5.3.21.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/tomcat-embed-core-9.0.64.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/tomcat-embed-el-9.0.64.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/lib/tomcat-embed-websocket-9.0.64.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/WEB-INF/web.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/target/web/index.jsp" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +93,7 @@
     <property name="jdk.selected.JAVA_MODULE" value="21" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Project" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.40342054" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
@@ -138,6 +104,15 @@
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\customer\src\main\java\com\wwd\customer" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\customer\src\main\resources\mapper" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.wwd.customerapi" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.wwd.customerapi.dto" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.CustomerApplication">
@@ -230,6 +205,13 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
+    <configuration name="CustomerApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
+      <module name="customer-api" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wwd.customerapi.CustomerApiApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="CustomerApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
       <module name="customer" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.wwd.customer.CustomerApplication" />
@@ -267,10 +249,12 @@
       <item itemvalue="Spring Boot.GatewayApplication" />
       <item itemvalue="Spring Boot.OrderApplication" />
       <item itemvalue="Spring Boot.CustomerApplication" />
+      <item itemvalue="Spring Boot.CustomerApiApplication" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Spring Boot.CustomerApplication" />
+        <item itemvalue="Spring Boot.CustomerApiApplication" />
         <item itemvalue="Application.CustomerApplication" />
       </list>
     </recent_temporary>
@@ -297,7 +281,7 @@
       <workItem from="1762273226969" duration="1997000" />
       <workItem from="1763478427267" duration="3521000" />
       <workItem from="1763562242561" duration="5481000" />
-      <workItem from="1763647699010" duration="14859000" />
+      <workItem from="1763647699010" duration="39354000" />
     </task>
     <task id="LOCAL-00001" summary="提交工程目录">
       <created>1740664357152</created>
@@ -320,7 +304,14 @@
       <option name="project" value="LOCAL" />
       <updated>1760444623932</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="更新">
+      <created>1765530264845</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1765530264846</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -380,13 +371,8 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java</url>
-          <line>57</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java</url>
-          <line>62</line>
+          <line>60</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>

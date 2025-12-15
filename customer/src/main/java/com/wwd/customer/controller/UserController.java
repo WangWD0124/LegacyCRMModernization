@@ -1,14 +1,21 @@
 package com.wwd.customer.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wwd.common.dto.PageResult;
+import com.wwd.common.dto.Result;
 import com.wwd.customer.entity.User;
 import com.wwd.customer.service.UserService;
+import com.wwd.customerapi.api.UserServiceClient;
+import com.wwd.customerapi.dto.UserDTO;
+import com.wwd.customerapi.dto.UserOperateDTO;
+import com.wwd.customerapi.dto.UserQueryDTO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Copyright: Copyright (c) 2025 Asiainfo
@@ -27,74 +34,85 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/users")
 @RequiredArgsConstructor
-public class UserController {
+public class UserController implements UserServiceClient {
 
     private final UserService userService;
 
-    // 获取所有用户
-    @GetMapping
-    public ResponseEntity<List<User>> getAllUsers() {
-        List<User> users = userService.findAll();
-        return ResponseEntity.ok(users);
+
+    @Override
+    public Result<Long> createUser(UserOperateDTO userOperateDTO) {
+
+        // DTO转换
+        User user = new User();
+        BeanUtils.copyProperties(userOperateDTO, user);
+
+        //调用业务层类方法
+        Long userId = userService.createUser(user);
+        return Result.success(userId);
     }
 
-    // 根据ID获取用户
-    @GetMapping("/userId/{userId}")
-    public ResponseEntity<User> getUserByUserId(@PathVariable Long userId) {
-        User user = userService.findByUserId(userId);
-        return ResponseEntity.ok(user);
+    @Override
+    public Result<Integer> updateUser(UserOperateDTO userOperateDTO) {
+
+        // DTO转换
+        User user = new User();
+        BeanUtils.copyProperties(userOperateDTO, user);
+
+        //调用业务层类方法
+        Integer rows = userService.updateUser(user);
+        return Result.success(rows);
     }
 
-    // 根据用户名获取用户
-    @GetMapping("/userName/{userName}")
-    public ResponseEntity<User> getUserByUsername(@PathVariable String userName) {
-        User user = userService.findByUsername(userName);
-        return ResponseEntity.ok(user);
+    @Override
+    public Result<Integer> deleteUserByUserId(Long userId) {
+
+        Integer rows = userService.deleteUserByUserId(userId);
+        return Result.success(rows);
     }
 
-    // 创建用户
-    @PostMapping
-    public ResponseEntity<String> createUser(@Valid @RequestBody User user) {
-        boolean success = userService.saveUser(user);
-        if (success) {
-            return ResponseEntity.ok("用户创建成功");
-        } else {
-            return ResponseEntity.badRequest().body("用户创建失败");
+    @Override
+    public Result<UserDTO> queryUserByUserId(Long userId) {
+
+        UserDTO userDTO = new UserDTO();
+        User user = userService.queryUserByUserId(userId);
+        BeanUtils.copyProperties(user, userDTO);
+        return Result.success(userDTO);
+    }
+
+    @Override
+    public Result<List<UserDTO>> queryUserListByCondition(UserQueryDTO userQueryDTO) {
+
+        List<UserDTO> userDTOs = new ArrayList<>();
+        List<User> users = userService.queryUserListByCondition(userQueryDTO);
+        BeanUtils.copyProperties(users, userDTOs);
+        return Result.success(userDTOs);
+    }
+
+    @Override
+    public Result<PageResult<UserDTO>> queryUserPageByCondition(UserQueryDTO userQueryDTO) {
+
+        IPage<User> page = userService.queryUserPageByCondition(userQueryDTO);
+        List<UserDTO> userDTOs = page.getRecords().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+        PageResult<UserDTO> userPage = new PageResult<UserDTO>(
+                userDTOs,
+                page.getTotal(),
+                page.getCurrent(),
+                page.getSize()
+        );
+        return Result.success(userPage);
+    }
+
+    /**
+     * Entity 转 DTO
+     */
+    private UserDTO convertToDTO(User user) {
+        if (user == null) {
+            return null;
         }
-    }
-
-    // 更新用户
-    @PutMapping("/{userId}")
-    public ResponseEntity<String> updateUser(@PathVariable Long userId, @Valid @RequestBody User user) {
-        user.setId(userId);
-        boolean success = userService.updateUser(user);
-        if (success) {
-            return ResponseEntity.ok("用户更新成功");
-        } else {
-            return ResponseEntity.badRequest().body("用户更新失败");
-        }
-    }
-
-    // 删除用户
-    @DeleteMapping("/{userId}")
-    public ResponseEntity<String> deleteUser(@PathVariable Long userId) {
-        boolean success = userService.deleteUser(userId);
-        if (success) {
-            return ResponseEntity.ok("用户删除成功");
-        } else {
-            return ResponseEntity.badRequest().body("用户删除失败");
-        }
-    }
-
-    // 分页查询用户
-    @GetMapping("/page")
-    public ResponseEntity<Map<String, Object>> getUsersByPage(
-            @RequestParam(required = false) String username,
-            @RequestParam(required = false) Integer status,
-            @RequestParam(defaultValue = "1") Integer page,
-            @RequestParam(defaultValue = "10") Integer size) {
-
-        Map<String, Object> result = userService.findByPage(username, status, page, size);
-        return ResponseEntity.ok(result);
+        UserDTO dto = new UserDTO();
+        BeanUtils.copyProperties(user, dto);
+        return dto;
     }
 }

@@ -1,4 +1,4 @@
-package com.wwd.customer.entity;
+package com.wwd.customerapi.dto;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
  * Copyright: Copyright (c) 2025 Asiainfo
  *
  * @ClassName: com.wwd.customer.entity.User
- * @Description: 业务实体类
+ * @Description: 数据传输对象
  * @version: v1.0.0
  * @author: wangwd7
  * @date: 2025-10-12
@@ -19,13 +19,13 @@ import java.time.LocalDateTime;
  * 2025-10-12     wangwd7          v1.0.0               创建
  */
 @Data
-public class User {
-    private Long userId;
-    private String userName;
+public class UserDTO {
+    private Long id;
+    private String username;
     private String password;
     private String email;
     private String phone;
-    private String status;
+    private Integer status;
     private LocalDateTime createTime;
     private LocalDateTime updateTime;
 }

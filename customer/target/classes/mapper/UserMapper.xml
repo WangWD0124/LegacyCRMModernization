@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wwd.customer.mapper.UserMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, username, password, email, phone, status, create_time, update_time
+    </sql>
+
+    <!-- 动态查询条件 -->
+    <sql id="Dynamic_Where">
+        <where>
+            <!-- 用户名模糊查询 -->
+            <if test="condition.username != null and condition.username != ''">
+                AND username LIKE CONCAT('%', #{condition.username}, '%')
+            </if>
+
+            <!-- 邮箱精确查询 -->
+            <if test="condition.email != null and condition.email != ''">
+                AND email = #{condition.email}
+            </if>
+
+            <!-- 手机号模糊查询 -->
+            <if test="condition.phone != null and condition.phone != ''">
+                AND phone LIKE CONCAT('%', #{condition.phone}, '%')
+            </if>
+
+            <!-- 状态查询 -->
+            <if test="condition.status != null">
+                AND status = #{condition.status}
+            </if>
+
+            <!-- 状态列表查询（IN查询） -->
+            <if test="condition.statusList != null and condition.statusList.size() > 0">
+                AND status IN
+                <foreach collection="condition.statusList" item="status"
+                         open="(" separator="," close=")">
+                    #{status}
+                </foreach>
+            </if>
+
+            <!-- 部门ID查询 -->
+            <if test="condition.deptId != null">
+                AND dept_id = #{condition.deptId}
+            </if>
+
+            <!-- 部门ID列表查询 -->
+            <if test="condition.deptIdList != null and condition.deptIdList.size() > 0">
+                AND dept_id IN
+                <foreach collection="condition.deptIdList" item="deptId"
+                         open="(" separator="," close=")">
+                    #{deptId}
+                </foreach>
+            </if>
+
+            <!-- 创建时间范围查询 -->
+            <if test="condition.createTimeStart != null">
+                AND create_time &gt;= #{condition.createTimeStart}
+            </if>
+            <if test="condition.createTimeEnd != null">
+                AND create_time &lt;= #{condition.createTimeEnd}
+            </if>
+
+            <!-- 更新时间范围查询 -->
+            <if test="condition.updateTimeStart != null">
+                AND update_time &gt;= #{condition.updateTimeStart}
+            </if>
+            <if test="condition.updateTimeEnd != null">
+                AND update_time &lt;= #{condition.updateTimeEnd}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 动态排序 -->
+    <sql id="Dynamic_Order">
+        <choose>
+            <when test="condition.orderBy != null and condition.orderBy != ''">
+                ORDER BY ${condition.orderBy}
+                <if test="condition.asc != null">
+                    <if test="condition.asc">ASC</if>
+                    <if test="!condition.asc">DESC</if>
+                </if>
+            </when>
+            <otherwise>
+                ORDER BY create_time DESC  <!-- 默认按创建时间倒序 -->
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 复杂查询 -->
+    <select id="selectByCondition" resultType="User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        <include refid="Dynamic_Where"/>
+        <include refid="Dynamic_Order"/>
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="selectPageByCondition" resultType="User">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM user
+        <include refid="Dynamic_Where"/>
+        <include refid="Dynamic_Order"/>
+    </select>
+
+    <!-- 关联查询：用户与部门 -->
+    <select id="selectUserWithDept" resultType="map">
+        SELECT
+        u.id, u.username, u.email, u.phone, u.status,
+        u.create_time, u.update_time,
+        d.id as dept_id, d.name as dept_name, d.code as dept_code
+        FROM user u
+        LEFT JOIN sys_dept d ON u.dept_id = d.id AND d.deleted = 0
+        <where>
+            u.deleted = 0
+            <if test="condition.username != null and condition.username != ''">
+                AND u.username LIKE CONCAT('%', #{condition.username}, '%')
+            </if>
+            <if test="condition.deptId != null">
+                AND u.dept_id = #{condition.deptId}
+            </if>
+        </where>
+        ORDER BY u.create_time DESC
+    </select>
+
+    <!-- 批量插入（MySQL语法） -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO user (
+        id, username, password, email, phone, status, dept_id,
+        create_time, update_time, create_by, update_by, remark
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.id},
+            #{item.username},
+            #{item.password},
+            #{item.email},
+            #{item.phone},
+            #{item.status},
+            #{item.deptId},
+            NOW(),
+            NOW(),
+            #{item.createBy},
+            #{item.updateBy},
+            #{item.remark}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 批量更新（根据ID） -->
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE user
+            <set>
+                <if test="item.username != null">username = #{item.username},</if>
+                <if test="item.email != null">email = #{item.email},</if>
+                <if test="item.phone != null">phone = #{item.phone},</if>
+                <if test="item.status != null">status = #{item.status},</if>
+                <if test="item.deptId != null">dept_id = #{item.deptId},</if>
+                update_time = NOW(),
+                <if test="item.updateBy != null">update_by = #{item.updateBy},</if>
+                <if test="item.remark != null">remark = #{item.remark}</if>
+            </set>
+            WHERE id = #{item.id} AND deleted = 0
+        </foreach>
+    </update>
+</mapper>

@@ -1,0 +1,28 @@
+Index: customer/src/main/java/com/wwd/customer/aspect/LoggingAspect.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.wwd.customer.aspect;\r\n\r\n\r\nimport org.springframework.stereotype.Component;\r\nimport org.slf4j.Logger;\r\nimport org.slf4j.LoggerFactory;\r\n\r\n/**\r\n * Copyright: Copyright (c) 2025 Asiainfo\r\n *\r\n * @ClassName: com.wwd.customer.aspect.LoggingAspect\r\n * @Description:\r\n * @version: v1.0.0\r\n * @author: wangwd7\r\n * @date: 2025-11-19\r\n * <p>\r\n * Modification History:\r\n * Date         Author          Version            Description\r\n * ---------------------------------------------------------*\r\n * 2025-11-19     wangwd7          v1.0.0               创建\r\n */\r\n@Component\r\n@Aspect\r\npublic class LoggingAspect {\r\n\r\n    private static final Logger logger = LoggerFactory.getLogger(LoggingAspect.class);\r\n\r\n    // 切点：Controller包下的所有方法\r\n    @Pointcut(\"execution(* com.wwd.customer.controller.*.*(..))\")\r\n    public void controllerPointcut() {}\r\n\r\n    // 切点：Service包下的所有方法\r\n    @Pointcut(\"execution(* com.example.demo.service.*.*(..))\")\r\n    public void servicePointcut() {}\r\n\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/customer/src/main/java/com/wwd/customer/aspect/LoggingAspect.java b/customer/src/main/java/com/wwd/customer/aspect/LoggingAspect.java
+--- a/customer/src/main/java/com/wwd/customer/aspect/LoggingAspect.java	(revision 4e6ef9a51a987c517564c0623c3fed2d910bb362)
++++ b/customer/src/main/java/com/wwd/customer/aspect/LoggingAspect.java	(date 1763567885098)
+@@ -1,6 +1,8 @@
+ package com.wwd.customer.aspect;
+ 
+ 
++import org.aspectj.lang.annotation.Aspect;
++import org.aspectj.lang.annotation.Pointcut;
+ import org.springframework.stereotype.Component;
+ import org.slf4j.Logger;
+ import org.slf4j.LoggerFactory;
+@@ -30,7 +32,7 @@
+     public void controllerPointcut() {}
+ 
+     // 切点：Service包下的所有方法
+-    @Pointcut("execution(* com.example.demo.service.*.*(..))")
++    @Pointcut("execution(* com.wwd.customer.service.*.*(..))")
+     public void servicePointcut() {}
+ 
+ 

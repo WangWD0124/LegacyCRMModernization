@@ -26,9 +26,12 @@ public class UserOperateDTO {
     @Size(min = 2, max = 20, message = "用户名长度2-20位")
     private String username;
 
-    @NotBlank(message = "邮箱不能为空")
     @Email(message = "邮箱格式不正确")
     private String email;
+
+    private String phone;
+
+    private String status;
 
     @NotBlank(message = "密码不能为空")
     @Size(min = 6, max = 20, message = "密码长度6-20位")

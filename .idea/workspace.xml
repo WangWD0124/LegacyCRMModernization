@@ -5,47 +5,85 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3f19885-1e59-467c-b558-f09b0af34cc0" name="Default Changelist" comment="更新">
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025_11_20_0_08_[Default_Changelist]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025_11_20_0_08__Default_Changelist_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025_11_20_0_10_[Default_Changelist]/shelved.patch" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_2025_11_20_0_10__Default_Changelist_.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/classes/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/classes/com/wwd/common/CommonApplication.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/classes/com/wwd/common/constant/ServiceNamesConstant.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/classes/com/wwd/common/dto/PageResult.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/classes/com/wwd/common/dto/Result.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/surefire-reports/2025-12-14T02-37-58_208.dumpstream" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/surefire-reports/TEST-com.wwd.common.CommonApplicationTests.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/surefire-reports/com.wwd.common.CommonApplicationTests.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/common/target/test-classes/com/wwd/common/CommonApplicationTests.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/CustomerApiApplication.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/src/main/resources/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/src/test/java/com/wwd/customerapi/CustomerApiApplicationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/target/classes/application.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/CustomerApiApplication.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/api/UserServiceClient.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/dto/UserDTO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/dto/UserOperateDTO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/dto/UserQueryDTO.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer-api/target/test-classes/com/wwd/customerapi/CustomerApiApplicationTests.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/CustomerApplication.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/aspect/LoggingAspect.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/config/AppConfig.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/config/WebConfig.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/controller/UserController.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/entity/Role.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/entity/User.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/exception/GlobalExceptionHandler.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/mapper/RoleMapper.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/mapper/UserMapper.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/service/UserService.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/service/UserServiceImpl.class" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customer/target/classes/mapper/UserMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/utils/JwtUtil.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/api/FundAccountServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/FundAccountDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/FundAccountOperateDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/FundAccountQueryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserLoginDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/FundAccountController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/FundAccount.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/FundAccountMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/FundAccountService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/FundAccountServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-api/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-api/src/main/java/com/wwd/orderapi/api/OrderServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-api/src/main/java/com/wwd/orderapi/dto/OrderDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-api/src/main/java/com/wwd/orderapi/dto/OrderOperateDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-api/src/main/java/com/wwd/orderapi/dto/OrderQueryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order-api/src/test/java/com/wwd/orderapi/OrderApiApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order/src/main/java/com/wwd/order/controller/OrderController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order/src/main/java/com/wwd/order/entity/OrderInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order/src/main/java/com/wwd/order/mapper/OrderInfoMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order/src/main/java/com/wwd/order/service/OrderService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order/src/main/java/com/wwd/order/service/OrderServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/order/src/main/resources/mapper/OrderInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/CommonApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/constant/ServiceNamesConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/constant/ServiceNamesConstant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/wwd/common/CommonApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/wwd/common/constant/ServiceNamesConstant.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/wwd/common/dto/PageResult.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/classes/com/wwd/common/dto/Result.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/mapper/FundAccountMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/surefire-reports/2025-12-14T02-37-58_208.dumpstream" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/surefire-reports/TEST-com.wwd.common.CommonApplicationTests.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/surefire-reports/com.wwd.common.CommonApplicationTests.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/target/test-classes/com/wwd/common/CommonApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/CustomerApiApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/api/UserServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/api/UserServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserOperateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserOperateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/target/classes/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/CustomerApiApplication.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/api/UserServiceClient.class" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/api/UserServiceClient.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/dto/UserDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/dto/UserDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/dto/UserOperateDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/dto/UserOperateDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/CustomerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/CustomerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/Role.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/RoleMapper.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/UserInfoMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/resources/mapper/UserMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/mapper/UserInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/test/java/com/wwd/gateway/CustomerApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/test/java/com/wwd/gateway/CustomerApplicationTests.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/target/classes/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/CustomerApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/CustomerApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/entity/User.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/mapper/UserMapper.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/service/UserService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/service/UserServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/service/UserServiceImpl.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/classes/mapper/UserMapper.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/test-classes/com/wwd/gateway/CustomerApplicationTests.class" beforeDir="false" afterPath="$PROJECT_DIR$/customer/target/test-classes/com/wwd/gateway/CustomerApplicationTests.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/java/com/wwd/order/OrderApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/order/src/main/java/com/wwd/order/OrderApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,8 +94,10 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="spring-beans.schema" />
-        <option value="Interface" />
+        <option value="FxmlFile" />
+        <option value="Tag Library Descriptor" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -82,11 +122,14 @@
     <option name="vmOptions" value="-Dfile.encoding=UTF-8" />
   </component>
   <component name="ProjectId" id="2tchkrF0vxwd7T6PkJyiBT69yey" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="DatabaseDriversLRU" value="mysql" />
     <property name="ExpandSpringBootJavaOptionsPanel" value="true" />
     <property name="RequestMappingsPanelOrder0" value="0" />
@@ -99,9 +142,9 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="21" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/config" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.40342054" />
     <property name="settings.editor.selected.configurable" value="File.Encoding" />
@@ -111,16 +154,24 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\customer\src\main\java\com\wwd\customer\config" />
+      <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\common\src\main\java\com\wwd\common\utils" />
+      <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\order\src\main\resources" />
       <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\customer\src\main\java\com\wwd\customer" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\customer\src\main\resources\mapper" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.wwd.orderapi" />
       <recent name="com.wwd.customerapi" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="com.wwd.customerapi.dto" />
+      <recent name="com.wwd.orderapi.dto" />
+      <recent name="com.wwd.orderapi.api" />
+      <recent name="com.wwd.order.controller" />
+      <recent name="com.wwd.order.service" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.CustomerApplication">
@@ -289,7 +340,10 @@
       <workItem from="1762273226969" duration="1997000" />
       <workItem from="1763478427267" duration="3521000" />
       <workItem from="1763562242561" duration="5481000" />
-      <workItem from="1763647699010" duration="40072000" />
+      <workItem from="1763647699010" duration="46786000" />
+      <workItem from="1765965593489" duration="956000" />
+      <workItem from="1765975685738" duration="25443000" />
+      <workItem from="1767024782772" duration="11422000" />
     </task>
     <task id="LOCAL-00001" summary="提交工程目录">
       <created>1740664357152</created>
@@ -326,11 +380,28 @@
       <option name="project" value="LOCAL" />
       <updated>1765764897148</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="更新">
+      <created>1765765747378</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1765765747378</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+      </list>
+    </option>
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
@@ -375,6 +446,7 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <ignored-roots>
       <path value="$PROJECT_DIR$" />
     </ignored-roots>
@@ -387,8 +459,8 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="2" />
+          <line>75</line>
+          <option name="timeStamp" value="25" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

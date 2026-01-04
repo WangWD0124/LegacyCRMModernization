@@ -3,21 +3,20 @@ package com.wwd.customer.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.wwd.customer.entity.User;
-import com.wwd.customer.mapper.RoleMapper;
-import com.wwd.customer.mapper.UserMapper;
+import com.wwd.common.utils.JwtUtil;
+import com.wwd.customer.entity.UserInfo;
+import com.wwd.customer.mapper.UserInfoMapper;
+import com.wwd.customerapi.dto.UserLoginDTO;
 import com.wwd.customerapi.dto.UserQueryDTO;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Copyright: Copyright (c) 2025 Asiainfo
@@ -35,37 +34,36 @@ import java.util.Map;
  */
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements UserService {
+@Slf4j
+public class UserServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> implements UserService {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserInfoMapper userInfoMapper;
 
-    @Autowired
-    private RoleMapper roleMapper;
 
-    @Value("${app.default-user-status:ACTIVE}")
-    private String defaultUserStatus;
+    @Value("${app.default-user-status.ACTIVE}")
+    private Integer defaultUserStatus;
 
-    //private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
-    public Long createUser(User user) {
+    public Long createUser(UserInfo userInfo) {
 
         //user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setStatus(defaultUserStatus);
-        user.setCreateTime(LocalDateTime.now());
-        user.setUpdateTime(LocalDateTime.now());
+        userInfo.setStatus(defaultUserStatus);
+        userInfo.setCreateTime(LocalDateTime.now());
+        userInfo.setUpdateTime(LocalDateTime.now());
 
-        baseMapper.insert(user);
-        return user.getUserId();
+        baseMapper.insert(userInfo);
+        return userInfo.getUserId();
     }
 
     @Override
-    public int updateUser(User user) {
+    public int updateUser(UserInfo userInfo) {
 
-        user.setUpdateTime(LocalDateTime.now());
+        userInfo.setUpdateTime(LocalDateTime.now());
 
-        return baseMapper.updateById(user);
+        return baseMapper.updateById(userInfo);
     }
 
     @Override
@@ -74,23 +72,52 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
-    public User queryUserByUserId(Long userId) {
+    public UserInfo queryUserByUserId(Long userId) {
         return baseMapper.selectById(userId);
     }
 
     @Override
-    public List<User> queryUserListByCondition(UserQueryDTO condition) {
+    public List<UserInfo> queryUserListByCondition(UserQueryDTO condition) {
         return baseMapper.selectListByCondition(condition);
     }
 
     @Override
-    public IPage<User> queryUserPageByCondition(UserQueryDTO condition) {
+    public IPage<UserInfo> queryUserPageByCondition(UserQueryDTO condition) {
 
-        Page<User> page = new Page<>(condition.getPageNum(), condition.getPageSize());
+        Page<UserInfo> page = new Page<>(condition.getPageNum(), condition.getPageSize());
         return baseMapper.selectPageByCondition(page, condition);
     }
 
+    @Override
+    public String login(UserLoginDTO req) {
 
+        // 根据邮箱查询用户
+        UserInfo userInfo = userInfoMapper.selectByEmail(req.getEmail());
+
+        if (userInfo == null) {
+            throw new RuntimeException("用户不存在");
+        }
+
+        //验证密码
+//        if (!passwordEncoder.matches(req.getPassword(), userInfo.getPassword())) {
+//            throw new RuntimeException("密码错误");
+//        }
+        if (!req.getPassword().equals(userInfo.getPassword())) {
+            throw new RuntimeException("密码错误");
+        }
+
+        //检查用户状态
+        if (userInfo.getStatus() == 0) {
+            throw new RuntimeException("用户状态异常，已禁用");
+        }
+
+        //生成JWT Token
+        String token = JwtUtil.generateToken(userInfo.getUserId(), userInfo.getUsername());
+
+        log.info("用户登录成功：{}", userInfo.getUserId());
+
+        return token;
+    }
 
 
 }

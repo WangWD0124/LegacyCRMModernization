@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: CUSTOMER-SERVICE
+    name: CUSTOMER_SERVICE
   cloud:
     nacos:
       discovery:
@@ -44,3 +44,7 @@ logging:
     org.springframework.jdbc.datasource: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+app:
+  default-user-status:
+    ACTIVE: 1

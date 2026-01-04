@@ -1,12 +1,12 @@
 package com.wwd.customer.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.wwd.customer.entity.User;
+import com.wwd.customer.entity.UserInfo;
+import com.wwd.customerapi.dto.UserLoginDTO;
 import com.wwd.customerapi.dto.UserQueryDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Copyright: Copyright (c) 2025 Asiainfo
@@ -25,16 +25,17 @@ import java.util.Map;
 @Service
 public interface UserService {
 
-    Long createUser(User user);
+    Long createUser(UserInfo userInfo);
 
-    int updateUser(User user);
+    int updateUser(UserInfo userInfo);
 
     int deleteUserByUserId(Long userId);
 
-    User queryUserByUserId(Long userId);
+    UserInfo queryUserByUserId(Long userId);
 
-    List<User> queryUserListByCondition(UserQueryDTO userQueryDTO);
+    List<UserInfo> queryUserListByCondition(UserQueryDTO userQueryDTO);
 
-    IPage<User> queryUserPageByCondition(UserQueryDTO userQueryDTO);
+    IPage<UserInfo> queryUserPageByCondition(UserQueryDTO userQueryDTO);
 
+    String login(UserLoginDTO req);
 }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.wwd.customer.mapper.FundAccountMapper">
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        account_id, user_id, account_code, account_name, account_type, description, balance, monthly_target, icon, color, sort_order, is_active, created_at, updated_at
+    </sql>
+
+
+    <!-- 动态查询条件 -->
+    <sql id="Dynamic_Where">
+        <where>
+            <!-- 账户编码精确查询 -->
+            <if test="condition.account_code != null and condition.account_code != ''">
+                AND account_code = #{condition.account_code}
+            </if>
+            
+            <!-- 账户名称模糊查询 -->
+            <if test="condition.account_name != null and condition.account_name != ''">
+                AND account_name LIKE CONCAT('%', #{condition.account_name}, '%')
+            </if>
+
+            <!-- 账户类型查询 -->
+            <if test="condition.account_type != null">
+                AND dept_id = #{condition.account_type}
+            </if>
+
+            <!-- 状态查询 -->
+            <if test="condition.is_active != null">
+                AND is_active = #{condition.is_active}
+            </if>
+
+            <!-- 用户查询 -->
+            <if test="condition.user_id != null">
+                AND user_id = #{condition.user_id}
+            </if>
+
+            <!-- 创建时间范围查询 -->
+            <if test="condition.createdAtStart != null">
+                AND created_at &gt;= #{condition.createdAtStart}
+            </if>
+            <if test="condition.createdAtEnd != null">
+                AND created_at &lt;= #{condition.createdAtEnd}
+            </if>
+
+            <!-- 更新时间范围查询 -->
+            <if test="condition.updatedAtStart != null">
+                AND updated_at &gt;= #{condition.updatedAtStart}
+            </if>
+            <if test="condition.updatedAtEnd != null">
+                AND updated_at &lt;= #{condition.updatedAtEnd}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 动态排序 -->
+    <sql id="Dynamic_Order">
+        <choose>
+            <when test="condition.orderBy != null and condition.orderBy != ''">
+                ORDER BY ${condition.orderBy}
+                <if test="condition.asc != null">
+                    <if test="condition.asc">ASC</if>
+                    <if test="!condition.asc">DESC</if>
+                </if>
+            </when>
+            <otherwise>
+                ORDER BY created_at DESC  <!-- 默认按创建时间倒序 -->
+            </otherwise>
+        </choose>
+    </sql>
+
+    <select id="selectById" resultType="com.wwd.customer.entity.FundAccount">
+        SELECT * FROM fund_account WHERE account_id = #{account_id}
+    </select>
+
+    <select id="selectByAccountCode" resultType="com.wwd.customer.entity.FundAccount">
+        SELECT * FROM fund_account WHERE account_code = #{account_code}
+    </select>
+</mapper>

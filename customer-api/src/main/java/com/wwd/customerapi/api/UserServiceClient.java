@@ -4,6 +4,7 @@ import com.wwd.common.constant.ServiceNamesConstant;
 import com.wwd.common.dto.PageResult;
 import com.wwd.common.dto.Result;
 import com.wwd.customerapi.dto.UserDTO;
+import com.wwd.customerapi.dto.UserLoginDTO;
 import com.wwd.customerapi.dto.UserQueryDTO;
 import com.wwd.customerapi.dto.UserOperateDTO;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -34,7 +35,7 @@ import java.util.List;
 public interface UserServiceClient {
 
     // 创建用户
-    @PostMapping
+    @PostMapping("/register")
     Result<Long> createUser(@RequestBody @Valid UserOperateDTO req);
 
     // 更新用户
@@ -56,4 +57,7 @@ public interface UserServiceClient {
     // 分页查询用户
     @GetMapping("/page")
     Result<PageResult<UserDTO>> queryUserPageByCondition(@SpringQueryMap UserQueryDTO req);
+
+    @PostMapping("/login")
+    Result<String> login(@RequestBody @Valid UserLoginDTO req);
 }

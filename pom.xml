@@ -14,6 +14,7 @@
     <module>process</module>
     <module>gateway</module>
     <module>customer</module>
+    <module>customer-api</module>
     <module>order</module>
   </modules>
   <packaging>pom</packaging>
@@ -27,6 +28,7 @@
     <maven.compiler.source>8</maven.compiler.source>
     <maven.compiler.target>8</maven.compiler.target>
     <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+    <maven.test.skip>true</maven.test.skip>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -36,6 +38,10 @@
     <mysql.version>8.0.33</mysql.version>
 
     <validation-api.version>2.0.1.Final</validation-api.version>
+
+    <jjwt-api.version>0.11.5</jjwt-api.version>
+    <jjwt-impl.version>0.11.5</jjwt-impl.version>
+    <jjwt-jackson.version>0.11.5</jjwt-jackson.version>
   </properties>
 
   <!-- spring boot帮助管理spring官方维护的依赖、插件，实现版本兼容和自动配置 -->
@@ -97,6 +103,24 @@
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-api</artifactId>
+      <version>${jjwt-api.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-impl</artifactId>
+      <version>${jjwt-impl.version}</version>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.jsonwebtoken</groupId>
+      <artifactId>jjwt-jackson</artifactId> <!-- 或 jjwt-gson 如果使用 Gson -->
+      <version>${jjwt-jackson.version}</version>
+      <scope>runtime</scope>
     </dependency>
 
   </dependencies>

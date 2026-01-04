@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wwd.order.mapper.OrderInfoMapper">
+
+    <!-- 表名 -->
+    <sql id="Dynamic_Table">
+        order_info
+    </sql>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        order_id, order_no, user_id, remark, order_source, order_status, create_time, update_time, payment_id, consignee_id, shipping_id
+    </sql>
+
+    <!-- 动态查询条件 -->
+    <sql id="Dynamic_Where">
+        <where>
+            <!-- 订单编码精确查询 -->
+            <if test="condition.order_no != null and condition.order_no != ''">
+                AND order_no = #{condition.order_no}
+            </if>
+
+            <!-- 订单来源精确查询 -->
+            <if test="condition.order_source != null and condition.order_source != ''">
+                AND order_source = #{condition.order_source}
+            </if>
+
+            <!-- 状态查询 -->
+            <if test="condition.status != null">
+                AND status = #{condition.status}
+            </if>
+
+            <!-- 状态列表查询（IN查询） -->
+            <if test="condition.statusList != null and condition.statusList.size() > 0">
+                AND status IN
+                <foreach collection="condition.statusList" item="status"
+                         open="(" separator="," close=")">
+                    #{status}
+                </foreach>
+            </if>
+
+            <!-- 部门ID查询 -->
+            <if test="condition.deptId != null">
+                AND dept_id = #{condition.deptId}
+            </if>
+
+            <!-- 创建时间范围查询 -->
+            <if test="condition.createTimeStart != null">
+                AND create_time &gt;= #{condition.createTimeStart}
+            </if>
+            <if test="condition.createTimeEnd != null">
+                AND create_time &lt;= #{condition.createTimeEnd}
+            </if>
+
+            <!-- 更新时间范围查询 -->
+            <if test="condition.updateTimeStart != null">
+                AND update_time &gt;= #{condition.updateTimeStart}
+            </if>
+            <if test="condition.updateTimeEnd != null">
+                AND update_time &lt;= #{condition.updateTimeEnd}
+            </if>
+        </where>
+    </sql>
+
+    <!-- 动态排序 -->
+    <sql id="Dynamic_Order">
+        <choose>
+            <when test="condition.orderBy != null and condition.orderBy != ''">
+                ORDER BY ${condition.orderBy}
+                <if test="condition.asc != null">
+                    <if test="condition.asc">ASC</if>
+                    <if test="!condition.asc">DESC</if>
+                </if>
+            </when>
+            <otherwise>
+                ORDER BY create_time DESC  <!-- 默认按创建时间倒序 -->
+            </otherwise>
+        </choose>
+    </sql>
+
+    <!-- 复杂查询 -->
+    <select id="selectByCondition" resultType="OrderInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Dynamic_Table"/>
+        <include refid="Dynamic_Where"/>
+        <include refid="Dynamic_Order"/>
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="selectPageByCondition" resultType="OrderInfo">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM
+        <include refid="Dynamic_Table"/>
+        <include refid="Dynamic_Where"/>
+        <include refid="Dynamic_Order"/>
+    </select>
+
+    <!-- 关联查询：用户与部门 -->
+    <select id="selectOrderWithUser" resultType="map">
+        SELECT
+        u.user_id, u.username, u.email, u.phone, u.status,
+        u.create_time, u.update_time,
+        d.id as dept_id, d.name as dept_name, d.code as dept_code
+        FROM userInfo u
+        LEFT JOIN sys_dept d ON u.dept_id = d.id AND d.deleted = 0
+        <where>
+            u.deleted = 0
+            <if test="condition.username != null and condition.username != ''">
+                AND u.username LIKE CONCAT('%', #{condition.username}, '%')
+            </if>
+        </where>
+        ORDER BY u.create_time DESC
+    </select>
+
+    <!-- 批量插入（MySQL语法） -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO
+        <include refid="Dynamic_Table"/>
+            (
+        order_id, order_no, user_id, remark, order_source, order_status, create_time, update_time, payment_id, consignee_id, shipping_id
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{order_id},
+            #{order_no},
+            #{user_id},
+            #{remark},
+            #{order_source},
+            #{order_status},
+            NOW(),
+            NOW(),
+            #{payment_id},
+            #{consignee_id},
+            #{shipping_id}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 批量更新（根据ID） -->
+    <update id="batchUpdate" parameterType="java.util.List">
+        <foreach collection="list" item="item" separator=";">
+            UPDATE user_info
+            <set>
+                <if test="item.username != null">username = #{item.username},</if>
+                <if test="item.email != null">email = #{item.email},</if>
+                <if test="item.phone != null">phone = #{item.phone},</if>
+                <if test="item.status != null">status = #{item.status},</if>
+                update_time = NOW()
+            </set>
+            WHERE id = #{item.user_id}
+        </foreach>
+    </update>
+</mapper>

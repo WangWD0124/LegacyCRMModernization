@@ -11,16 +11,24 @@
   <!-- 所有子模块 -->
   <modules>
     <module>common</module>
-    <module>process</module>
     <module>gateway</module>
+    <module>process</module>
     <module>customer</module>
     <module>customer-api</module>
     <module>order</module>
+    <module>order-api</module>
   </modules>
   <packaging>pom</packaging>
 
   <name>crm</name>
   <url>http://www.wwd.com</url>
+
+  <!-- spring boot帮助管理spring官方维护的依赖、插件，实现版本兼容和自动配置 -->
+  <parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.7.1</version>
+  </parent>
 
   <!-- 所有属性配置 -->
   <properties>
@@ -44,89 +52,6 @@
     <jjwt-jackson.version>0.11.5</jjwt-jackson.version>
   </properties>
 
-  <!-- spring boot帮助管理spring官方维护的依赖、插件，实现版本兼容和自动配置 -->
-  <parent>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-parent</artifactId>
-    <version>2.7.1</version>
-  </parent>
-
-
-  <!-- 所有子模块共享的依赖 -->
-  <dependencies>
-    <!-- spring boot的web启动器，帮助快速引入web应用开发所需的依赖-->
-    <!-- 其中包括spring-core、spring-context、spring-beans、spring-aop、spring-web、spring-webmvc、spring-boot-starter-tomcat、spring-boot-starter-json -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-
-    <!-- mybatis维护的spring boot的mybatis启动器，帮助快速引入mybatis持久层开发所需的依赖 -->
-    <!-- 其中包括mybatis、mybatis-spring -->
-    <!-- MyBatis Plus 核心依赖 -->
-    <dependency>
-      <groupId>com.baomidou</groupId>
-      <artifactId>mybatis-plus-boot-starter</artifactId>
-      <version>${mybatis-plus.version}</version>
-    </dependency>
-
-    <!--  MySQL依赖  -->
-    <dependency>
-      <groupId>mysql</groupId>
-      <artifactId>mysql-connector-java</artifactId>
-      <version>${mysql.version}</version>
-    </dependency>
-
-    <!--
-      1、支持 Java Bean 合法验证：可以使用注解（如 @NotNull, @Size, @Min, @Max 等）对字段进行验证。
-      2、自动验证请求数据：在 Spring MVC 或 RESTful API 控制器中，你可以通过 @Valid 或 @Validated 注解标记请求体参数，让 Spring 自动进行数据验证。
-      3、结合 Spring 表单数据绑定：（如 @ModelAttribute）一起使用，自动验证用户提交的表单数据。
-      4、验证错误处理：Spring 会抛出 MethodArgumentNotValidException 异常。可以通过 @ControllerAdvice 或 @ExceptionHandler 来处理这些验证错误，并返回适当的错误信息给客户端。
-         -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-validation</artifactId>
-    </dependency>
-
-    <!-- Spring Boot AOP Starter -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-aop</artifactId>
-    </dependency>
-
-    <!-- Lombok帮助简化代码编写，通过注解自动生成类中常见的方法 -->
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-test</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt-api</artifactId>
-      <version>${jjwt-api.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt-impl</artifactId>
-      <version>${jjwt-impl.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-    <dependency>
-      <groupId>io.jsonwebtoken</groupId>
-      <artifactId>jjwt-jackson</artifactId> <!-- 或 jjwt-gson 如果使用 Gson -->
-      <version>${jjwt-jackson.version}</version>
-      <scope>runtime</scope>
-    </dependency>
-
-  </dependencies>
-
-
-
   <!-- 所有子模块可选的依赖 -->
   <dependencyManagement>
     <dependencies>
@@ -145,6 +70,39 @@
         <version>2021.0.1.0</version> <!-- 请选择与Spring Boot版本对应的版本 -->
         <type>pom</type>
         <scope>import</scope>
+      </dependency>
+
+      <!--  MySQL依赖  -->
+      <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <version>${mysql.version}</version>
+      </dependency>
+      <!-- mybatis维护的spring boot的mybatis启动器，帮助快速引入mybatis持久层开发所需的依赖 -->
+      <!-- 其中包括mybatis、mybatis-spring -->
+      <!-- MyBatis Plus 核心依赖 -->
+      <dependency>
+        <groupId>com.baomidou</groupId>
+        <artifactId>mybatis-plus-boot-starter</artifactId>
+        <version>${mybatis-plus.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-api</artifactId>
+        <version>${jjwt-api.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-impl</artifactId>
+        <version>${jjwt-impl.version}</version>
+        <scope>runtime</scope>
+      </dependency>
+      <dependency>
+        <groupId>io.jsonwebtoken</groupId>
+        <artifactId>jjwt-jackson</artifactId> <!-- 或 jjwt-gson 如果使用 Gson -->
+        <version>${jjwt-jackson.version}</version>
+        <scope>runtime</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>

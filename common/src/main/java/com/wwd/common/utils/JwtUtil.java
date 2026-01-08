@@ -20,56 +20,49 @@ import java.util.Date;
  * ---------------------------------------------------------*
  * 2025-12-29     wangwd7          v1.0.0               创建
  */
-@Slf4j
+@Component
 public class JwtUtil {
 
-    private static final String SECRET_KEY = "finance-system-secret-key-2024-spring-boot-vue-project";
-    private static final long EXPIRATION_TIME = 7 * 24 * 60 * 60 * 1000; // 7天
+    @Value("${jwt.secret:your-256-bit-secret}")
+    private String secret;
 
-    // 生成密钥
-    private static final SecretKey KEY = Keys.hmacShaKeyFor(SECRET_KEY.getBytes());
+    @Value("${jwt.expiration:86400000}")
+    private Long expiration; // 默认24小时
 
-    public static String generateToken(Long userId, String username) {
+    public Claims validateToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(secret.getBytes(StandardCharsets.UTF_8))
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
+
+    public String generateToken(UserDTO user) {
         Date now = new Date();
-        Date expiryDate = new Date(now.getTime() + EXPIRATION_TIME);
+        Date expiryDate = new Date(now.getTime() + expiration);
 
         return Jwts.builder()
-                .setSubject(userId.toString())
-                .claim("username", username)
+                .setSubject(String.valueOf(user.getId()))
+                .claim("username", user.getUsername())
+                .claim("roles", String.join(",", user.getRoles()))
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
-                .signWith(KEY, SignatureAlgorithm.HS256)
+                .signWith(SignatureAlgorithm.HS256, secret.getBytes(StandardCharsets.UTF_8))
                 .compact();
     }
 
-    public static Long getUserId(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(KEY)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return Long.parseLong(claims.getSubject());
-    }
+    // 刷新Token（返回新Token，旧Token加入黑名单）
+    public String refreshToken(String oldToken) {
+        Claims claims = validateToken(oldToken);
 
-    public static String getUsername(String token) {
-        Claims claims = Jwts.parserBuilder()
-                .setSigningKey(KEY)
-                .build()
-                .parseClaimsJws(token)
-                .getBody();
-        return claims.get("username", String.class);
-    }
+        // 将旧Token加入黑名单（剩余有效期）
+        blacklistToken(oldToken, claims.getExpiration());
 
-    public static boolean validateToken(String token) {
-        try {
-            Jwts.parserBuilder()
-                    .setSigningKey(KEY)
-                    .build()
-                    .parseClaimsJws(token);
-            return true;
-        } catch (Exception e) {
-            log.error("Token验证失败: {}", e.getMessage());
-            return false;
-        }
+        // 生成新Token
+        UserDTO user = new UserDTO();
+        user.setId(Long.parseLong(claims.getSubject()));
+        user.setUsername(claims.get("username", String.class));
+
+        return generateToken(user);
     }
 }

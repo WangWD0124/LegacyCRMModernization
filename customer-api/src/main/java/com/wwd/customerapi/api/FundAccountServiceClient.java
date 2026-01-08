@@ -28,7 +28,7 @@ import java.util.List;
  */
 @FeignClient(
         name = ServiceNamesConstant.CUSTOMER_SERVICE,
-        path = "/api/fundAccount/"
+        path = "/api/fundAccount"
 )
 public interface FundAccountServiceClient {
 

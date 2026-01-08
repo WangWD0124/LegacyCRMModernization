@@ -13,7 +13,11 @@
     <name>common</name>
 
     <dependencies>
-
+        <!-- Lombok帮助简化代码编写，通过注解自动生成类中常见的方法 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

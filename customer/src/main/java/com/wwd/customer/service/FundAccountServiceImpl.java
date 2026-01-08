@@ -38,10 +38,25 @@ public class FundAccountServiceImpl extends ServiceImpl<FundAccountMapper, FundA
 
     @Override
     public Long createFundAccount(FundAccount fundAccount) {
-        fundAccount.setIs_active(Boolean.TRUE);
-        fundAccount.setCreated_at(LocalDateTime.now());
-        fundAccount.setUpdated_at(LocalDateTime.now());
+        fundAccount.setIsActive(Boolean.TRUE);
+        fundAccount.setCreatedAt(LocalDateTime.now());
+        fundAccount.setUpdatedAt(LocalDateTime.now());
         baseMapper.insert(fundAccount);
-        return fundAccount.getAccount_id();
+        return fundAccount.getAccountId();
+    }
+
+    @Override
+    public Integer updateFundAccount(FundAccount fundAccount) {
+        fundAccount.setUpdatedAt(LocalDateTime.now());
+        return baseMapper.updateById(fundAccount);
+    }
+
+    @Override
+    public Integer deleteFundAccountByAccountId(Long accountId) {
+
+        FundAccount fundAccount = selectByAccountId(accountId);
+        fundAccount.setIsActive(Boolean.FALSE);
+        fundAccount.setUpdatedAt(LocalDateTime.now());
+        return baseMapper.updateById(fundAccount);
     }
 }

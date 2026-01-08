@@ -11,6 +11,7 @@ import com.wwd.customerapi.dto.FundAccountQueryDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -29,6 +30,7 @@ import java.util.List;
  * 2026-01-05     wangwd7          v1.0.0               创建
  */
 @Controller
+@RequestMapping("/api/fundAccount")
 public class FundAccountController implements FundAccountServiceClient {
 
     @Autowired
@@ -46,17 +48,23 @@ public class FundAccountController implements FundAccountServiceClient {
 
     @Override
     public Result<Integer> updateFundAccount(FundAccountOperateDTO fundAccountOperateDTO) {
-        return null;
+
+        FundAccount fundAccount = new FundAccount();
+        BeanUtils.copyProperties(fundAccountOperateDTO, fundAccount);
+        return Result.success(fundAccountService.updateFundAccount(fundAccount));
     }
 
     @Override
     public Result<Integer> deleteFundAccountByAccountId(Long account_id) {
-        return null;
+        return Result.success(fundAccountService.deleteFundAccountByAccountId(account_id));
     }
 
     @Override
     public Result<FundAccountDTO> queryFundAccountByAccountId(Long account_id) {
-        return null;
+        FundAccountDTO fundAccountDTO = new FundAccountDTO();
+        FundAccount fundAccount = fundAccountService.selectByAccountId(account_id);
+        BeanUtils.copyProperties(fundAccount, fundAccountDTO);
+        return Result.success(fundAccountDTO);
     }
 
     @Override

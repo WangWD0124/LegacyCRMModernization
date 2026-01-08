@@ -25,4 +25,10 @@ public interface FundAccountService {
     FundAccount selectByAccountCode(String account_code);
 
     Long createFundAccount(FundAccount fundAccount);
+
+    Integer updateFundAccount(FundAccount fundAccount);
+
+    Integer deleteFundAccountByAccountId(Long accountId);
+
+
 }

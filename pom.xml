@@ -12,11 +12,10 @@
   <modules>
     <module>common</module>
     <module>gateway</module>
-    <module>process</module>
-    <module>customer</module>
     <module>customer-api</module>
-    <module>order</module>
-    <module>order-api</module>
+    <module>customer</module>
+    <module>finance-api</module>
+    <module>finance</module>
   </modules>
   <packaging>pom</packaging>
 
@@ -50,6 +49,8 @@
     <jjwt-api.version>0.11.5</jjwt-api.version>
     <jjwt-impl.version>0.11.5</jjwt-impl.version>
     <jjwt-jackson.version>0.11.5</jjwt-jackson.version>
+    <hutool.version>5.8.16</hutool.version>
+    <knife4j.version>3.0.3</knife4j.version>
   </properties>
 
   <!-- 所有子模块可选的依赖 -->
@@ -103,6 +104,20 @@
         <artifactId>jjwt-jackson</artifactId> <!-- 或 jjwt-gson 如果使用 Gson -->
         <version>${jjwt-jackson.version}</version>
         <scope>runtime</scope>
+      </dependency>
+
+      <!-- Hutool工具包 -->
+      <dependency>
+        <groupId>cn.hutool</groupId>
+        <artifactId>hutool-all</artifactId>
+        <version>${hutool.version}</version>
+      </dependency>
+
+      <!-- Knife4j API文档 -->
+      <dependency>
+        <groupId>com.github.xiaoymin</groupId>
+        <artifactId>knife4j-spring-boot-starter</artifactId>
+        <version>${knife4j.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>

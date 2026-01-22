@@ -11,9 +11,13 @@ import com.wwd.customerapi.dto.UserLoginDTO;
 import com.wwd.customerapi.dto.UserOperateDTO;
 import com.wwd.customerapi.dto.UserQueryDTO;
 import lombok.RequiredArgsConstructor;
+import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -33,7 +37,7 @@ import java.util.stream.Collectors;
  * 2025-10-12     wangwd7          v1.0.0               创建
  */
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/customer/user")
 @RequiredArgsConstructor
 public class UserController implements UserServiceClient {
 
@@ -41,27 +45,20 @@ public class UserController implements UserServiceClient {
 
 
     @Override
-    public Result<Long> createUser(UserOperateDTO userOperateDTO) {
+    public Result<Long> operateUser(UserOperateDTO userOperateDTO) {
 
         // DTO转换
         UserInfo userInfo = new UserInfo();
         BeanUtils.copyProperties(userOperateDTO, userInfo);
 
         //调用业务层类方法
-        Long userId = userService.createUser(userInfo);
-        return Result.success(userId);
-    }
-
-    @Override
-    public Result<Integer> updateUser(UserOperateDTO userOperateDTO) {
-
-        // DTO转换
-        UserInfo userInfo = new UserInfo();
-        BeanUtils.copyProperties(userOperateDTO, userInfo);
-
-        //调用业务层类方法
-        Integer rows = userService.updateUser(userInfo);
-        return Result.success(rows);
+        if (userInfo.getUserId() != null){
+            userService.updateUser(userInfo);
+            return Result.success(userInfo.getUserId());
+        } else {
+            Long userId = userService.createUser(userInfo);
+            return Result.success(userId);
+        }
     }
 
     @Override

@@ -2,7 +2,6 @@ package com.wwd.customerapi.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
 
 /**
  * Copyright: Copyright (c) 2026 Asiainfo
@@ -31,7 +30,19 @@ public class FundAccountQueryDTO {
     private String icon;
     private String color;
     private Integer sort_order;
-    private Boolean is_active;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private String is_active;
+
+    // 时间范围
+    private String createdAtStart;
+    private String createdAtEnd;
+    private String updatedAtStart;
+    private String updatedAtEnd;
+    
+    // 分页参数
+    private Integer pageNum = 1;
+    private Integer pageSize = 10;
+
+    // 排序参数
+    private String orderBy = "created_at";
+    private Boolean asc = false; // 默认降序
 }

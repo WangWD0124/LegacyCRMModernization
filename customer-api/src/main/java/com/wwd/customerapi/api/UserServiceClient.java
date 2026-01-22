@@ -9,9 +9,11 @@ import com.wwd.customerapi.dto.UserQueryDTO;
 import com.wwd.customerapi.dto.UserOperateDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -30,20 +32,16 @@ import java.util.List;
  */
 @FeignClient(
         name = ServiceNamesConstant.CUSTOMER_SERVICE,
-        path = "/api/users"
+        path = "/api/customer/user"
 )
 public interface UserServiceClient {
 
-    // 创建用户
-    @PostMapping("/register")
-    Result<Long> createUser(@RequestBody @Valid UserOperateDTO req);
-
-    // 更新用户
-    @PutMapping
-    Result<Integer> updateUser(@RequestBody @Valid UserOperateDTO req);
+    // 创建or更新用户
+    @PostMapping("/operate")
+    Result<Long> operateUser(@RequestBody @Valid UserOperateDTO req);
 
     // 删除用户
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/delete/{userId}")
     Result<Integer> deleteUserByUserId(@PathVariable Long userId);
 
     // 根据ID获取用户
@@ -51,12 +49,12 @@ public interface UserServiceClient {
     Result<UserDTO> queryUserByUserId(@PathVariable Long userId);
 
     // 获取用户列表
-    @GetMapping
+    @GetMapping("/list")
     Result<List<UserDTO>> queryUserListByCondition(@SpringQueryMap UserQueryDTO req);
 
     // 分页查询用户
     @GetMapping("/page")
-    Result<PageResult<UserDTO>> queryUserPageByCondition(@SpringQueryMap UserQueryDTO req);
+    Result<PageResult<UserDTO>> queryUserPageByCondition(UserQueryDTO req);
 
     @PostMapping("/login")
     Result<String> login(@RequestBody @Valid UserLoginDTO req);

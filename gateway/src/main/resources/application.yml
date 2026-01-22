@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: API_GATEWAY
+    name: api-gateway
   cloud:
     nacos:
       discovery:
@@ -11,24 +11,57 @@ spring:
     gateway:
       discovery:
         locator:
-          enabled: true  # \u5F00\u542F\u4ECE\u670D\u52A1\u53D1\u73B0\u4E2D\u52A8\u6001\u521B\u5EFA\u8DEF\u7531
+          enabled: true
       routes:
-        - id: CUSTOMER_SERVICE
-          uri: lb://CUSTOMER_SERVICE  # lb\u4EE3\u8868\u8D1F\u8F7D\u5747\u8861
+        - id: customer-service
+          uri: lb://customer-service
           predicates:
             - Path=/api/customer/**
           filters:
-            - StripPrefix=0   # \u53BB\u6389\u8DEF\u5F84\u524D\u7F00\uFF0C\u4F8B\u5982/api/user/xxx -> /xxx
-        - id: FINANCE_SERVICE
-          uri: lb://FINANCE_SERVICE
+            - StripPrefix=0   # /api/customer/xxx -> /xxx
+        - id: finance-service
+          uri: lb://finance-service
           predicates:
             - Path=/api/finance/**
           filters:
             - StripPrefix=0
-        # \u5176\u4ED6\u670D\u52A1\u8DEF\u7531...
       globalcors:
         cors-configurations:
           '[/**]':
-            allowedOrigins: "*"
-            allowedMethods: "*"
-            allowedHeaders: "*"
+            allowed-origins:
+              - "http://localhost:8081"  # Vue前端地址
+            allowed-methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+              - PATCH
+            allowed-headers: "*"
+            allow-credentials: true
+            exposed-headers:
+              - "Authorization"
+              - "X-Request-Id"
+              - "X-User-Id"
+            max-age: 3600
+    loadbalancer:
+      retry:
+        enabled: true
+# JWT配置
+jwt:
+  secret: "qXwZ7P2rL+9sV6bT5yN8mW4cK1jH3dF0gE5aB7vR2tY6uI9oP3qA8zX1wC4n7"
+  expiration: 86400000  # 24小时（单位：毫秒）
+  issuer: "customer-service"
+  header: "Authorization"
+  prefix: "Bearer "
+# application.yml 白名单配置
+security:
+  whitelist:
+    enabled: true
+    paths:
+      - /api/customer/user/login
+      - /api/customer/user/register
+    patterns:
+      - /public/.*
+      - /static/.*
+      - /download/.*\\.(jpg|png|pdf)$

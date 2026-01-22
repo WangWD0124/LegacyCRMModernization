@@ -56,10 +56,10 @@
 
             <!-- 创建时间范围查询 -->
             <if test="condition.createTimeStart != null">
-                AND create_time &gt;= #{condition.createTimeStart}
+                AND create_time &gt;= STR_TO_DATE(#{condition.createTimeStart}, '%Y-%m-%d %H:%i:%s')
             </if>
             <if test="condition.createTimeEnd != null">
-                AND create_time &lt;= #{condition.createTimeEnd}
+                AND create_time &lt;= STR_TO_DATE(#{condition.createTimeEnd}, '%Y-%m-%d %H:%i:%s')
             </if>
 
             <!-- 更新时间范围查询 -->
@@ -88,7 +88,7 @@
         </choose>
     </sql>
 
-    <select id="selectById" resultType="com.wwd.customer.entity.UserInfo">
+    <select id="selectByUserId" resultType="com.wwd.customer.entity.UserInfo">
         SELECT * FROM user_info WHERE user_id = #{userId}
     </select>
 

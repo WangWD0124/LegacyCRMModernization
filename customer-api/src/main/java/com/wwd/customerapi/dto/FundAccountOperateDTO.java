@@ -20,18 +20,16 @@ import java.time.LocalDateTime;
  */
 @Data
 public class FundAccountOperateDTO {
-    private Long account_id;
-    private Long user_id;
-    private String account_code;
-    private String account_name;
-    private String account_type;
+    private Long accountId;
+    private Long userId;
+    private String accountCode;
+    private String accountName;
+    private String accountType;
     private String description;
     private String balance;
-    private String monthly_target;
+    private String monthlyTarget;
     private String icon;
     private String color;
-    private Integer sort_order;
-    private Boolean is_active;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private Integer sortOrder;
+    private Boolean isActive;
 }

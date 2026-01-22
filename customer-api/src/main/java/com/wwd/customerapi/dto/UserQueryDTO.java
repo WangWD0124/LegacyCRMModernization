@@ -2,7 +2,6 @@ package com.wwd.customerapi.dto;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -34,10 +33,10 @@ public class UserQueryDTO {
     private List<Long> deptIdList;    // 部门ID列表
 
     // 时间范围
-    private LocalDateTime createTimeStart;
-    private LocalDateTime createTimeEnd;
-    private LocalDateTime updateTimeStart;
-    private LocalDateTime updateTimeEnd;
+    private String createTimeStart;
+    private String createTimeEnd;
+    private String updateTimeStart;
+    private String updateTimeEnd;
 
     // 分页参数
     private Integer pageNum = 1;
@@ -46,4 +45,5 @@ public class UserQueryDTO {
     // 排序参数
     private String orderBy = "create_time";
     private Boolean asc = false; // 默认降序
+
 }

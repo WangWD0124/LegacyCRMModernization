@@ -1,0 +1,85 @@
+server:
+  port: 30001
+
+spring:
+  application:
+    name: finance-service
+
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 192.168.31.50:10001,192.168.31.50:10002,192.168.31.50:10003
+        namespace: public
+        group: DEFAULT_GROUP
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/finance_db?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: root
+    password: 123456
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+    # Hikari连接池配置
+    hikari:
+      maximum-pool-size: 20
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      connection-test-query: SELECT 1
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+# MyBatis-Plus配置
+mybatis-plus:
+  # 全局配置
+  global-config:
+    db-config:
+      id-type: auto
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+  # 配置映射器
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.wwd.finance.entity
+
+  # MyBatis配置
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    use-generated-keys: true
+    default-statement-timeout: 30
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 日志配置
+logging:
+  level:
+    com.wwd.finance: DEBUG
+    com.baomidou.mybatisplus: INFO
+    org.springframework.jdbc: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+# JWT配置
+jwt:
+  secret: "qXwZ7P2rL+9sV6bT5yN8mW4cK1jH3dF0gE5aB7vR2tY6uI9oP3qA8zX1wC4n7"
+  expiration: 86400000
+  issuer: "customer-service"
+  header: "Authorization"
+  prefix: "Bearer "
+
+# 应用配置
+app:
+  default-user-status:
+    ACTIVE: 1
+
+# Knife4j配置
+knife4j:
+  enable: true
+  setting:
+    language: zh-CN
+  basic:
+    enable: true
+    username: admin
+    password: admin123

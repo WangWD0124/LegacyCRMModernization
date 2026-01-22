@@ -72,11 +72,20 @@
         </choose>
     </sql>
 
-    <select id="selectById" resultType="com.wwd.customer.entity.FundAccount">
+    <select id="selectByFundAccountId" resultType="com.wwd.customer.entity.FundAccount">
         SELECT * FROM fund_account WHERE account_id = #{account_id}
     </select>
 
     <select id="selectByAccountCode" resultType="com.wwd.customer.entity.FundAccount">
         SELECT * FROM fund_account WHERE account_code = #{account_code}
+    </select>
+
+    <!-- 分页查询 -->
+    <select id="selectPageByCondition" resultType="com.wwd.customer.entity.FundAccount">
+        SELECT
+        <include refid="Base_Column_List"/>
+        FROM fund_account
+        <include refid="Dynamic_Where"/>
+        <include refid="Dynamic_Order"/>
     </select>
 </mapper>

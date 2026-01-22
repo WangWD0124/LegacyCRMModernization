@@ -1,5 +1,6 @@
 package com.wwd.customer.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,8 @@ import java.time.LocalDateTime;
  */
 @Data
 public class FundAccount {
+
+    @TableId
     private Long accountId;
     private Long userId;
     private String accountCode;
@@ -31,7 +34,7 @@ public class FundAccount {
     private String icon;
     private String color;
     private Integer sortOrder;
-    private Boolean isActive;
+    private String isActive;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wwd.finance.mapper.IncomeRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.wwd.finance.entity.IncomeRecord">
+        <id column="income_id" property="incomeId" />
+        <result column="user_id" property="userId" />
+        <result column="account_id" property="accountId" />
+        <result column="amount" property="amount" />
+        <result column="currency" property="currency" />
+        <result column="income_date" property="incomeDate" />
+        <result column="source_type_code" property="sourceTypeCode" />
+        <result column="source_detail" property="sourceDetail" />
+        <result column="work_hours" property="workHours" />
+        <result column="description" property="description" />
+        <result column="remark" property="remark" />
+        <result column="allocation_rule" property="allocationRule" />
+        <result column="is_settled" property="isSettled" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="is_deleted" property="isDeleted" />
+    </resultMap>
+
+    <!-- 基础查询列 -->
+    <sql id="Base_Column_List">
+        income_id, user_id, account_id, amount, currency, income_date, source_type_code,
+        source_detail, work_hours, description, remark, allocation_rule, is_settled,
+        created_at, updated_at, is_deleted
+    </sql>
+
+    <!-- 分页查询收入流水 -->
+    <select id="selectIncomePage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM income_record
+        WHERE 1=1
+        <if test="params.isDeleted != null">
+            AND is_deleted = #{params.isDeleted}
+        </if>
+        <if test="params.userId != null">
+            AND user_id = #{params.userId}
+        </if>
+        <if test="params.sourceTypeCode != null and params.sourceTypeCode != ''">
+            AND source_type_code = #{params.sourceTypeCode}
+        </if>
+        <if test="params.isSettled != null and params.isSettled != ''">
+            AND is_settled = #{params.isSettled}
+        </if>
+        <if test="params.accountId != null">
+            AND account_id = #{params.accountId}
+        </if>
+        <if test="params.sourceDetail != null and params.sourceDetail != ''">
+            AND source_detail LIKE CONCAT('%', #{params.sourceDetail}, '%')
+        </if>
+        <if test="params.incomeDateStart != null">
+            AND income_date &gt;= #{params.incomeDateStart}
+        </if>
+        <if test="params.incomeDateEnd != null">
+            AND income_date &lt;= #{params.incomeDateEnd}
+        </if>
+        <if test="params.createTimeStart != null">
+            AND created_at &gt;= #{params.createTimeStart}
+        </if>
+        <if test="params.createTimeEnd != null">
+            AND created_at &lt;= #{params.createTimeEnd}
+        </if>
+        <if test="params.amountMin != null">
+            AND amount &gt;= #{params.amountMin}
+        </if>
+        <if test="params.amountMax != null">
+            AND amount &lt;= #{params.amountMax}
+        </if>
+        <if test="params.hasWorkHours != null and params.hasWorkHours == 'true'">
+            AND work_hours IS NOT NULL
+        </if>
+        <if test="params.hasWorkHours != null and params.hasWorkHours == 'false'">
+            AND work_hours IS NULL
+        </if>
+        <if test="params.hasAllocationRule != null and params.hasAllocationRule == 'true'">
+            AND allocation_rule IS NOT NULL AND allocation_rule != ''
+        </if>
+        <if test="params.hasAllocationRule != null and params.hasAllocationRule == 'false'">
+            AND (allocation_rule IS NULL OR allocation_rule = '')
+        </if>
+        <if test="params.orderBy != null and params.orderBy != ''">
+            ORDER BY ${params.orderBy}
+            <if test="params.asc != null and params.asc == true">
+                ASC
+            </if>
+            <if test="params.asc != null and params.asc == false">
+                DESC
+            </if>
+        </if>
+        <if test="params.orderBy == null or params.orderBy == ''">
+            ORDER BY created_at DESC
+        </if>
+    </select>
+
+    <!-- 统计收入数据 -->
+    <select id="selectIncomeStatistics" resultType="java.util.Map">
+        SELECT
+        COUNT(*) as totalCount,
+        SUM(CASE WHEN is_settled = 'Y' THEN 1 ELSE 0 END) as settledCount,
+        SUM(CASE WHEN is_settled = 'N' THEN 1 ELSE 0 END) as unsettledCount,
+        COALESCE(SUM(amount), 0) as totalIncome,
+        COALESCE(SUM(CASE WHEN is_settled = 'Y' THEN amount ELSE 0 END), 0) as settledIncome,
+        COALESCE(SUM(CASE WHEN is_settled = 'N' THEN amount ELSE 0 END), 0) as unsettledIncome,
+        COALESCE(AVG(CASE WHEN work_hours > 0 THEN amount / work_hours ELSE NULL END), 0) as avgHourlyRate
+        FROM income_record
+        WHERE 1=1
+        <if test="params.userId != null">
+            AND user_id = #{params.userId}
+        </if>
+        <if test="params.sourceTypeCode != null and params.sourceTypeCode != ''">
+            AND source_type_code = #{params.sourceTypeCode}
+        </if>
+        <if test="params.isSettled != null and params.isSettled != ''">
+            AND is_settled = #{params.isSettled}
+        </if>
+        <if test="params.accountId != null">
+            AND account_id = #{params.accountId}
+        </if>
+        <if test="params.incomeDateStart != null">
+            AND income_date &gt;= #{params.incomeDateStart}
+        </if>
+        <if test="params.incomeDateEnd != null">
+            AND income_date &lt;= #{params.incomeDateEnd}
+        </if>
+    </select>
+
+    <!-- 获取收入趋势数据 -->
+    <select id="selectIncomeTrend" resultType="java.util.Map">
+        SELECT
+        DATE_FORMAT(income_date, #{params.dateFormat}) as date,
+        COUNT(*) as count,
+        COALESCE(SUM(amount), 0) as amount
+        FROM income_record
+        WHERE 1=1
+        <if test="params.userId != null">
+            AND user_id = #{params.userId}
+        </if>
+        <if test="params.startDate != null">
+            AND income_date &gt;= #{params.startDate}
+        </if>
+        <if test="params.endDate != null">
+            AND income_date &lt;= #{params.endDate}
+        </if>
+        GROUP BY DATE_FORMAT(income_date, #{params.dateFormat})
+        ORDER BY date
+    </select>
+
+    <!-- 更新结算状态 -->
+    <update id="updateSettleStatus">
+        UPDATE income_record
+        SET is_settled = #{isSettled}, updated_at = NOW()
+        WHERE income_id = #{incomeId}
+    </update>
+
+    <!-- 批量更新结算状态 -->
+    <update id="batchUpdateSettleStatus">
+        UPDATE income_record
+        SET is_settled = #{isSettled}, updated_at = NOW()
+        WHERE income_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </update>
+
+    <!-- 根据时间段统计收入 -->
+    <select id="selectIncomeByDateRange" resultType="java.util.Map">
+        SELECT
+        income_date,
+        COUNT(*) as count,
+        COALESCE(SUM(amount), 0) as amount
+        FROM income_record
+        WHERE income_date BETWEEN #{startDate} AND #{endDate}
+        <if test="userId != null">
+            AND user_id = #{userId}
+        </if>
+        GROUP BY income_date
+        ORDER BY income_date
+    </select>
+
+</mapper>

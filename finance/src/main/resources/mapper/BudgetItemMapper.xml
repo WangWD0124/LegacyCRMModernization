@@ -1,0 +1,266 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wwd.finance.mapper.BudgetItemMapper">
+
+    <!-- 分页查询结果映射 -->
+    <resultMap id="BudgetItemWithInfoMap" type="com.wwd.finance.entity.BudgetItem">
+        <id column="budget_id" property="budgetId"/>
+        <result column="user_id" property="userId"/>
+        <result column="fund_account_id" property="fundAccountId"/>
+        <result column="title" property="title"/>
+        <result column="category_code" property="categoryCode"/>
+        <result column="consumption_type" property="consumptionType"/>
+        <result column="budget_amount" property="budgetAmount"/>
+        <result column="actual_amount" property="actualAmount"/>
+        <result column="currency" property="currency"/>
+        <result column="past_situation" property="pastSituation"/>
+        <result column="core_need" property="coreNeed"/>
+        <result column="decision_process" property="decisionProcess"/>
+        <result column="alternatives" property="alternatives"/>
+        <result column="expected_decision_minutes" property="expectedDecisionMinutes"/>
+        <result column="actual_decision_minutes" property="actualDecisionMinutes"/>
+        <result column="research_platforms_count" property="researchPlatformsCount"/>
+        <result column="budget_adjustment_count" property="budgetAdjustmentCount"/>
+        <result column="struggle_score" property="struggleScore"/>
+        <result column="decision_start_time" property="decisionStartTime"/>
+        <result column="decision_end_time" property="decisionEndTime"/>
+        <result column="execute_time" property="executeTime"/>
+        <result column="status" property="status"/>
+        <result column="status_reason" property="statusReason"/>
+        <result column="satisfaction_score" property="satisfactionScore"/>
+        <result column="after_thought" property="afterThought"/>
+        <result column="purchase_channel" property="purchaseChannel"/>
+        <result column="item_lifecycle" property="itemLifecycle"/>
+        <result column="version" property="version"/>
+        <result column="is_deleted" property="deleted"/>
+        <result column="created_at" property="createdAt"/>
+        <result column="updated_at" property="updatedAt"/>
+        <!-- 关联字段 -->
+        <result column="category_name" property="categoryName"/>
+        <result column="consumption_type_name" property="consumptionTypeName"/>
+        <result column="fund_account_name" property="fundAccountName"/>
+    </resultMap>
+
+    <!-- 分页查询预算项目 -->
+    <select id="selectPageWithInfo" resultMap="BudgetItemWithInfoMap">
+        SELECT
+        bi.*,
+        bc.category_name,
+        ct.type_name as consumption_type_name,
+        fa.account_name as fund_account_name
+        FROM budget_item bi
+        LEFT JOIN budget_category bc ON bi.category_code = bc.category_code AND bc.is_deleted = '0'
+        LEFT JOIN consumption_type ct ON bi.consumption_type = ct.type_code AND ct.is_deleted = '0'
+        LEFT JOIN customer_db.fund_account fa ON bi.fund_account_id = fa.account_id AND fa.is_active = '1'
+        WHERE bi.is_deleted = '0' AND bi.user_id = #{query.userId}
+        <if test="query.title != null and query.title != ''">
+            AND bi.title LIKE CONCAT('%', #{query.title}, '%')
+        </if>
+        <if test="query.categoryCode != null and query.categoryCode != ''">
+            AND bi.category_code = #{query.categoryCode}
+        </if>
+        <if test="query.consumptionType != null and query.consumptionType != ''">
+            AND bi.consumption_type = #{query.consumptionType}
+        </if>
+        <if test="query.status != null and query.status != ''">
+            AND bi.status = #{query.status}
+        </if>
+        <if test="query.fundAccountId != null">
+            AND bi.fund_account_id = #{query.fundAccountId}
+        </if>
+        <if test="query.budgetAmountMin != null">
+            AND bi.budget_amount &gt;= #{query.budgetAmountMin}
+        </if>
+        <if test="query.budgetAmountMax != null">
+            AND bi.budget_amount &lt;= #{query.budgetAmountMax}
+        </if>
+        <if test="query.createTimeStart != null and query.createTimeStart != ''">
+            AND bi.created_at &gt;= #{query.createTimeStart}
+        </if>
+        <if test="query.createTimeEnd != null and query.createTimeEnd != ''">
+            AND bi.created_at &lt;= #{query.createTimeEnd}
+        </if>
+        <if test="query.decisionTimeStart != null and query.decisionTimeStart != ''">
+            AND bi.decision_start_time &gt;= #{query.decisionTimeStart}
+        </if>
+        <if test="query.decisionTimeEnd != null and query.decisionTimeEnd != ''">
+            AND bi.decision_start_time &lt;= #{query.decisionTimeEnd}
+        </if>
+        <if test="query.executeTimeStart != null and query.executeTimeStart != ''">
+            AND bi.execute_time &gt;= #{query.executeTimeStart}
+        </if>
+        <if test="query.executeTimeEnd != null and query.executeTimeEnd != ''">
+            AND bi.execute_time &lt;= #{query.executeTimeEnd}
+        </if>
+        <if test="query.struggleScoreMin != null">
+            AND bi.struggle_score &gt;= #{query.struggleScoreMin}
+        </if>
+        <if test="query.satisfactionScoreMin != null">
+            AND bi.satisfaction_score &gt;= #{query.satisfactionScoreMin}
+        </if>
+        <if test="query.orderBy != null and query.orderBy != ''">
+            ORDER BY
+            <choose>
+                <when test="query.orderBy == 'budgetId'">bi.budget_id</when>
+                <when test="query.orderBy == 'decisionStartTime'">bi.decision_start_time</when>
+                <when test="query.orderBy == 'executeTime'">bi.execute_time</when>
+                <when test="query.orderBy == 'struggleScore'">bi.struggle_score</when>
+                <when test="query.orderBy == 'satisfactionScore'">bi.satisfaction_score</when>
+                <when test="query.orderBy == 'budgetAmount'">bi.budget_amount</when>
+                <when test="query.orderBy == 'actualAmount'">bi.actual_amount</when>
+                <when test="query.orderBy == 'createdAt'">bi.created_at</when>
+                <otherwise>bi.created_at</otherwise>
+            </choose>
+            <if test="query.asc != null and query.asc">ASC</if>
+            <if test="query.asc != null and !query.asc">DESC</if>
+        </if>
+        <if test="query.orderBy == null or query.orderBy == ''">
+            ORDER BY bi.created_at DESC
+        </if>
+    </select>
+
+    <select id="selectListWithInfo" resultMap="BudgetItemWithInfoMap">
+        SELECT
+        bi.*,
+        bc.category_name,
+        ct.type_name as consumption_type_name,
+        fa.account_name as fund_account_name
+        FROM budget_item bi
+        LEFT JOIN budget_category bc ON bi.category_code = bc.category_code AND bc.is_deleted = '0'
+        LEFT JOIN consumption_type ct ON bi.consumption_type = ct.type_code AND ct.is_deleted = '0'
+        LEFT JOIN customer_db.fund_account fa ON bi.fund_account_id = fa.account_id AND fa.is_active = '1'
+        WHERE bi.is_deleted = '0' AND bi.user_id = #{query.userId}
+        <if test="query.title != null and query.title != ''">
+            AND bi.title LIKE CONCAT('%', #{query.title}, '%')
+        </if>
+        <if test="query.categoryCode != null and query.categoryCode != ''">
+            AND bi.category_code = #{query.categoryCode}
+        </if>
+        <if test="query.consumptionType != null and query.consumptionType != ''">
+            AND bi.consumption_type = #{query.consumptionType}
+        </if>
+        <if test="query.status != null and query.status != ''">
+            AND bi.status = #{query.status}
+        </if>
+        <if test="query.fundAccountId != null">
+            AND bi.fund_account_id = #{query.fundAccountId}
+        </if>
+        <if test="query.budgetAmountMin != null">
+            AND bi.budget_amount &gt;= #{query.budgetAmountMin}
+        </if>
+        <if test="query.budgetAmountMax != null">
+            AND bi.budget_amount &lt;= #{query.budgetAmountMax}
+        </if>
+        <if test="query.createTimeStart != null and query.createTimeStart != ''">
+            AND bi.created_at &gt;= #{query.createTimeStart}
+        </if>
+        <if test="query.createTimeEnd != null and query.createTimeEnd != ''">
+            AND bi.created_at &lt;= #{query.createTimeEnd}
+        </if>
+        <if test="query.decisionTimeStart != null and query.decisionTimeStart != ''">
+            AND bi.decision_start_time &gt;= #{query.decisionTimeStart}
+        </if>
+        <if test="query.decisionTimeEnd != null and query.decisionTimeEnd != ''">
+            AND bi.decision_start_time &lt;= #{query.decisionTimeEnd}
+        </if>
+        <if test="query.executeTimeStart != null and query.executeTimeStart != ''">
+            AND bi.execute_time &gt;= #{query.executeTimeStart}
+        </if>
+        <if test="query.executeTimeEnd != null and query.executeTimeEnd != ''">
+            AND bi.execute_time &lt;= #{query.executeTimeEnd}
+        </if>
+        <if test="query.struggleScoreMin != null">
+            AND bi.struggle_score &gt;= #{query.struggleScoreMin}
+        </if>
+        <if test="query.satisfactionScoreMin != null">
+            AND bi.satisfaction_score &gt;= #{query.satisfactionScoreMin}
+        </if>
+        <if test="query.orderBy != null and query.orderBy != ''">
+            ORDER BY
+            <choose>
+                <when test="query.orderBy == 'budgetId'">bi.budget_id</when>
+                <when test="query.orderBy == 'decisionStartTime'">bi.decision_start_time</when>
+                <when test="query.orderBy == 'executeTime'">bi.execute_time</when>
+                <when test="query.orderBy == 'struggleScore'">bi.struggle_score</when>
+                <when test="query.orderBy == 'satisfactionScore'">bi.satisfaction_score</when>
+                <when test="query.orderBy == 'budgetAmount'">bi.budget_amount</when>
+                <when test="query.orderBy == 'actualAmount'">bi.actual_amount</when>
+                <when test="query.orderBy == 'createdAt'">bi.created_at</when>
+                <otherwise>bi.created_at</otherwise>
+            </choose>
+            <if test="query.asc != null and query.asc">ASC</if>
+            <if test="query.asc != null and !query.asc">DESC</if>
+        </if>
+        <if test="query.orderBy == null or query.orderBy == ''">
+            ORDER BY bi.created_at DESC
+        </if>
+    </select>
+
+    <!-- 批量更新状态 -->
+    <update id="batchUpdateStatus">
+        UPDATE budget_item
+        SET status = #{status}, updated_at = NOW()
+        WHERE budget_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND is_deleted = '0'
+    </update>
+
+    <!-- 批量删除 -->
+    <update id="batchDelete">
+        UPDATE budget_item
+        SET is_deleted = '1', updated_at = NOW()
+        WHERE budget_id IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND is_deleted = '0'
+    </update>
+
+    <!-- 更新单个预算项目状态 -->
+    <update id="updateStatus">
+        UPDATE budget_item
+        SET status = #{status}, updated_at = NOW()
+        WHERE budget_id = #{budgetId} AND is_deleted = '0'
+    </update>
+
+    <select id="selectStatistics" resultType="com.wwd.financeapi.dto.budget.BudgetStatisticDTO">
+        SELECT
+        COALESCE(SUM(budget_amount), 0) as total_budget,
+        COALESCE(SUM(actual_amount), 0) as total_actual,
+        COUNT(CASE WHEN status = 'PENDING' THEN 1 END) as pending_count,
+        AVG(struggle_score) as avg_struggle_score,
+        COUNT(CASE WHEN status = 'APPROVED' THEN 1 END) as approved_count,
+        COUNT(CASE WHEN status = 'EXECUTED' THEN 1 END) as executed_count,
+        COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) as cancelled_count,
+        COUNT(CASE WHEN actual_amount &gt; budget_amount THEN 1 END) as over_budget_count,
+        COUNT(CASE WHEN actual_amount &lt;= budget_amount THEN 1 END) as under_budget_count
+        FROM budget_item
+        WHERE is_deleted = 0 AND user_id = #{userId}
+        <if test="query.categoryCode != null and query.categoryCode != ''">
+            AND category_code = #{query.categoryCode}
+        </if>
+        <if test="query.consumptionType != null and query.consumptionType != ''">
+            AND consumption_type = #{query.consumptionType}
+        </if>
+        <if test="query.status != null and query.status != ''">
+            AND status = #{query.status}
+        </if>
+        <if test="query.fundAccountId != null">
+            AND fund_account_id = #{query.fundAccountId}
+        </if>
+        <if test="query.budgetAmountMin != null">
+            AND budget_amount &gt;= #{query.budgetAmountMin}
+        </if>
+        <if test="query.budgetAmountMax != null">
+            AND budget_amount &lt;= #{query.budgetAmountMax}
+        </if>
+        <if test="query.createTimeStart != null and query.createTimeStart != ''">
+            AND created_at &gt;= #{query.createTimeStart}
+        </if>
+        <if test="query.createTimeEnd != null and query.createTimeEnd != ''">
+            AND created_at &lt;= #{query.createTimeEnd}
+        </if>
+    </select>
+</mapper>

@@ -1,19 +1,25 @@
 package com.wwd.customer.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wwd.common.dto.PageResult;
 import com.wwd.common.dto.Result;
+import com.wwd.customer.context.UserContext;
 import com.wwd.customer.entity.FundAccount;
+import com.wwd.customer.entity.UserInfo;
 import com.wwd.customer.service.FundAccountService;
 import com.wwd.customerapi.api.FundAccountServiceClient;
 import com.wwd.customerapi.dto.FundAccountDTO;
 import com.wwd.customerapi.dto.FundAccountOperateDTO;
 import com.wwd.customerapi.dto.FundAccountQueryDTO;
+import com.wwd.customerapi.dto.UserDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Copyright: Copyright (c) 2026 Asiainfo
@@ -29,29 +35,33 @@ import java.util.List;
  * ---------------------------------------------------------*
  * 2026-01-05     wangwd7          v1.0.0               创建
  */
-@Controller
-@RequestMapping("/api/fundAccount")
+@RestController
+@RequestMapping("/api/customer/fundAccount")
 public class FundAccountController implements FundAccountServiceClient {
 
     @Autowired
     private FundAccountService fundAccountService;
 
     @Override
-    public Result<Long> createFundAccount(FundAccountOperateDTO fundAccountOperateDTO) {
+    public Result<Long> operateFundAccount(FundAccountOperateDTO fundAccountOperateDTO) {
 
         FundAccount fundAccount = new FundAccount();
         BeanUtils.copyProperties(fundAccountOperateDTO, fundAccount);
 
-        Long account_id = fundAccountService.createFundAccount(fundAccount);
-        return Result.success(account_id);
-    }
+        if (fundAccount.getAccountId() != null){
+            fundAccountService.updateFundAccount(fundAccount);
+            return Result.success(fundAccount.getAccountId());
+        } else {
+            Long currentUserId = UserContext.getCurrentUserId();
 
-    @Override
-    public Result<Integer> updateFundAccount(FundAccountOperateDTO fundAccountOperateDTO) {
+            if (currentUserId == null){
+                return Result.error("用户未登录");
+            }
+            fundAccount.setUserId(currentUserId);
 
-        FundAccount fundAccount = new FundAccount();
-        BeanUtils.copyProperties(fundAccountOperateDTO, fundAccount);
-        return Result.success(fundAccountService.updateFundAccount(fundAccount));
+            Long account_id = fundAccountService.createFundAccount(fundAccount);
+            return Result.success(account_id);
+        }
     }
 
     @Override
@@ -74,6 +84,33 @@ public class FundAccountController implements FundAccountServiceClient {
 
     @Override
     public Result<PageResult<FundAccountDTO>> queryFundAccountPageByCondition(FundAccountQueryDTO fundAccountQueryDTO) {
+        IPage<FundAccount> page = fundAccountService.queryFundAccountPageByCondition(fundAccountQueryDTO);
+        List<FundAccountDTO> fundAccountDTOS = page.getRecords().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+        PageResult<FundAccountDTO> fundAccountPage = new PageResult<FundAccountDTO>(
+                fundAccountDTOS,
+                page.getTotal(),
+                page.getCurrent(),
+                page.getSize()
+        );
+        return Result.success(fundAccountPage);
+    }
+
+    @Override
+    public Result<Long> update(FundAccountOperateDTO fundAccountOperateDTO) {
         return null;
+    }
+
+    /**
+     * Entity 转 DTO
+     */
+    private FundAccountDTO convertToDTO(FundAccount fundAccount) {
+        if (fundAccount == null) {
+            return null;
+        }
+        FundAccountDTO dto = new FundAccountDTO();
+        BeanUtils.copyProperties(fundAccount, dto);
+        return dto;
     }
 }

@@ -5,10 +5,11 @@
     <file url="file://$PROJECT_DIR$/customer-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/customer/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/customer/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/finance/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order-api/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/order/src/main/java" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/process/src/main/java" charset="UTF-8" />
     <file url="PROJECT" charset="UTF-8" />
   </component>
 </project>

@@ -1,5 +1,6 @@
 package com.wwd.customer.entity;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -20,6 +21,8 @@ import java.time.LocalDateTime;
  */
 @Data
 public class UserInfo {
+
+    @TableId
     private Long userId;
     private String username;
     private String password;

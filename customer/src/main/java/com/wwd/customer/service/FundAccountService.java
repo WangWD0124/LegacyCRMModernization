@@ -1,6 +1,8 @@
 package com.wwd.customer.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wwd.customer.entity.FundAccount;
+import com.wwd.customerapi.dto.FundAccountQueryDTO;
 import org.springframework.stereotype.Service;
 
 /**
@@ -31,4 +33,5 @@ public interface FundAccountService {
     Integer deleteFundAccountByAccountId(Long accountId);
 
 
+    IPage<FundAccount> queryFundAccountPageByCondition(FundAccountQueryDTO fundAccountQueryDTO);
 }

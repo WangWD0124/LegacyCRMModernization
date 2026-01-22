@@ -25,6 +25,12 @@
             <artifactId>customer-api</artifactId>
             <version>${customer-api.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
         <!-- spring boot的web启动器，帮助快速引入web应用开发所需的依赖-->
         <!-- 其中包括spring-core、spring-context、spring-beans、spring-aop、spring-web、spring-webmvc、spring-boot-starter-tomcat、spring-boot-starter-json -->
         <dependency>

@@ -7,6 +7,7 @@ import com.wwd.customerapi.dto.FundAccountDTO;
 import com.wwd.customerapi.dto.FundAccountOperateDTO;
 import com.wwd.customerapi.dto.FundAccountQueryDTO;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,26 +29,26 @@ import java.util.List;
  */
 @FeignClient(
         name = ServiceNamesConstant.CUSTOMER_SERVICE,
-        path = "/api/fundAccount"
+        path = "/api/customer/fundAccount"
 )
+@Component("FundAccountServiceClient")
 public interface FundAccountServiceClient {
 
-    @PostMapping("/register")
-    Result<Long> createFundAccount(@RequestBody @Valid FundAccountOperateDTO fundAccountOperateDTO);
+    @PostMapping("/operate")
+    Result<Long> operateFundAccount(@RequestBody @Valid FundAccountOperateDTO fundAccountOperateDTO);
 
-    @PutMapping()
-    Result<Integer> updateFundAccount(@RequestBody @Valid FundAccountOperateDTO fundAccountOperateDTO);
-
-    @DeleteMapping("/{account_id}")
+    @DeleteMapping("/delete/{account_id}")
     Result<Integer> deleteFundAccountByAccountId(@PathVariable Long account_id);
 
     @GetMapping("/{account_id}")
     Result<FundAccountDTO> queryFundAccountByAccountId(@PathVariable Long account_id);
 
     @GetMapping("/list")
-    Result<List<FundAccountDTO>> queryFundAccountListByCondition(@RequestBody @Valid FundAccountQueryDTO fundAccountQueryDTO);
+    Result<List<FundAccountDTO>> queryFundAccountListByCondition(FundAccountQueryDTO fundAccountQueryDTO);
 
     @GetMapping("/page")
-    Result<PageResult<FundAccountDTO>> queryFundAccountPageByCondition(@RequestBody @Valid FundAccountQueryDTO fundAccountQueryDTO);
+    Result<PageResult<FundAccountDTO>> queryFundAccountPageByCondition(FundAccountQueryDTO fundAccountQueryDTO);
 
+    @PostMapping("/operate")
+    Result<Long> update(@RequestBody @Valid FundAccountOperateDTO fundAccountOperateDTO);
 }

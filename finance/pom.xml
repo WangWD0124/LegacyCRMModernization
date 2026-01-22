@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <parent>
+        <artifactId>crm</artifactId>
+        <groupId>com.wwd</groupId>
+        <version>2025.1.1</version>
+    </parent>
+    <groupId>com.wwd</groupId>
+    <artifactId>finance</artifactId>
+    <version>2025.1.1</version>
+    <name>finance</name>
+    <description>Demo project for Spring Boot</description>
+    <modelVersion>4.0.0</modelVersion>
+
+    <properties>
+        <finance-api.version>2025.1.1</finance-api.version>
+        <customer-api.version>2025.1.1</customer-api.version>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.wwd</groupId>
+            <artifactId>finance-api</artifactId>
+            <version>${finance-api.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.wwd</groupId>
+            <artifactId>customer-api</artifactId>
+            <version>${customer-api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.alibaba.cloud</groupId>
+            <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
+        </dependency>
+
+        <!-- spring boot的web启动器，帮助快速引入web应用开发所需的依赖-->
+        <!-- 其中包括spring-core、spring-context、spring-beans、spring-aop、spring-web、spring-webmvc、spring-boot-starter-tomcat、spring-boot-starter-json -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+        <!--
+          1、支持 Java Bean 合法验证：可以使用注解（如 @NotNull, @Size, @Min, @Max 等）对字段进行验证。
+          2、自动验证请求数据：在 Spring MVC 或 RESTful API 控制器中，你可以通过 @Valid 或 @Validated 注解标记请求体参数，让 Spring 自动进行数据验证。
+          3、结合 Spring 表单数据绑定：（如 @ModelAttribute）一起使用，自动验证用户提交的表单数据。
+          4、验证错误处理：Spring 会抛出 MethodArgumentNotValidException 异常。可以通过 @ControllerAdvice 或 @ExceptionHandler 来处理这些验证错误，并返回适当的错误信息给客户端。
+             -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
+
+        <!-- Spring Boot AOP Starter -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
+        <!--  MySQL依赖  -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+        <!-- mybatis维护的spring boot的mybatis启动器，帮助快速引入mybatis持久层开发所需的依赖 -->
+        <!-- 其中包括mybatis、mybatis-spring -->
+        <!-- MyBatis Plus 核心依赖 -->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-boot-starter</artifactId>
+        </dependency>
+
+        <!-- Lombok帮助简化代码编写，通过注解自动生成类中常见的方法 -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+        </dependency>
+
+        <!-- Hutool工具包 -->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+
+    </dependencies>
+
+</project>

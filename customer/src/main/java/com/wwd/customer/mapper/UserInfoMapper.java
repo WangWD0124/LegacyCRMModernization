@@ -30,7 +30,7 @@ public interface UserInfoMapper extends BaseMapper<UserInfo> {
     // selectById, selectBatchIds, selectByMap, selectOne, selectList, selectPage
     // insert, updateById, deleteById, deleteByMap, deleteBatchIds
 
-    UserInfo selectById(@Param("userId") Long userId);
+    UserInfo selectByUserId(@Param("userId") Long userId);
 
     UserInfo selectByEmail(@Param("email") String email);
 

@@ -5,36 +5,126 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3f19885-1e59-467c-b558-f09b0af34cc0" name="Default Changelist" comment="更新">
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/wwd/gateway/filter/JwtAuthFilter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/wwd/gateway/handler/ErrorResponseHandler.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/CommonApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/config/AppConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/config/MybatisPlusConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/controller/CommonTypeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/dto/Dto.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/dto/Entity.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/dto/StatisticsDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/entity/CommonType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/mapper/CommonTypeMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/service/CommonTypeService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/service/impl/CommonTypeServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/utils/FlexibleLocalDateTimeDeserializer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/common/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/config/MybatisPlusConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/context/UserContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/interceptor/UserContextInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/api/BudgetItemServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/api/ExpenseRecordServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/api/IncomeRecordServiceClient.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BatchUpdateStatusDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetCategoryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetItemCreateDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetItemDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetItemOperateDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetItemQueryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetItemVO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetStatisticDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/ConsumptionTypeDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/expense/ExpenseQueryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/expense/ExpenseRecordDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/expense/ExpenseStatisticsDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/expense/ExpenseTrendQueryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/income/IncomeQueryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/income/IncomeRecordDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/income/IncomeStatisticsDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/income/IncomeTrendQueryDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/.gitattributes" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/hs_err_pid15352.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/hs_err_pid7640.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/replay_pid15352.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/FinanceApplication.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/config/MybatisPlusConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/config/WebConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/context/UserContext.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/controller/BudgetItemController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/controller/ExpenseRecordController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/controller/IncomeRecordController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/entity/BudgetCategory.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/entity/BudgetItem.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/entity/ExpenseRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/entity/IncomeRecord.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/enums/BudgetStatus.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/enums/IncomeEnums.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/interceptor/UserContextInterceptor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/mapper/BudgetItemMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/mapper/ExpenseRecordMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/mapper/IncomeRecordMapper.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/BudgetItemService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/BudgetStatisticService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/ExpenseRecordService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/IncomeRecordService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/impl/BudgetItemServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/impl/BudgetStatisticServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/impl/ExpenseRecordServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/impl/IncomeRecordServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/resources/application.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/resources/mapper/BudgetItemMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/resources/mapper/ExpenseRecordMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/main/resources/mapper/IncomeRecordMapper.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/finance/src/test/java/com/wwd/finance/FinanceApplicationTests.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gateway/src/main/java/com/wwd/gateway/filter/JwtFilter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/common/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/constant/ServiceNamesConstant.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/constant/ServiceNamesConstant.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/utils/JwtUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/common/src/main/java/com/wwd/common/utils/JwtUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/api/FundAccountServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/api/FundAccountServiceClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/api/UserServiceClient.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/dto/UserDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/dto/UserOperateDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-api/target/classes/com/wwd/customerapi/dto/UserQueryDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer-api/target/test-classes/com/wwd/customerapi/CustomerApiApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/api/UserServiceClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/api/UserServiceClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/FundAccountDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/FundAccountDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/FundAccountOperateDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/FundAccountOperateDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/FundAccountQueryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/FundAccountQueryDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserQueryDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/UserQueryDTO.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/CustomerApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/CustomerApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/config/WebConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/config/WebConfig.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/FundAccountController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/FundAccountController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/FundAccount.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/FundAccount.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/UserInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/UserInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/FundAccountMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/FundAccountMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/UserInfoMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/mapper/UserInfoMapper.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/FundAccountService.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/FundAccountService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/FundAccountServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/FundAccountServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/CustomerApplication.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/aspect/LoggingAspect.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/config/AppConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/config/WebConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/controller/UserController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/entity/Role.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/exception/GlobalExceptionHandler.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/mapper/RoleMapper.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/service/UserService.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/classes/com/wwd/customer/service/UserServiceImpl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/customer/target/test-classes/com/wwd/gateway/CustomerApplicationTests.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/resources/mapper/FundAccountMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/mapper/FundAccountMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/src/main/resources/mapper/UserInfoMapper.xml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/src/main/resources/mapper/UserInfoMapper.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customer/target/classes/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/customer/target/classes/application.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/wwd/gateway/GatewayApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/java/com/wwd/gateway/GatewayApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/wwd/gateway/filter/JwtAuthFilter.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/java/com/wwd/gateway/handler/ErrorResponseHandler.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order-api/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order-api/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/order/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/order/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/finance-api/.gitattributes" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/finance-api/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/pom.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/src/main/java/com/wwd/process/ProcessApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/src/main/resources/application.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/process/src/test/java/com/wwd/process/ProcessApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/finance-api/src/test/java/com/wwd/financeapi/FinanceApiApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,6 +137,7 @@
         <option value="spring-beans.schema" />
         <option value="FxmlFile" />
         <option value="Tag Library Descriptor" />
+        <option value="Enum" />
         <option value="Interface" />
         <option value="Class" />
       </list>
@@ -67,7 +158,34 @@
     <option name="defaultAccountId" value="4eb67ca0-3059-4316-b018-a9a76e7b2aaf" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/api/UserServiceClient.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/entity/BudgetItem.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetItemDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/api/FundAccountServiceClient.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/customer-api/src/main/java/com/wwd/customerapi/dto/FundAccountDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/BudgetItemService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/impl/BudgetItemServiceImpl.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/controller/BudgetItemController.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetItemQueryDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance/pom.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/mapper/BudgetItemMapper.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/UserInfo.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/api/BudgetItemServiceClient.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/interceptor/UserContextInterceptor.java" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/pom.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserService.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/customer-api/pom.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetItemOperateDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetStatisticDTO.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance-api/pom.xml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/common/src/main/java/com/wwd/common/constant/ServiceNamesConstant.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/FundAccountServiceImpl.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance/src/main/resources/application.yml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/entity/BudgetCategory.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/entity/FundAccount.java" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/finance-api/src/main/java/com/wwd/financeapi/dto/budget/BudgetItemCreateDTO.java" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="MavenRunner">
     <option name="vmOptions" value="-Dfile.encoding=UTF-8" />
@@ -93,7 +211,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="jdk.selected.JAVA_MODULE" value="21" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/config" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/common/src/main/java/com/wwd/common" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
@@ -108,27 +226,33 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\common\src\main\java\com\wwd\common" />
+      <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\finance\src\main\resources" />
       <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\customer\src\main\java\com\wwd\customer\config" />
       <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\common\src\main\java\com\wwd\common\utils" />
       <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\order\src\main\resources" />
-      <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\customer\src\main\java\com\wwd\customer" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\finance\src\main\resources\mapper" />
+      <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\finance\src\main\resources\mapper\budget" />
       <recent name="D:\MSoft_IDEA_2021\IdeaProjects\crm\customer\src\main\resources\mapper" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.wwd.customer" />
+      <recent name="com.wwd.common" />
+      <recent name="com.wwd.gateway" />
       <recent name="com.wwd.orderapi" />
       <recent name="com.wwd.customerapi" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.wwd.customerapi.dto" />
-      <recent name="com.wwd.orderapi.dto" />
-      <recent name="com.wwd.orderapi.api" />
-      <recent name="com.wwd.order.controller" />
-      <recent name="com.wwd.order.service" />
+      <recent name="com.wwd.financeapi.api" />
+      <recent name="com.wwd.finance.config" />
+      <recent name="com.wwd.finance.context" />
+      <recent name="com.wwd.finance.interceptor" />
+      <recent name="com.wwd.common.config" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.CustomerApplication">
+  <component name="RunManager" selected="Spring Boot.CommonApplication">
     <configuration name="CustomerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.wwd.customer.CustomerApplication" />
       <module name="customer" />
@@ -142,13 +266,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -216,9 +342,15 @@
       </MavenSettings>
       <method v="2" />
     </configuration>
-    <configuration name="CustomerApiApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true">
-      <module name="customer-api" />
-      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wwd.customerapi.CustomerApiApplication" />
+    <configuration name="CommonApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <module name="common" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.wwd.common.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wwd.common.CommonApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -233,6 +365,15 @@
       <envs>
         <env name="-Dfile.encoding" value="UTF-8 " />
       </envs>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FinanceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="finance" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.wwd.finance.FinanceApplication" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SHORTEN_COMMAND_LINE" value="NONE" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -259,13 +400,14 @@
       <item itemvalue="Maven.customer [compile]" />
       <item itemvalue="Spring Boot.GatewayApplication" />
       <item itemvalue="Spring Boot.OrderApplication" />
+      <item itemvalue="Spring Boot.FinanceApplication" />
       <item itemvalue="Spring Boot.CustomerApplication" />
-      <item itemvalue="Spring Boot.CustomerApiApplication" />
+      <item itemvalue="Spring Boot.CommonApplication" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.CommonApplication" />
         <item itemvalue="Spring Boot.CustomerApplication" />
-        <item itemvalue="Spring Boot.CustomerApiApplication" />
         <item itemvalue="Application.CustomerApplication" />
       </list>
     </recent_temporary>
@@ -298,6 +440,10 @@
       <workItem from="1767024782772" duration="31328000" />
       <workItem from="1767842165314" duration="768000" />
       <workItem from="1767844014400" duration="4223000" />
+      <workItem from="1768321360658" duration="2934000" />
+      <workItem from="1768401250037" duration="928000" />
+      <workItem from="1768402335892" duration="16062000" />
+      <workItem from="1768623614363" duration="75387000" />
     </task>
     <task id="LOCAL-00001" summary="提交工程目录">
       <created>1740664357152</created>
@@ -420,8 +566,158 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java</url>
-          <line>75</line>
+          <line>80</line>
           <option name="timeStamp" value="25" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java</url>
+          <line>82</line>
+          <option name="timeStamp" value="26" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java</url>
+          <line>101</line>
+          <option name="timeStamp" value="45" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/FundAccountController.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="47" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java</url>
+          <line>106</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java</url>
+          <line>123</line>
+          <option name="timeStamp" value="52" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/UserServiceImpl.java</url>
+          <line>119</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/FundAccountController.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="55" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/interceptor/UserContextInterceptor.java</url>
+          <line>23</line>
+          <option name="timeStamp" value="58" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/service/FundAccountServiceImpl.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="61" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/FundAccountController.java</url>
+          <line>86</line>
+          <option name="timeStamp" value="63" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/interceptor/UserContextInterceptor.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="64" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/FundAccountController.java</url>
+          <line>96</line>
+          <option name="timeStamp" value="65" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/gateway/src/main/java/com/wwd/gateway/filter/JwtFilter.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="66" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/customer/src/main/java/com/wwd/customer/controller/UserController.java</url>
+          <line>107</line>
+          <option name="timeStamp" value="67" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/gateway/src/main/java/com/wwd/gateway/filter/JwtFilter.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="68" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/common/src/main/java/com/wwd/common/utils/JwtUtil.java</url>
+          <line>109</line>
+          <option name="timeStamp" value="69" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/gateway/src/main/java/com/wwd/gateway/filter/JwtFilter.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="71" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/controller/BudgetItemController.java</url>
+          <line>76</line>
+          <option name="timeStamp" value="74" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/impl/BudgetItemServiceImpl.java</url>
+          <line>89</line>
+          <option name="timeStamp" value="75" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/controller/IncomeRecordController.java</url>
+          <line>78</line>
+          <option name="timeStamp" value="79" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/impl/IncomeRecordServiceImpl.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="80" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/controller/IncomeRecordController.java</url>
+          <line>91</line>
+          <option name="timeStamp" value="82" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>jar://$MAVEN_REPOSITORY$/com/baomidou/mybatis-plus-extension/3.5.3.1/mybatis-plus-extension-3.5.3.1-sources.jar!/com/baomidou/mybatisplus/extension/service/IService.java</url>
+          <line>257</line>
+          <option name="timeStamp" value="85" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/controller/IncomeRecordController.java</url>
+          <line>48</line>
+          <option name="timeStamp" value="86" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/impl/IncomeRecordServiceImpl.java</url>
+          <line>51</line>
+          <option name="timeStamp" value="88" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/impl/IncomeRecordServiceImpl.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="89" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/service/impl/IncomeRecordServiceImpl.java</url>
+          <line>50</line>
+          <option name="timeStamp" value="90" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/finance/src/main/java/com/wwd/finance/controller/BudgetItemController.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/common/src/main/java/com/wwd/common/controller/CommonTypeController.java</url>
+          <line>39</line>
+          <option name="timeStamp" value="94" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

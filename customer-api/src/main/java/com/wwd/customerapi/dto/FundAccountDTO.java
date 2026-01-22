@@ -1,5 +1,6 @@
 package com.wwd.customerapi.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -20,18 +21,19 @@ import java.time.LocalDateTime;
  */
 @Data
 public class FundAccountDTO {
-    private Long account_id;
-    private Long user_id;
-    private String account_code;
-    private String account_name;
-    private String account_type;
+    @JsonFormat(shape = JsonFormat.Shape.STRING)
+    private Long accountId;
+    private Long userId;
+    private String accountCode;
+    private String accountName;
+    private String accountType;
     private String description;
     private String balance;
-    private String monthly_target;
+    private String monthlyTarget;
     private String icon;
     private String color;
-    private Integer sort_order;
-    private Boolean is_active;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private Integer sortOrder;
+    private Boolean isActive;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }

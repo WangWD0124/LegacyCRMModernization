@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wwd.common.utils.JwtUtil;
+import com.wwd.customer.context.UserContext;
 import com.wwd.customer.entity.UserInfo;
 import com.wwd.customer.mapper.UserInfoMapper;
 import com.wwd.customerapi.dto.UserLoginDTO;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,6 +42,9 @@ public class UserServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> imple
     @Autowired
     private UserInfoMapper userInfoMapper;
 
+    @Resource
+    private JwtUtil jwtUtil;
+
 
     @Value("${app.default-user-status.ACTIVE}")
     private Integer defaultUserStatus;
@@ -49,7 +54,7 @@ public class UserServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> imple
     @Override
     public Long createUser(UserInfo userInfo) {
 
-        //user.setPassword(passwordEncoder.encode(user.getPassword()));
+        userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
         userInfo.setStatus(defaultUserStatus);
         userInfo.setCreateTime(LocalDateTime.now());
         userInfo.setUpdateTime(LocalDateTime.now());
@@ -73,7 +78,7 @@ public class UserServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> imple
 
     @Override
     public UserInfo queryUserByUserId(Long userId) {
-        return baseMapper.selectById(userId);
+        return userInfoMapper.selectByUserId(userId);
     }
 
     @Override
@@ -99,12 +104,12 @@ public class UserServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> imple
         }
 
         //验证密码
-//        if (!passwordEncoder.matches(req.getPassword(), userInfo.getPassword())) {
-//            throw new RuntimeException("密码错误");
-//        }
-        if (!req.getPassword().equals(userInfo.getPassword())) {
+        if (!passwordEncoder.matches(req.getPassword(), userInfo.getPassword())) {
             throw new RuntimeException("密码错误");
         }
+//        if (!req.getPassword().equals(userInfo.getPassword())) {
+//            throw new RuntimeException("密码错误");
+//        }
 
         //检查用户状态
         if (userInfo.getStatus() == 0) {
@@ -112,7 +117,9 @@ public class UserServiceImpl extends ServiceImpl<UserInfoMapper, UserInfo> imple
         }
 
         //生成JWT Token
-        String token = JwtUtil.generateToken(userInfo.getUserId(), userInfo.getUsername());
+        String token = jwtUtil.generateToken(userInfo.getUserId());
+
+        UserContext.setCurrentUserId(userInfo.getUserId());
 
         log.info("用户登录成功：{}", userInfo.getUserId());
 

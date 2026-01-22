@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: CUSTOMER_SERVICE
+    name: customer-service
   cloud:
     nacos:
       discovery:
@@ -44,6 +44,14 @@ logging:
     org.springframework.jdbc.datasource: INFO
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
+
+# JWT配置
+jwt:
+  secret: "qXwZ7P2rL+9sV6bT5yN8mW4cK1jH3dF0gE5aB7vR2tY6uI9oP3qA8zX1wC4n7"
+  expiration: 86400000  # 24小时（单位：毫秒）
+  issuer: "customer-service"
+  header: "Authorization"
+  prefix: "Bearer "
 
 app:
   default-user-status:

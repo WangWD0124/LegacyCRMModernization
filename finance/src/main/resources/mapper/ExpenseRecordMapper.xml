@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wwd.finance.mapper.ExpenseRecordMapper">
+
+    <resultMap id="BaseResultMap" type="com.wwd.finance.entity.ExpenseRecord">
+        <id column="expense_id" property="expenseId" />
+        <result column="user_id" property="userId" />
+        <result column="account_id" property="accountId" />
+        <result column="budget_item_id" property="budgetItemId" />
+        <result column="amount" property="amount" />
+        <result column="currency" property="currency" />
+        <result column="expense_date" property="expenseDate" />
+        <result column="payment_method" property="paymentMethod" />
+        <result column="payee" property="payee" />
+        <result column="description" property="description" />
+        <result column="remark" property="remark" />
+        <result column="budget_amount" property="budgetAmount" />
+        <result column="difference_amount" property="differenceAmount" />
+        <result column="difference_percent" property="differencePercent" />
+        <result column="created_at" property="createdAt" />
+        <result column="updated_at" property="updatedAt" />
+        <result column="deleted" property="deleted" />
+    </resultMap>
+
+    <!-- 基础查询列 -->
+    <sql id="Base_Column_List">
+        expense_id, user_id, account_id, budget_item_id, amount, currency, expense_date,
+        payment_method, payee, description, remark, budget_amount, difference_amount,
+        difference_percent, created_at, updated_at, deleted
+    </sql>
+
+    <!-- 分页查询支出流水（包含关联信息） -->
+    <select id="selectExpensePage" resultMap="BaseResultMap">
+        SELECT
+        er.expense_id, er.user_id, er.account_id, er.budget_item_id,
+        er.amount, er.currency, er.expense_date, er.payment_method,
+        er.payee, er.description, er.remark, er.budget_amount,
+        er.difference_amount, er.difference_percent, er.created_at,
+        er.updated_at, er.deleted,
+        b.title as budget_item_title,
+        fa.name as account_name
+        FROM expense_record er
+        LEFT JOIN budget_item b ON er.budget_item_id = b.budget_id AND b.is_deleted = 0
+        LEFT JOIN fund_account fa ON er.account_id = fa.account_id AND fa.deleted = 0
+        WHERE er.deleted = 0
+        <if test="params.userId != null">
+            AND er.user_id = #{params.userId}
+        </if>
+        <if test="params.payee != null and params.payee != ''">
+            AND er.payee LIKE CONCAT('%', #{params.payee}, '%')
+        </if>
+        <if test="params.paymentMethod != null and params.paymentMethod != ''">
+            AND er.payment_method = #{params.paymentMethod}
+        </if>
+        <if test="params.accountId != null">
+            AND er.account_id = #{params.accountId}
+        </if>
+        <if test="params.description != null and params.description != ''">
+            AND (er.description LIKE CONCAT('%', #{params.description}, '%')
+            OR er.remark LIKE CONCAT('%', #{params.description}, '%'))
+        </if>
+        <if test="params.expenseDateStart != null">
+            AND er.expense_date &gt;= #{params.expenseDateStart}
+        </if>
+        <if test="params.expenseDateEnd != null">
+            AND er.expense_date &lt;= #{params.expenseDateEnd}
+        </if>
+        <if test="params.createTimeStart != null">
+            AND er.created_at &gt;= #{params.createTimeStart}
+        </if>
+        <if test="params.createTimeEnd != null">
+            AND er.created_at &lt;= #{params.createTimeEnd}
+        </if>
+        <if test="params.amountMin != null">
+            AND er.amount &gt;= #{params.amountMin}
+        </if>
+        <if test="params.amountMax != null">
+            AND er.amount &lt;= #{params.amountMax}
+        </if>
+        <if test="params.differenceMin != null">
+            AND er.difference_amount &gt;= #{params.differenceMin}
+        </if>
+        <if test="params.differenceMax != null">
+            AND er.difference_amount &lt;= #{params.differenceMax}
+        </if>
+        <if test="params.hasBudgetItem != null and params.hasBudgetItem == 'true'">
+            AND er.budget_item_id IS NOT NULL
+        </if>
+        <if test="params.hasBudgetItem != null and params.hasBudgetItem == 'false'">
+            AND er.budget_item_id IS NULL
+        </if>
+        <if test="params.orderBy != null and params.orderBy != ''">
+            ORDER BY ${params.orderBy}
+            <if test="params.asc != null and params.asc == true">
+                ASC
+            </if>
+            <if test="params.asc != null and params.asc == false">
+                DESC
+            </if>
+        </if>
+        <if test="params.orderBy == null or params.orderBy == ''">
+            ORDER BY er.created_at DESC
+        </if>
+    </select>
+
+    <!-- 统计支出数据 -->
+    <select id="selectExpenseStatistics" resultType="java.util.Map">
+        SELECT
+        COUNT(*) as totalCount,
+        COUNT(CASE WHEN budget_item_id IS NOT NULL THEN 1 END) as linkedCount,
+        COALESCE(SUM(amount), 0) as totalExpense,
+        COALESCE(AVG(amount), 0) as avgExpense,
+        COALESCE(MAX(amount), 0) as maxExpense,
+        COALESCE(MIN(amount), 0) as minExpense
+        FROM expense_record
+        WHERE deleted = 0
+        <if test="params.userId != null">
+            AND user_id = #{params.userId}
+        </if>
+        <if test="params.expenseDateStart != null">
+            AND expense_date &gt;= #{params.expenseDateStart}
+        </if>
+        <if test="params.expenseDateEnd != null">
+            AND expense_date &lt;= #{params.expenseDateEnd}
+        </if>
+    </select>
+
+    <!-- 获取支出趋势数据 -->
+    <select id="selectExpenseTrend" resultType="java.util.Map">
+        SELECT
+        DATE_FORMAT(expense_date, #{params.dateFormat}) as date,
+        COUNT(*) as count,
+        COALESCE(SUM(amount), 0) as amount
+        FROM expense_record
+        WHERE deleted = 0
+        <if test="params.userId != null">
+            AND user_id = #{params.userId}
+        </if>
+        <if test="params.startDate != null">
+            AND expense_date &gt;= #{params.startDate}
+        </if>
+        <if test="params.endDate != null">
+            AND expense_date &lt;= #{params.endDate}
+        </if>
+        GROUP BY DATE_FORMAT(expense_date, #{params.dateFormat})
+        ORDER BY date
+    </select>
+
+    <!-- 获取差异分析数据 -->
+    <select id="selectDifferenceAnalysis" resultType="java.util.Map">
+        SELECT
+        b.budget_id as budgetId,
+        b.title as budgetItemTitle,
+        b.budget_amount as budgetAmount,
+        COALESCE(SUM(er.amount), 0) as actualAmount,
+        b.budget_amount - COALESCE(SUM(er.amount), 0) as differenceAmount,
+        CASE
+        WHEN b.budget_amount > 0
+        THEN ROUND((b.budget_amount - COALESCE(SUM(er.amount), 0)) / b.budget_amount * 100, 2)
+        ELSE 0
+        END as differencePercent
+        FROM budget_item b
+        LEFT JOIN expense_record er ON b.budget_id = er.budget_item_id AND er.deleted = 0
+        WHERE b.is_deleted = 0
+        AND b.status IN ('APPROVED', 'EXECUTED')
+        <if test="params.userId != null">
+            AND b.user_id = #{params.userId}
+        </if>
+        <if test="params.startDate != null">
+            AND (er.expense_date &gt;= #{params.startDate} OR er.expense_date IS NULL)
+        </if>
+        <if test="params.endDate != null">
+            AND (er.expense_date &lt;= #{params.endDate} OR er.expense_date IS NULL)
+        </if>
+        GROUP BY b.budget_id, b.title, b.budget_amount
+        HAVING actualAmount > 0
+        ORDER BY differenceAmount DESC
+    </select>
+
+    <!-- 根据时间段统计支出 -->
+    <select id="selectExpenseByDateRange" resultType="java.util.Map">
+        SELECT
+        expense_date,
+        COUNT(*) as count,
+        COALESCE(SUM(amount), 0) as amount
+        FROM expense_record
+        WHERE deleted = 0
+        AND expense_date BETWEEN #{startDate} AND #{endDate}
+        <if test="userId != null">
+            AND user_id = #{userId}
+        </if>
+        GROUP BY expense_date
+        ORDER BY expense_date
+    </select>
+
+    <!-- 批量更新预算关联信息 -->
+    <update id="batchUpdateBudgetLink">
+        UPDATE expense_record
+        SET
+        budget_item_id = #{budgetItemId},
+        budget_amount = #{budgetAmount},
+        difference_amount = budget_amount - amount,
+        difference_percent = CASE
+        WHEN #{budgetAmount} > 0
+        THEN ROUND((#{budgetAmount} - amount) / #{budgetAmount} * 100, 2)
+        ELSE 0
+        END,
+        updated_at = NOW()
+        WHERE expense_id IN
+        <foreach collection="expenseIds" item="id" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+        AND deleted = 0
+    </update>
+
+</mapper>

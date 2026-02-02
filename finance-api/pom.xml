@@ -3,24 +3,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>crm</artifactId>
+        <artifactId>finance-system</artifactId>
         <groupId>com.wwd</groupId>
-        <version>2025.1.1</version>
+        <version>2026.2.1</version>
     </parent>
     <groupId>com.wwd</groupId>
     <artifactId>finance-api</artifactId>
-    <version>2025.1.1</version>
+    <version>2026.2.1</version>
     <name>finance-api</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <common.version>2025.1.1</common.version>
+        <common.version>2026.2.1</common.version>
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>com.wwd</groupId>
+            <artifactId>common</artifactId>
+            <version>${common.version}</version>
         </dependency>
 
         <!--
@@ -35,20 +36,14 @@
         </dependency>
 
         <dependency>
-            <groupId>com.wwd</groupId>
-            <artifactId>common</artifactId>
-            <version>${common.version}</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-
+        <!-- SpringFox (for Spring Boot 2.x) -->
         <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
-
-        <!-- Knife4j API文档 -->
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-boot-starter</artifactId>
+            <version>3.0.0</version>
         </dependency>
 
     </dependencies>

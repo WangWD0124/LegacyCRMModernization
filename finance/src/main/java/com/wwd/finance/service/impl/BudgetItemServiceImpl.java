@@ -1,5 +1,6 @@
 package com.wwd.finance.service.impl;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -11,7 +12,6 @@ import com.wwd.financeapi.dto.budget.BudgetItemDTO;
 import com.wwd.financeapi.dto.budget.BudgetItemOperateDTO;
 import com.wwd.financeapi.dto.budget.BudgetItemQueryDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,10 +50,10 @@ public class BudgetItemServiceImpl extends ServiceImpl<BudgetItemMapper, BudgetI
         Page<BudgetItem> page = new Page<>(budgetItemQueryDTO.getPageNum(), budgetItemQueryDTO.getPageSize());
 
         // 执行分页查询
-        IPage<BudgetItem> entityPage = budgetItemMapper.selectPageWithInfo(page, budgetItemQueryDTO);
+        IPage<BudgetItemDTO> budgetItemDTOIPage = budgetItemMapper.selectPageWithInfo(page, budgetItemQueryDTO);
 
         // 转换为DTO
-        return entityPage.convert(this::convertToDTO);
+        return budgetItemDTOIPage;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class BudgetItemServiceImpl extends ServiceImpl<BudgetItemMapper, BudgetI
     @Override
     public BudgetItemDTO getBudgetItemById(Long budgetId) {
         BudgetItem entity = budgetItemMapper.selectById(budgetId);
-        if (entity == null || entity.getDeleted()) {
+        if (entity == null || entity.getIsDeleted() == 1) {
             return null;
         }
         return convertToDTO(entity);
@@ -95,7 +95,7 @@ public class BudgetItemServiceImpl extends ServiceImpl<BudgetItemMapper, BudgetI
 
         // 设置默认值
         entity.setUserId(getCurrentUserId()); // 获取当前用户ID
-        entity.setDeleted(false);
+        entity.setIsDeleted(0);
         entity.setVersion(0);
 
         // 计算实际决策时间
@@ -184,7 +184,7 @@ public class BudgetItemServiceImpl extends ServiceImpl<BudgetItemMapper, BudgetI
         }
 
         // 逻辑删除
-        entity.setDeleted(true);
+        entity.setIsDeleted(1);
         boolean result = this.updateById(entity);
 
         if (result) {
@@ -259,7 +259,7 @@ public class BudgetItemServiceImpl extends ServiceImpl<BudgetItemMapper, BudgetI
      * 验证状态值
      */
     private void validateStatus(String status) {
-        if (!Arrays.asList("PENDING", "APPROVED", "EXECUTED", "CANCELLED").contains(status)) {
+        if (!Arrays.asList(0, 1, 2, 3, 4).contains(status)) {
             throw new IllegalArgumentException("无效的状态值");
         }
     }
@@ -277,10 +277,11 @@ public class BudgetItemServiceImpl extends ServiceImpl<BudgetItemMapper, BudgetI
 
         // 设置状态名称
         Map<String, String> statusMap = new HashMap<>();
-        statusMap.put("PENDING", "待审批");
-        statusMap.put("APPROVED", "已批准");
-        statusMap.put("EXECUTED", "已执行");
-        statusMap.put("CANCELLED", "已取消");
+        statusMap.put("0", "待决策");
+        statusMap.put("1", "决策中");
+        statusMap.put("2", "已批准");
+        statusMap.put("3", "已执行");
+        statusMap.put("4", "已取消");
         dto.setStatusName(statusMap.getOrDefault(entity.getStatus(), entity.getStatus()));
 
         return dto;
@@ -290,7 +291,6 @@ public class BudgetItemServiceImpl extends ServiceImpl<BudgetItemMapper, BudgetI
      * 获取当前用户ID（需要根据实际情况实现）
      */
     private Long getCurrentUserId() {
-        // TODO: 从安全上下文获取当前用户ID
-        return 1L; // 示例用户ID
+        return UserContext.getCurrentUserId();
     }
 }

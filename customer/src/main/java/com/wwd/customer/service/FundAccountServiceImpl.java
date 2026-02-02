@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Copyright: Copyright (c) 2026 Asiainfo
@@ -72,6 +73,13 @@ public class FundAccountServiceImpl extends ServiceImpl<FundAccountMapper, FundA
         fundAccount.setIsActive("0");
         fundAccount.setUpdatedAt(LocalDateTime.now());
         return baseMapper.updateById(fundAccount);
+    }
+
+
+    @Override
+    public List<FundAccount> queryFundAccountListByCondition(FundAccountQueryDTO condition) {
+        condition.setIs_active("1");
+        return baseMapper.selectListByCondition(condition);
     }
 
     @Override

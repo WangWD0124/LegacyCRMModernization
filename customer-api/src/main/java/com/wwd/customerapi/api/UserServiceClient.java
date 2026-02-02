@@ -9,11 +9,9 @@ import com.wwd.customerapi.dto.UserQueryDTO;
 import com.wwd.customerapi.dto.UserOperateDTO;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.cloud.openfeign.SpringQueryMap;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.List;
 
 /**

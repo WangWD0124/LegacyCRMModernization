@@ -1,6 +1,6 @@
 package com.wwd.orderapi.api;
 
-import com.wwd.common.constant.ServiceNamesConstant;
+import com.wwd.base.constant.ServiceNamesConstant;
 import com.wwd.common.dto.PageResult;
 import com.wwd.common.dto.Result;
 import com.wwd.orderapi.dto.OrderDTO;

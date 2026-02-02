@@ -1,5 +1,5 @@
 server:
-  port: 20001
+  port: 30001
 
 spring:
   application:
@@ -20,7 +20,14 @@ spring:
       connection-timeout: 30000
       idle-timeout: 600000
       max-lifetime: 1800000
-
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    # 建议开启确认模式，保证消息可靠性
+    publisher-confirms: true
+    publisher-returns: true
 
 mybatis-plus:
   # 类型别名包配置

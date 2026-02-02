@@ -22,10 +22,11 @@ import lombok.Getter;
  */
 @Getter
 public enum BudgetStatus {
-    PENDING("PENDING", "待审批"),
-    APPROVED("APPROVED", "已批准"),
-    EXECUTED("EXECUTED", "已执行"),
-    CANCELLED("CANCELLED", "已取消");
+    PENDING("0", "待决策"),
+    APPROVING("1", "决策中"),
+    APPROVED("2", "已批准"),
+    EXECUTED("3", "已执行"),
+    CANCELLED("4", "已取消");
 
     private final String code;
     private final String description;

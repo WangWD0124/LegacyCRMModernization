@@ -5,16 +5,13 @@ import com.wwd.common.dto.PageResult;
 import com.wwd.common.dto.Result;
 import com.wwd.customer.context.UserContext;
 import com.wwd.customer.entity.FundAccount;
-import com.wwd.customer.entity.UserInfo;
 import com.wwd.customer.service.FundAccountService;
 import com.wwd.customerapi.api.FundAccountServiceClient;
 import com.wwd.customerapi.dto.FundAccountDTO;
 import com.wwd.customerapi.dto.FundAccountOperateDTO;
 import com.wwd.customerapi.dto.FundAccountQueryDTO;
-import com.wwd.customerapi.dto.UserDTO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -79,7 +76,11 @@ public class FundAccountController implements FundAccountServiceClient {
 
     @Override
     public Result<List<FundAccountDTO>> queryFundAccountListByCondition(FundAccountQueryDTO fundAccountQueryDTO) {
-        return null;
+        List<FundAccount> fundAccountList = fundAccountService.queryFundAccountListByCondition(fundAccountQueryDTO);
+        List<FundAccountDTO> fundAccountDTOS = fundAccountList.stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+        return Result.success(fundAccountDTOS);
     }
 
     @Override
@@ -97,10 +98,6 @@ public class FundAccountController implements FundAccountServiceClient {
         return Result.success(fundAccountPage);
     }
 
-    @Override
-    public Result<Long> update(FundAccountOperateDTO fundAccountOperateDTO) {
-        return null;
-    }
 
     /**
      * Entity 转 DTO

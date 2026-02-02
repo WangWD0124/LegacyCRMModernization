@@ -13,12 +13,18 @@ spring:
         locator:
           enabled: true
       routes:
+        - id: base-service
+          uri: lb://base-service
+          predicates:
+            - Path=/api/base/**
+          filters:
+            - StripPrefix=0
         - id: customer-service
           uri: lb://customer-service
           predicates:
             - Path=/api/customer/**
           filters:
-            - StripPrefix=0   # /api/customer/xxx -> /xxx
+            - StripPrefix=0
         - id: finance-service
           uri: lb://finance-service
           predicates:

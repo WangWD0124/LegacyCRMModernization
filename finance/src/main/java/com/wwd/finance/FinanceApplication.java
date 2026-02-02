@@ -12,7 +12,7 @@ import org.springframework.context.annotation.ComponentScan;
 @EnableFeignClients(basePackages = "com.wwd.financeapi.api") // 明确指定Feign扫描路径
 @ComponentScan(basePackages = {
         "com.wwd.finance",
-        "com.wwd.common",
+        "com.wwd.base",
         "com.wwd.finance.config" // 添加config包扫描
 })
 @MapperScan(basePackages = "com.wwd.finance.mapper") // 添加Mapper扫描

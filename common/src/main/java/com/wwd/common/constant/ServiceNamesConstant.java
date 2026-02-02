@@ -16,6 +16,7 @@ package com.wwd.common.constant;
  */
 public class ServiceNamesConstant {
 
+    public static final String BASE_SERVICE = "base-service";
     public static final String CUSTOMER_SERVICE = "customer-service";
     public static final String FINANCE_SERVICE = "finance-service";
     public static final String ORDER_SERVICE = "ORDER_SERVICE";

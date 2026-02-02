@@ -23,13 +23,13 @@ public interface BudgetItemServiceClient {
      * 分页查询预算项目
      */
     @GetMapping("/page")
-    Result<PageResult<BudgetItemDTO>> pageBudgetItems(@RequestParam BudgetItemQueryDTO budgetItemQueryDTO);
+    Result<PageResult<BudgetItemDTO>> pageBudgetItems(BudgetItemQueryDTO budgetItemQueryDTO);
 
     /**
      * 查询预算项目
      */
     @GetMapping("/list")
-    Result<List<BudgetItemDTO>> listBudgetItems(@RequestParam BudgetItemQueryDTO budgetItemQueryDTO);
+    Result<List<BudgetItemDTO>> listBudgetItems(BudgetItemQueryDTO budgetItemQueryDTO);
 
     /**
      * 获取预算项目详情

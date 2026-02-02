@@ -1,5 +1,5 @@
 server:
-  port: 30001
+  port: 40001
 
 spring:
   application:
@@ -27,9 +27,24 @@ spring:
       max-lifetime: 1800000
       connection-test-query: SELECT 1
 
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    # 建议开启确认模式，保证消息可靠性
+    publisher-confirms: true
+    publisher-returns: true
+
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
+
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    deserialization:
+      accept-empty-string-as-null-object: true
 
 # MyBatis-Plus配置
 mybatis-plus:

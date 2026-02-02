@@ -3,24 +3,33 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>crm</artifactId>
+        <artifactId>finance-system</artifactId>
         <groupId>com.wwd</groupId>
-        <version>2025.1.1</version>
+        <version>2026.2.1</version>
     </parent>
     <groupId>com.wwd</groupId>
     <artifactId>customer-api</artifactId>
-    <version>2025.1.1</version>
+    <version>2026.2.1</version>
     <name>customer-api</name>
 
 
     <properties>
-        <common.version>2025.1.1</common.version>
+        <common.version>2026.2.1</common.version>
     </properties>
 
     <dependencies>
+
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>com.wwd</groupId>
+            <artifactId>common</artifactId>
+            <version>${common.version}</version>
+        </dependency>
+
+        <!-- spring boot的web启动器，帮助快速引入web应用开发所需的依赖-->
+        <!-- 其中包括spring-core、spring-context、spring-beans、spring-aop、spring-web、spring-webmvc、spring-boot-starter-tomcat、spring-boot-starter-json -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
         <!--
@@ -35,15 +44,12 @@
         </dependency>
 
         <dependency>
-            <groupId>com.wwd</groupId>
-            <artifactId>common</artifactId>
-            <version>${common.version}</version>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-annotations</artifactId>
-        </dependency>
+
+
     </dependencies>
 
 </project>

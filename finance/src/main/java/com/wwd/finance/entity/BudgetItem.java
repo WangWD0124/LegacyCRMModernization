@@ -144,7 +144,7 @@ public class BudgetItem implements Serializable {
     private LocalDateTime executeTime;
 
     /**
-     * 状态：PENDING-待审批, APPROVED-已批准, EXECUTED-已执行, CANCELLED-已取消
+     * 状态[0-待决策、1-决策中、2-已批准、3-已执行、4-已取消]
      */
     private String status;
 
@@ -189,7 +189,7 @@ public class BudgetItem implements Serializable {
      */
     @TableLogic
     @TableField("is_deleted")
-    private Boolean deleted;
+    private Integer isDeleted;
 
     /**
      * 创建时间

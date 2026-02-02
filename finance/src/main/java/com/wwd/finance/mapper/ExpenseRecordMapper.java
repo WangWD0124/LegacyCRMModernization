@@ -23,7 +23,7 @@ public interface ExpenseRecordMapper extends BaseMapper<ExpenseRecord> {
     /**
      * 分页查询支出流水
      */
-    IPage<ExpenseRecord> selectExpensePage(Page<ExpenseRecord> page, ExpenseQueryDTO expenseQueryDTO);
+    IPage<ExpenseRecord> selectExpensePage(Page<ExpenseRecord> page, ExpenseQueryDTO params);
 
     /**
      * 统计支出数据

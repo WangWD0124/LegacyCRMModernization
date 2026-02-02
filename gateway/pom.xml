@@ -3,29 +3,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>crm</artifactId>
+        <artifactId>finance-system</artifactId>
         <groupId>com.wwd</groupId>
-        <version>2025.1.1</version>
+        <version>2026.2.1</version>
     </parent>
     <groupId>com.wwd</groupId>
     <artifactId>gateway</artifactId>
-    <version>2025.1.1</version>
+    <version>2026.2.1</version>
     <name>gateway</name>
     <description>Demo project for Spring Boot</description>
-
     <properties>
-        <java.version>8</java.version>
+        <common.version>2026.2.1</common.version>
     </properties>
+
     <dependencies>
+
         <dependency>
             <groupId>com.wwd</groupId>
             <artifactId>common</artifactId>
-            <version>2025.1.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <version>${common.version}</version>
         </dependency>
 
         <dependency>
@@ -43,27 +39,10 @@
             <artifactId>spring-cloud-starter-loadbalancer</artifactId>
         </dependency>
 
-        <!-- Lombok帮助简化代码编写，通过注解自动生成类中常见的方法 -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-        </dependency>
-
-        <!-- JWT处理 -->
-        <dependency>
-            <groupId>io.jsonwebtoken</groupId>
-            <artifactId>jjwt-api</artifactId>
-        </dependency>
-
         <!-- 监控 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
         </dependency>
     </dependencies>
 

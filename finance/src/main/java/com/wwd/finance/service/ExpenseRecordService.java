@@ -61,11 +61,6 @@ public interface ExpenseRecordService extends IService<ExpenseRecord> {
     List<ExpenseRecord> exportExpense(ExpenseQueryDTO expenseQueryDTO);
 
     /**
-     * 获取当前用户ID
-     */
-    Long getCurrentUserId();
-
-    /**
      * 关联预算项目
      */
     boolean linkBudgetItem(Long expenseId, Long budgetItemId, BigDecimal budgetAmount);

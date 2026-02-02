@@ -1,0 +1,9 @@
+com\wwd\customerapi\api\FundAccountServiceClient.class
+com\wwd\customerapi\dto\FundAccountQueryDTO.class
+com\wwd\customerapi\dto\UserDTO.class
+com\wwd\customerapi\dto\UserLoginDTO.class
+com\wwd\customerapi\dto\FundAccountOperateDTO.class
+com\wwd\customerapi\dto\UserQueryDTO.class
+com\wwd\customerapi\api\UserServiceClient.class
+com\wwd\customerapi\dto\FundAccountDTO.class
+com\wwd\customerapi\dto\UserOperateDTO.class

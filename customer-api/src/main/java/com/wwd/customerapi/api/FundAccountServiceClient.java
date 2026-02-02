@@ -49,6 +49,4 @@ public interface FundAccountServiceClient {
     @GetMapping("/page")
     Result<PageResult<FundAccountDTO>> queryFundAccountPageByCondition(FundAccountQueryDTO fundAccountQueryDTO);
 
-    @PostMapping("/operate")
-    Result<Long> update(@RequestBody @Valid FundAccountOperateDTO fundAccountOperateDTO);
 }

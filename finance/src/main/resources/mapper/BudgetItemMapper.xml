@@ -42,15 +42,13 @@
     </resultMap>
 
     <!-- 分页查询预算项目 -->
-    <select id="selectPageWithInfo" resultMap="BudgetItemWithInfoMap">
+    <select id="selectPageWithInfo" resultType="com.wwd.financeapi.dto.budget.BudgetItemDTO">
         SELECT
         bi.*,
-        bc.category_name,
         ct.type_name as consumption_type_name,
         fa.account_name as fund_account_name
         FROM budget_item bi
-        LEFT JOIN budget_category bc ON bi.category_code = bc.category_code AND bc.is_deleted = '0'
-        LEFT JOIN consumption_type ct ON bi.consumption_type = ct.type_code AND ct.is_deleted = '0'
+        LEFT JOIN base_db.common_type ct ON bi.consumption_type = ct.type_code AND ct.status = '1'
         LEFT JOIN customer_db.fund_account fa ON bi.fund_account_id = fa.account_id AND fa.is_active = '1'
         WHERE bi.is_deleted = '0' AND bi.user_id = #{query.userId}
         <if test="query.title != null and query.title != ''">
@@ -122,12 +120,10 @@
     <select id="selectListWithInfo" resultMap="BudgetItemWithInfoMap">
         SELECT
         bi.*,
-        bc.category_name,
         ct.type_name as consumption_type_name,
         fa.account_name as fund_account_name
         FROM budget_item bi
-        LEFT JOIN budget_category bc ON bi.category_code = bc.category_code AND bc.is_deleted = '0'
-        LEFT JOIN consumption_type ct ON bi.consumption_type = ct.type_code AND ct.is_deleted = '0'
+        LEFT JOIN base_db.common_type ct ON bi.consumption_type = ct.type_code AND ct.status = '1'
         LEFT JOIN customer_db.fund_account fa ON bi.fund_account_id = fa.account_id AND fa.is_active = '1'
         WHERE bi.is_deleted = '0' AND bi.user_id = #{query.userId}
         <if test="query.title != null and query.title != ''">
@@ -229,11 +225,12 @@
         SELECT
         COALESCE(SUM(budget_amount), 0) as total_budget,
         COALESCE(SUM(actual_amount), 0) as total_actual,
-        COUNT(CASE WHEN status = 'PENDING' THEN 1 END) as pending_count,
+        COUNT(CASE WHEN status = '0' THEN 1 END) as pending_count,
         AVG(struggle_score) as avg_struggle_score,
-        COUNT(CASE WHEN status = 'APPROVED' THEN 1 END) as approved_count,
-        COUNT(CASE WHEN status = 'EXECUTED' THEN 1 END) as executed_count,
-        COUNT(CASE WHEN status = 'CANCELLED' THEN 1 END) as cancelled_count,
+        COUNT(CASE WHEN status = '1' THEN 1 END) as approving_count,
+        COUNT(CASE WHEN status = '2' THEN 1 END) as approved_count,
+        COUNT(CASE WHEN status = '3' THEN 1 END) as executed_count,
+        COUNT(CASE WHEN status = '4' THEN 1 END) as cancelled_count,
         COUNT(CASE WHEN actual_amount &gt; budget_amount THEN 1 END) as over_budget_count,
         COUNT(CASE WHEN actual_amount &lt;= budget_amount THEN 1 END) as under_budget_count
         FROM budget_item

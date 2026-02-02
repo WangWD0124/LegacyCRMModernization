@@ -5,10 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {
-        "com.wwd.gateway",
-        "com.wwd.common"  // 确保扫描common包
-})
+@ComponentScan({"com.wwd.common","com.wwd.gateway"})
 public class GatewayApplication {
 
     public static void main(String[] args) {

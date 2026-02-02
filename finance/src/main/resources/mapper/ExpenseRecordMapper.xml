@@ -38,10 +38,10 @@
         er.difference_amount, er.difference_percent, er.created_at,
         er.updated_at, er.deleted,
         b.title as budget_item_title,
-        fa.name as account_name
+        fa.account_name as account_name
         FROM expense_record er
         LEFT JOIN budget_item b ON er.budget_item_id = b.budget_id AND b.is_deleted = 0
-        LEFT JOIN fund_account fa ON er.account_id = fa.account_id AND fa.deleted = 0
+        LEFT JOIN customer_db.fund_account fa ON er.account_id = fa.account_id AND fa.is_active = 1
         WHERE er.deleted = 0
         <if test="params.userId != null">
             AND er.user_id = #{params.userId}

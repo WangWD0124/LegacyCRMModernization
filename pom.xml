@@ -5,13 +5,15 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.wwd</groupId>
-  <artifactId>crm</artifactId>
-  <version>2025.1.1</version>
+  <artifactId>finance-system</artifactId>
+  <version>2026.2.1</version>
 
   <!-- 所有子模块 -->
   <modules>
     <module>common</module>
     <module>gateway</module>
+    <module>base-api</module>
+    <module>base</module>
     <module>customer-api</module>
     <module>customer</module>
     <module>finance-api</module>
@@ -19,7 +21,7 @@
   </modules>
   <packaging>pom</packaging>
 
-  <name>crm</name>
+  <name>finance-system</name>
   <url>http://www.wwd.com</url>
 
   <!-- spring boot帮助管理spring官方维护的依赖、插件，实现版本兼容和自动配置 -->
@@ -123,7 +125,7 @@
   </dependencyManagement>
 
   <build>
-    <finalName>crm</finalName>
+    <finalName>finance-system</finalName>
     <resources>
 
     </resources>

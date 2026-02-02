@@ -3,18 +3,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>crm</artifactId>
+        <artifactId>finance-system</artifactId>
         <groupId>com.wwd</groupId>
-        <version>2025.1.1</version>
+        <version>2026.2.1</version>
     </parent>
     <groupId>com.wwd</groupId>
     <artifactId>order-api</artifactId>
-    <version>2025.1.1</version>
+    <version>2026.2.1</version>
     <name>order-api</name>
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <common.version>2025.1.1</common.version>
+        <common.version>2026.2.1</common.version>
     </properties>
 
     <dependencies>

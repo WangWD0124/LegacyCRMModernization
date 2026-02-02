@@ -1,9 +1,11 @@
 package com.wwd.finance.service.impl;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wwd.finance.context.UserContext;
 import com.wwd.finance.entity.BudgetItem;
 import com.wwd.finance.entity.ExpenseRecord;
 import com.wwd.finance.mapper.ExpenseRecordMapper;
@@ -13,7 +15,6 @@ import com.wwd.financeapi.dto.expense.ExpenseQueryDTO;
 import com.wwd.financeapi.dto.expense.ExpenseRecordDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,11 +43,11 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
     public IPage<ExpenseRecordDTO> pageExpense(ExpenseQueryDTO expenseQueryDTO) {
         // 设置默认排序
         if (StringUtils.isEmpty(expenseQueryDTO.getOrderBy())){
-            expenseQueryDTO.setOrderBy("createdAt");
+            expenseQueryDTO.setOrderBy("created_at");
             expenseQueryDTO.setAsc(false);
         }
         // 设置用户ID
-        Long userId = getCurrentUserId();
+        Long userId = UserContext.getCurrentUserId();
         expenseQueryDTO.setUserId(userId);
 
         // 处理分页参数
@@ -60,7 +61,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
         LambdaQueryWrapper<ExpenseRecord> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ExpenseRecord::getExpenseId, expenseId)
                 .eq(ExpenseRecord::getDeleted, 0)
-                .eq(ExpenseRecord::getUserId, getCurrentUserId());
+                .eq(ExpenseRecord::getUserId, UserContext.getCurrentUserId());
         return this.getOne(queryWrapper);
     }
 
@@ -71,7 +72,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
         BeanUtils.copyProperties(dto, expenseRecord, "expenseId");
 
         // 设置用户ID
-        expenseRecord.setUserId(getCurrentUserId());
+        expenseRecord.setUserId(UserContext.getCurrentUserId());
 
         // 计算差异信息
         calculateDifference(expenseRecord);
@@ -88,7 +89,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
             expenseRecord.setUpdatedAt(now);
             LambdaQueryWrapper<ExpenseRecord> queryWrapper = new LambdaQueryWrapper<>();
             queryWrapper.eq(ExpenseRecord::getExpenseId, dto.getExpenseId())
-                    .eq(ExpenseRecord::getUserId, getCurrentUserId());
+                    .eq(ExpenseRecord::getUserId, UserContext.getCurrentUserId());
             this.update(expenseRecord, queryWrapper);
         }
 
@@ -100,7 +101,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
     public boolean deleteExpense(Long expenseId) {
         LambdaQueryWrapper<ExpenseRecord> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(ExpenseRecord::getExpenseId, expenseId)
-                .eq(ExpenseRecord::getUserId, getCurrentUserId())
+                .eq(ExpenseRecord::getUserId, UserContext.getCurrentUserId())
                 .eq(ExpenseRecord::getDeleted, 0);
 
         ExpenseRecord expenseRecord = new ExpenseRecord();
@@ -120,7 +121,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
         // 验证所有记录都属于当前用户
         LambdaQueryWrapper<ExpenseRecord> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(ExpenseRecord::getExpenseId, ids)
-                .eq(ExpenseRecord::getUserId, getCurrentUserId())
+                .eq(ExpenseRecord::getUserId, UserContext.getCurrentUserId())
                 .eq(ExpenseRecord::getDeleted, 0);
 
         List<ExpenseRecord> records = this.list(queryWrapper);
@@ -144,7 +145,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
 
     @Override
     public Map<String, Object> getExpenseStatistics(Map<String, Object> params) {
-        Long userId = getCurrentUserId();
+        Long userId = UserContext.getCurrentUserId();
         params.put("userId", userId);
 
         Map<String, Object> statistics = expenseRecordMapper.selectExpenseStatistics(params);
@@ -177,7 +178,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
 
     @Override
     public List<Map<String, Object>> getExpenseTrend(Map<String, Object> params) {
-        Long userId = getCurrentUserId();
+        Long userId = UserContext.getCurrentUserId();
         params.put("userId", userId);
 
         // 根据period参数设置日期范围和格式化
@@ -217,7 +218,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
 
     @Override
     public Map<String, Object> getDifferenceAnalysis(Map<String, Object> params) {
-        Long userId = getCurrentUserId();
+        Long userId = UserContext.getCurrentUserId();
         params.put("userId", userId);
 
         List<Map<String, Object>> analysisData = expenseRecordMapper.selectDifferenceAnalysis(params);
@@ -304,7 +305,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
 
     @Override
     public List<ExpenseRecord> exportExpense(ExpenseQueryDTO expenseQueryDTO) {
-        Long userId = getCurrentUserId();
+        Long userId = UserContext.getCurrentUserId();
         expenseQueryDTO.setUserId(userId);
 
         // 查询所有符合条件的记录（不分页）
@@ -318,7 +319,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
     @Transactional(rollbackFor = Exception.class)
     public boolean linkBudgetItem(Long expenseId, Long budgetItemId, BigDecimal budgetAmount) {
         ExpenseRecord expenseRecord = this.getById(expenseId);
-        if (expenseRecord == null || !expenseRecord.getUserId().equals(getCurrentUserId())) {
+        if (expenseRecord == null || !expenseRecord.getUserId().equals(UserContext.getCurrentUserId())) {
             throw new RuntimeException("支出记录不存在或无权操作");
         }
 
@@ -340,7 +341,7 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
         // 验证所有记录都属于当前用户
         LambdaQueryWrapper<ExpenseRecord> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.in(ExpenseRecord::getExpenseId, expenseIds)
-                .eq(ExpenseRecord::getUserId, getCurrentUserId())
+                .eq(ExpenseRecord::getUserId, UserContext.getCurrentUserId())
                 .eq(ExpenseRecord::getDeleted, 0);
 
         List<ExpenseRecord> records = this.list(queryWrapper);
@@ -351,12 +352,6 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
         return expenseRecordMapper.batchUpdateBudgetLink(expenseIds, budgetItemId, budgetAmount) > 0;
     }
 
-    @Override
-    public Long getCurrentUserId() {
-        // TODO: 从安全上下文中获取当前用户ID
-        // 这里暂时返回一个模拟的ID
-        return 1L;
-    }
 
     /**
      * 计算差异信息

@@ -5,6 +5,8 @@ import com.wwd.customer.entity.FundAccount;
 import com.wwd.customerapi.dto.FundAccountQueryDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Copyright: Copyright (c) 2026 Asiainfo
  *
@@ -32,6 +34,7 @@ public interface FundAccountService {
 
     Integer deleteFundAccountByAccountId(Long accountId);
 
+    List<FundAccount> queryFundAccountListByCondition(FundAccountQueryDTO fundAccountQueryDTO);
 
     IPage<FundAccount> queryFundAccountPageByCondition(FundAccountQueryDTO fundAccountQueryDTO);
 }

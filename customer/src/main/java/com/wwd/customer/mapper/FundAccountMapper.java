@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Copyright: Copyright (c) 2026 Asiainfo
@@ -36,4 +37,7 @@ public interface FundAccountMapper extends BaseMapper<FundAccount> {
     FundAccount selectByAccountCode(@Param("account_code") String account_code);
 
     IPage<FundAccount> selectPageByCondition(Page<FundAccount> page, FundAccountQueryDTO condition);
+
+    List<FundAccount> selectListByCondition(@Param("condition") FundAccountQueryDTO condition);
+
 }

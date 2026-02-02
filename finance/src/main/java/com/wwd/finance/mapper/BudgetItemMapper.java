@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.wwd.financeapi.dto.budget.BudgetItemDTO;
 import com.wwd.financeapi.dto.budget.BudgetItemQueryDTO;
 import com.wwd.finance.entity.BudgetItem;
 import com.wwd.financeapi.dto.budget.BudgetStatisticDTO;
@@ -21,14 +22,14 @@ public interface BudgetItemMapper extends BaseMapper<BudgetItem> {
     /**
      * 分页查询预算项目（带关联查询）
      */
-    IPage<BudgetItem> selectPageWithInfo(Page<BudgetItem> page, @Param("query") BudgetItemQueryDTO query);
+    IPage<BudgetItemDTO> selectPageWithInfo(Page<BudgetItem> page, @Param("query") BudgetItemQueryDTO query);
 
     /**
      * 列表
-     * @param budgetItemQueryDTO
+     * @param query
      * @return
      */
-    List<BudgetItem> selectListWithInfo(BudgetItemQueryDTO budgetItemQueryDTO);
+    List<BudgetItem> selectListWithInfo(@Param("query") BudgetItemQueryDTO query);
 
     /**
      * 获取预算统计信息

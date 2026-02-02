@@ -1,0 +1,4 @@
+com\wwd\orderapi\dto\OrderQueryDTO.class
+com\wwd\orderapi\dto\OrderDTO.class
+com\wwd\orderapi\api\OrderServiceClient.class
+com\wwd\orderapi\dto\OrderOperateDTO.class

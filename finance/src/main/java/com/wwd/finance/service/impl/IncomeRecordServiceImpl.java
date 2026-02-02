@@ -1,6 +1,7 @@
 // finance/src/main/java/com/wwd/finance/service/impl/IncomeRecordServiceImpl.java
 package com.wwd.finance.service.impl;
 
+import com.alibaba.cloud.commons.lang.StringUtils;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -18,7 +19,6 @@ import com.wwd.financeapi.dto.IncomeQueryDTO;
 import com.wwd.financeapi.dto.IncomeRecordDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -50,7 +50,7 @@ public class IncomeRecordServiceImpl extends ServiceImpl<IncomeRecordMapper, Inc
     public IPage<IncomeRecordDTO> pageIncome(IncomeQueryDTO incomeQueryDTO) {
         // 设置默认排序
         if (StringUtils.isBlank(incomeQueryDTO.getOrderBy())) {
-            incomeQueryDTO.setOrderBy("createdAt");
+            incomeQueryDTO.setOrderBy("created_at");
             incomeQueryDTO.setAsc(false);
         }
 
@@ -96,15 +96,15 @@ public class IncomeRecordServiceImpl extends ServiceImpl<IncomeRecordMapper, Inc
         incomeRecord.setUserId(getCurrentUserId());
 
         // 处理分配规则（JSON字符串）
-        if (dto.getAllocationRule() != null && !dto.getAllocationRule().isEmpty()) {
-            try {
-                String allocationRuleJson = objectMapper.writeValueAsString(dto.getAllocationRule());
-                incomeRecord.setAllocationRule(allocationRuleJson);
-            } catch (JsonProcessingException e) {
-                log.error("分配规则JSON转换失败", e);
-                throw new RuntimeException("分配规则格式错误");
-            }
-        }
+//        if (dto.getAllocationRule() != null && !dto.getAllocationRule().isEmpty()) {
+//            try {
+//                String allocationRuleJson = objectMapper.writeValueAsString(dto.getAllocationRule());
+//                incomeRecord.setAllocationRule(allocationRuleJson);
+//            } catch (JsonProcessingException e) {
+//                log.error("分配规则JSON转换失败", e);
+//                throw new RuntimeException("分配规则格式错误");
+//            }
+//        }
 
         // 设置时间
         LocalDateTime now = LocalDateTime.now();
@@ -124,6 +124,9 @@ public class IncomeRecordServiceImpl extends ServiceImpl<IncomeRecordMapper, Inc
                     .eq(IncomeRecord::getUserId, getCurrentUserId());
             this.update(incomeRecord, queryWrapper);
         }
+
+        //更新账户余额
+        fundAccountServiceClient.
 
         return incomeRecord.getIncomeId();
     }
@@ -310,9 +313,8 @@ public class IncomeRecordServiceImpl extends ServiceImpl<IncomeRecordMapper, Inc
 
     @Override
     public Long getCurrentUserId() {
-        // TODO: 从安全上下文中获取当前用户ID
-        // 这里暂时返回一个模拟的ID
-        return 1L;
+
+        return UserContext.getCurrentUserId();
     }
 
     /**

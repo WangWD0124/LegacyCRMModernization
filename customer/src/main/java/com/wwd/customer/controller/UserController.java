@@ -11,13 +11,9 @@ import com.wwd.customerapi.dto.UserLoginDTO;
 import com.wwd.customerapi.dto.UserOperateDTO;
 import com.wwd.customerapi.dto.UserQueryDTO;
 import lombok.RequiredArgsConstructor;
-import org.mockito.internal.util.StringUtil;
 import org.springframework.beans.BeanUtils;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

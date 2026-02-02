@@ -1,0 +1,11 @@
+com\wwd\base\service\CommonTypeService.class
+com\wwd\base\entity\CommonType.class
+com\wwd\base\service\impl\CommonTypeServiceImpl.class
+com\wwd\base\config\AppConfig.class
+com\wwd\base\context\UserContext.class
+com\wwd\base\config\MybatisPlusConfig.class
+com\wwd\base\controller\CommonTypeController.class
+com\wwd\base\interceptor\UserContextInterceptor.class
+com\wwd\base\mapper\CommonTypeMapper.class
+com\wwd\base\BaseApplication.class
+com\wwd\base\config\WebConfig.class

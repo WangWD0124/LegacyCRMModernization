@@ -1,5 +1,6 @@
 package com.wwd.financeapi.dto.budget;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -106,16 +107,19 @@ public class BudgetItemOperateDTO implements Serializable {
     /**
      * 决策开始时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime decisionStartTime;
 
     /**
      * 决策结束时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime decisionEndTime;
 
     /**
      * 执行时间
      */
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime executeTime;
 
     /**

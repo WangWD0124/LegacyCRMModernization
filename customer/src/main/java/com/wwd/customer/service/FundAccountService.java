@@ -1,10 +1,13 @@
 package com.wwd.customer.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.wwd.common.dto.BusinessResult;
+import com.wwd.common.enums.MessageStatus;
 import com.wwd.customer.entity.FundAccount;
 import com.wwd.customerapi.dto.FundAccountQueryDTO;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -37,4 +40,6 @@ public interface FundAccountService {
     List<FundAccount> queryFundAccountListByCondition(FundAccountQueryDTO fundAccountQueryDTO);
 
     IPage<FundAccount> queryFundAccountPageByCondition(FundAccountQueryDTO fundAccountQueryDTO);
+
+    BusinessResult<String> addBalance(Long accountId, BigDecimal amount);
 }

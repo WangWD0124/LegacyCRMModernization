@@ -1,0 +1,240 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yourproject.customer.mapper.MessageIdempotentMapper">
+
+    <!-- 基础字段映射 -->
+    <resultMap id="BaseResultMap" type="com.yourproject.customer.entity.MessageIdempotent">
+        <id column="id" property="id" />
+        <result column="message_id" property="messageId" />
+        <result column="business_id" property="businessId" />
+        <result column="business_type" property="businessType" />
+        <result column="status" property="status" />
+        <result column="retry_count" property="retryCount" />
+        <result column="last_try_time" property="lastTryTime" />
+        <result column="process_result" property="processResult" />
+        <result column="created_time" property="createdTime" />
+        <result column="updated_time" property="updatedTime" />
+        <result column="is_deleted" property="isDeleted" />
+        <result column="version" property="version" />
+        <result column="extra_info" property="extraInfo" />
+    </resultMap>
+
+    <!-- 查询字段 -->
+    <sql id="Base_Column_List">
+        id, message_id, business_id, business_type, status, retry_count,
+        last_try_time, process_result, created_time, updated_time,
+        is_deleted, version, extra_info
+    </sql>
+
+    <!-- 更新状态和重试次数 -->
+    <update id="updateStatusAndRetry">
+        UPDATE message_idempotent
+        SET status = #{newStatus},
+            process_result = #{processResult},
+            retry_count = retry_count + #{incrementRetry},
+            last_try_time = #{lastTryTime},
+            updated_time = NOW(),
+            version = version + 1
+        WHERE message_id = #{messageId}
+          AND is_deleted = 0
+    </update>
+
+    <!-- 批量更新状态 -->
+    <update id="batchUpdateStatus">
+        UPDATE message_idempotent
+        SET status = #{newStatus},
+        updated_time = NOW(),
+        version = version + 1
+        WHERE message_id IN
+        <foreach collection="messageIds" item="messageId" open="(" separator="," close=")">
+            #{messageId}
+        </foreach>
+        AND is_deleted = 0
+    </update>
+
+    <!-- 查询需要重试的消息 -->
+    <select id="selectForRetry" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM message_idempotent
+        WHERE is_deleted = 0
+        AND status IN
+        <foreach collection="statusList" item="status" open="(" separator="," close=")">
+            #{status}
+        </foreach>
+        AND retry_count &lt; #{maxRetryCount}
+        <if test="beforeTime != null">
+            AND last_try_time &lt; #{beforeTime}
+        </if>
+        ORDER BY last_try_time ASC
+        LIMIT 100
+    </select>
+
+    <!-- 条件分页查询 -->
+    <select id="selectByPage" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM message_idempotent
+        WHERE is_deleted = 0
+        <if test="query.messageId != null and query.messageId != ''">
+            AND message_id LIKE CONCAT('%', #{query.messageId}, '%')
+        </if>
+        <if test="query.businessId != null and query.businessId != ''">
+            AND business_id LIKE CONCAT('%', #{query.businessId}, '%')
+        </if>
+        <if test="query.businessType != null and query.businessType != ''">
+            AND business_type = #{query.businessType}
+        </if>
+        <if test="query.status != null and query.status != ''">
+            AND status = #{query.status}
+        </if>
+        <if test="query.serviceName != null and query.serviceName != ''">
+            AND extra_info LIKE CONCAT('%"service_name":"', #{query.serviceName}, '"%')
+        </if>
+        <if test="query.startTime != null">
+            AND created_time &gt;= #{query.startTime}
+        </if>
+        <if test="query.endTime != null">
+            AND created_time &lt;= #{query.endTime}
+        </if>
+        ORDER BY
+        <choose>
+            <when test="query.sortField != null and query.sortField != ''">
+                ${query.sortField}
+                <if test="query.sortOrder != null and query.sortOrder != ''">
+                    ${query.sortOrder}
+                </if>
+            </when>
+            <otherwise>
+                created_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <!-- 统计各个状态的数量 -->
+    <select id="countByStatus" resultType="java.util.Map">
+        SELECT
+        status,
+        COUNT(*) as count
+        FROM message_idempotent
+        WHERE is_deleted = 0
+        <if test="serviceName != null and serviceName != ''">
+            AND extra_info LIKE CONCAT('%"service_name":"', #{serviceName}, '"%')
+        </if>
+        <if test="businessType != null and businessType != ''">
+            AND business_type = #{businessType}
+        </if>
+        <if test="startTime != null">
+            AND created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND created_time &lt;= #{endTime}
+        </if>
+        GROUP BY status
+        ORDER BY count DESC
+    </select>
+
+    <!-- 清理过期数据 -->
+    <delete id="deleteExpired">
+        DELETE FROM message_idempotent
+        WHERE created_time &lt; DATE_SUB(NOW(), INTERVAL #{expireDays} DAY)
+        AND status IN
+        <foreach collection="statusList" item="status" open="(" separator="," close=")">
+            #{status}
+        </foreach>
+    </delete>
+
+    <!-- 根据消息ID和版本号更新（乐观锁） -->
+    <update id="updateWithVersion">
+        UPDATE message_idempotent
+        SET
+            status = #{status},
+            business_id = #{businessId},
+            business_type = #{businessType},
+            retry_count = #{retryCount},
+            last_try_time = #{lastTryTime},
+            process_result = #{processResult},
+            updated_time = NOW(),
+            version = version + 1
+        WHERE id = #{id}
+          AND version = #{version}
+          AND is_deleted = 0
+    </update>
+
+    <!-- 插入时防止重复 -->
+    <insert id="insertOnDuplicateKeyUpdate">
+        INSERT INTO message_idempotent (
+            message_id, business_id, business_type, status,
+            retry_count, process_result, extra_info
+        ) VALUES (
+                     #{messageId}, #{businessId}, #{businessType}, #{status},
+                     #{retryCount}, #{processResult}, #{extraInfo}
+                 )
+            ON DUPLICATE KEY UPDATE
+                                 status = VALUES(status),
+                                 retry_count = VALUES(retry_count),
+                                 process_result = VALUES(process_result),
+                                 updated_time = NOW(),
+                                 version = version + 1
+    </insert>
+
+    <!-- 批量插入 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO message_idempotent (
+        message_id, business_id, business_type, status,
+        retry_count, process_result, created_time, updated_time, extra_info
+        ) VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.messageId}, #{item.businessId}, #{item.businessType}, #{item.status},
+            #{item.retryCount}, #{item.processResult}, NOW(), NOW(), #{item.extraInfo}
+            )
+        </foreach>
+        ON DUPLICATE KEY UPDATE
+        status = VALUES(status),
+        retry_count = VALUES(retry_count),
+        process_result = VALUES(process_result),
+        updated_time = NOW(),
+        version = version + 1
+    </insert>
+
+    <!-- 根据业务类型和状态查询统计信息 -->
+    <select id="selectStatisticsByType" resultType="java.util.Map">
+        SELECT
+        business_type,
+        status,
+        COUNT(*) as total_count,
+        SUM(retry_count) as total_retry,
+        AVG(retry_count) as avg_retry,
+        MIN(created_time) as first_time,
+        MAX(created_time) as last_time
+        FROM message_idempotent
+        WHERE is_deleted = 0
+        <if test="startTime != null">
+            AND created_time &gt;= #{startTime}
+        </if>
+        <if test="endTime != null">
+            AND created_time &lt;= #{endTime}
+        </if>
+        GROUP BY business_type, status
+        ORDER BY business_type, status
+    </select>
+
+    <!-- 查询最近N分钟内的处理情况 -->
+    <select id="selectRecentProcessStats" resultType="java.util.Map">
+        SELECT
+            DATE_FORMAT(created_time, '%Y-%m-%d %H:%i:00') as time_minute,
+            business_type,
+            status,
+            COUNT(*) as count
+        FROM message_idempotent
+        WHERE is_deleted = 0
+          AND created_time &gt;= DATE_SUB(NOW(), INTERVAL #{minutes} MINUTE)
+        GROUP BY
+            DATE_FORMAT(created_time, '%Y-%m-%d %H:%i:00'),
+            business_type,
+            status
+        ORDER BY time_minute DESC, business_type, status
+    </select>
+
+</mapper>

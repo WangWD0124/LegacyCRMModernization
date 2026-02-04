@@ -1,4 +1,4 @@
-package com.wwd.customer.service;
+package com.wwd.customer.service.impl;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -7,6 +7,7 @@ import com.wwd.common.utils.JwtUtil;
 import com.wwd.customer.context.UserContext;
 import com.wwd.customer.entity.UserInfo;
 import com.wwd.customer.mapper.UserInfoMapper;
+import com.wwd.customer.service.UserService;
 import com.wwd.customerapi.dto.UserLoginDTO;
 import com.wwd.customerapi.dto.UserQueryDTO;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ import java.util.List;
 /**
  * Copyright: Copyright (c) 2025 Asiainfo
  *
- * @ClassName: com.wwd.customer.service.UserServiceImpl
+ * @ClassName: com.wwd.customer.service.impl.UserServiceImpl
  * @Description:
  * @version: v1.0.0
  * @author: wangwd7

@@ -1,20 +1,24 @@
-package com.wwd.customer.service;
+package com.wwd.customer.service.impl;
 
 import com.baomidou.mybatisplus.core.incrementer.IdentifierGenerator;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.IdWorker;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wwd.common.dto.BusinessResult;
+import com.wwd.common.enums.MessageStatus;
 import com.wwd.customer.context.UserContext;
 import com.wwd.customer.entity.FundAccount;
 import com.wwd.customer.entity.UserInfo;
 import com.wwd.customer.mapper.FundAccountMapper;
+import com.wwd.customer.service.FundAccountService;
 import com.wwd.customerapi.dto.FundAccountQueryDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +26,7 @@ import java.util.List;
 /**
  * Copyright: Copyright (c) 2026 Asiainfo
  *
- * @ClassName: com.wwd.customer.service.FundAccountServiceImpl
+ * @ClassName: com.wwd.customer.service.impl.FundAccountServiceImpl
  * @Description:
  * @version: v1.0.0
  * @author: wangwd7
@@ -35,7 +39,7 @@ import java.util.List;
  */
 @Service
 @RequiredArgsConstructor
-public class FundAccountServiceImpl extends ServiceImpl<FundAccountMapper, FundAccount> implements FundAccountService{
+public class FundAccountServiceImpl extends ServiceImpl<FundAccountMapper, FundAccount> implements FundAccountService {
 
 
     @Override
@@ -87,5 +91,20 @@ public class FundAccountServiceImpl extends ServiceImpl<FundAccountMapper, FundA
         Page<FundAccount> page = new Page<>(condition.getPageNum(), condition.getPageSize());
         condition.setIs_active("1");
         return baseMapper.selectPageByCondition(page, condition);
+    }
+
+    @Override
+    public BusinessResult<String> addBalance(Long accountId, BigDecimal amount) {
+
+        FundAccount fundAccount = selectByAccountId(accountId);
+        BigDecimal balance = BigDecimal.valueOf(Long.parseLong(fundAccount.getBalance()));
+        String currentBalance = balance.add(amount).toString();
+        fundAccount.setBalance(currentBalance);
+        Integer updateRow = updateFundAccount(fundAccount);
+        if (updateRow > 0) {
+            return BusinessResult.success(currentBalance);
+        } else {
+            return BusinessResult.error();
+        }
     }
 }

@@ -1,5 +1,6 @@
 com\wwd\customerapi\api\FundAccountServiceClient.class
 com\wwd\customerapi\dto\FundAccountQueryDTO.class
+com\wwd\customerapi\dto\MessageIdempotentQueryDTO.class
 com\wwd\customerapi\dto\UserDTO.class
 com\wwd\customerapi\dto\UserLoginDTO.class
 com\wwd\customerapi\dto\FundAccountOperateDTO.class

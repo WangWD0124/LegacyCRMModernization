@@ -1,7 +1,9 @@
 package com.wwd.customer.consumer;
 
 import com.wwd.common.dto.BusinessResult;
+import com.wwd.common.dto.IdempotentCheckResult;
 import com.wwd.common.enums.BusinessResultEnun;
+import com.wwd.customer.entity.MessageIdempotent;
 import com.wwd.customer.message.AccountAddMessage;
 import com.wwd.customer.message.AccountDeductMessage;
 import com.wwd.customer.service.FundAccountService;
@@ -15,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -60,14 +63,15 @@ public class AccountConsumer {
 
         log.info("收到打款消息，消息ID: {}，收入记录ID：{}", messageId, message.getIncomeId());
 
-        // 获取分布式锁，防止并发处理
-        if (tryLock(messageId))
-
-        // 关键点2：消费幂等性检查（防止重复消费）
-        if (checkMessage(message.getMessageId())) {
-            log.warn("消息已处理过，跳过: {}", message.getMessageId());
+        // 关键点：获取分布式锁，防止并发处理
+        if (!tryLock(messageId)) {
+            log.warn("获取锁失败，消息可能正在被处理: {}", messageId);
             return;
         }
+
+        // 关键点：消费幂等性检查（防止重复消费）
+        IdempotentCheckResult idempotentCheckResult = checkMessage(messageId);
+
 
         try {
             // 关键点3：执行业务逻辑
@@ -108,17 +112,26 @@ public class AccountConsumer {
      */
     private boolean tryLock(String messageId) {
 
-        String lockKey = LOCK_KEY_PREFIX + messageId;
+        String lockKey = buildRedisKey(messageId);
 
         /**
+         * setIfAbsent 该方法如果键值对不存在则设置缓存，若存在则设置失败，返回设置结果
          *
+         * 该操作属于原子性操作，利用键值对在缓存中的唯一性，实现分布式锁
+         *
+         * 设置过期时间，能避免死锁
+         *
+         * 但由于业务执行时长可鞥超过有效期，这里有待优化
+         *
+         * 该操作涉及外部服务，会产生IO操作，可能会因为网络问题等造成异常，故需要容错处理
          */
         try {
-
+            Boolean success = redisTemplate.opsForValue().setIfAbsent(lockKey, Thread.currentThread().getName(), 10, TimeUnit.SECONDS);
+            return Boolean.TRUE.equals(success);
+        } catch (Exception e) {
+            log.error(LOG_HEAD, "获取分布式锁异常，messageId:" + messageId, e);
+            return false;
         }
-        Boolean success = redisTemplate.opsForValue().setIfAbsent(lockKey, Thread.currentThread().getName(), 10, TimeUnit.SECONDS);
-        return Boolean.TRUE.equals(success);
-
 
     }
 
@@ -127,29 +140,32 @@ public class AccountConsumer {
      * @param messageId
      * @return
      */
-    private boolean checkMessage(String messageId) {
+    private IdempotentCheckResult checkMessage(String messageId) {
 
-        // 第1级：Redis布隆过滤器（防止缓存穿透）
-        if (bloomFilterCheck(messageId)) {
-            log.info("消息已处理，幂等跳过: {}", messageId);
-            return true;
-        }
+//        // 第1级：Redis布隆过滤器（防止缓存穿透）
+//        if (bloomFilterCheck(messageId)) {
+//            log.info("消息已处理，幂等跳过: {}", messageId);
+//            return true;
+//        }
 
         // 第2级：Redis精确匹配（快速返回）
-        String redisKey = buildRedisKey(messageId);
-        if (checkRedis(redisKey)) {
-            log.info("消息已处理，幂等跳过: {}", messageId);
-            return true;
+        IdempotentCheckResult idempotentCheckResult = checkRedis(messageId);
+        if (idempotentCheckResult != null) {
+            return idempotentCheckResult;
         }
 
         // 第3级. 检查数据库唯一性幂等性
-        if (messageIdempotentService.isMessageProcessed(messageId)) {
-            log.info("消息已处理，幂等跳过: {}", messageId);
-            return true;
-        }
+        idempotentCheckResult = checkDatabase(messageId);
+        return idempotentCheckResult;
+    }
 
-        // 消息不存在，未被处理
-        return false;
+    private IdempotentCheckResult checkDatabase(String messageId) {
+
+        MessageIdempotent messageIdempotent = messageIdempotentService.getByMessageId(messageId);
+        switch (messageIdempotent.getStatus()){
+            case IdempotentCheckResult.CheckStatus.PROCESSED_SUCCESS:
+                return IdempotentCheckResult.success(messageId, "数据库检查_已处理成功");
+        }
     }
 
     /**
@@ -174,22 +190,46 @@ public class AccountConsumer {
 
     /**
      * 第2级：Redis精确匹配（快速返回）
-     * @param redisKey
+     * @param messageId
      * @return
      */
-    private boolean checkRedis(String redisKey) {
+    private IdempotentCheckResult checkRedis(String messageId) {
 
         log.info(LOG_HEAD, "开始Redis缓存精准检查");
         try {
-            String status = (String) redisTemplate.opsForValue().get(redisKey);
-            if (StringUtils.hasText(status)) {
-                return true;
+            String redisKey = buildRedisKey(messageId);
+            Map idempotentValue = redisTemplate.opsForHash().entries(redisKey);
+
+            if (idempotentValue.isEmpty()) {
+                return IdempotentCheckResult.notProcessed(messageId);
             }
-            // 消息不存在，未被处理
-            return false;
+            String status = (String) idempotentValue.get("status");
+            IdempotentCheckResult.CheckStatus checkStatus = IdempotentCheckResult.CheckStatus.valueOf(status);
+
+            switch (checkStatus) {
+                case PROCESSING:
+                    log.info("Redis检查_正在处理，{}", messageId);
+                    return IdempotentCheckResult.success(messageId, "Redis检查_正在处理");
+                case PROCESSED_SUCCESS:
+                    log.info("Redis检查_已处理成功，{}", messageId);
+                    return IdempotentCheckResult.success(messageId, "Redis检查_已处理成功");
+                case PROCESSED_FAILED:
+                    log.info("Redis检查_已处理失败，{}", messageId);
+                    /**
+                     * 重试机制
+                     */
+                    Integer retryCount = (Integer) idempotentValue.get("retry_count");
+                    if (retryCount != null && retryCount < 3) {
+                        return IdempotentCheckResult.failedRetry(messageId, "Redis检查_已处理失败_可重试");
+                    }
+                    return IdempotentCheckResult.failed(messageId, "Redis检查_已处理失败_不可重试");
+                default:
+                    return null;
+            }
+
         } catch (Exception e) {
             log.error("Redis检查异常，降级到数据库检查");
-            return false;
+            return null;
         } finally {
             log.info(LOG_HEAD, "结束Redis缓存精准检查");
         }

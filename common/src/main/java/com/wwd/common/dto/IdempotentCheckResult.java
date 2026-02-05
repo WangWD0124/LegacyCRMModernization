@@ -50,6 +50,7 @@ public class IdempotentCheckResult {
         NOT_PROCESSED,      // 未处理，可以继续处理
         PROCESSED_SUCCESS,  // 已处理且成功
         PROCESSED_FAILED,   // 已处理但失败
+        PROCESSED_FAILED_RETRY,   // 已处理但失败可重试
         PROCESSING,         // 正在处理中（防止并发）
         EXPIRED            // 已过期（可重新处理）
     }
@@ -64,12 +65,12 @@ public class IdempotentCheckResult {
     /**
      * 未处理，可以继续处理
      */
-    public static IdempotentCheckResult notProcessed(String messageId) {
+    public static IdempotentCheckResult notProcessed(String messageId, SourceType sourceType) {
         return IdempotentCheckResult.builder()
                 .messageId(messageId)
                 .status(CheckStatus.NOT_PROCESSED)
                 .statusDesc("消息未处理，可以继续处理")
-                .source(SourceType.UNKNOWN)
+                .source(sourceType)
                 .responseTime(System.currentTimeMillis())
                 .build();
     }
@@ -77,11 +78,10 @@ public class IdempotentCheckResult {
     /**
      * 已处理且成功
      */
-    public static IdempotentCheckResult alreadyProcessed(
-            String messageId, String businessId, String result) {
+    public static IdempotentCheckResult success(
+            String messageId, String result) {
         return IdempotentCheckResult.builder()
                 .messageId(messageId)
-                .businessId(businessId)
                 .status(CheckStatus.PROCESSED_SUCCESS)
                 .statusDesc("消息已处理成功")
                 .processResult(result)
@@ -120,31 +120,46 @@ public class IdempotentCheckResult {
                 .build();
     }
 
-//    /**
-//     * 基于数据库记录构建
-//     */
-//    public static IdempotentCheckResult fromEntity(MessageIdempotentEntity entity) {
-//        CheckStatus status;
-//        switch (entity.getStatus()) {
-//            case "SUCCESS": status = CheckStatus.PROCESSED_SUCCESS; break;
-//            case "FAILED": status = CheckStatus.PROCESSED_FAILED; break;
-//            case "PROCESSING": status = CheckStatus.PROCESSING; break;
-//            default: status = CheckStatus.NOT_PROCESSED;
-//        }
-//
-//        return IdempotentCheckResult.builder()
-//                .messageId(entity.getMessageId())
-//                .businessId(entity.getBusinessId())
-//                .businessType(entity.getBusinessType())
-//                .status(status)
-//                .statusDesc("来自数据库记录")
-//                .processResult(entity.getProcessResult())
-//                .processTime(entity.getProcessTime())
-//                .serviceName(entity.getServiceName())
-//                .source(SourceType.DATABASE)
-//                .responseTime(System.currentTimeMillis())
-//                .build();
-//    }
+    /**
+     * 处理失败_可重试
+     */
+    public static IdempotentCheckResult failedRetry(String messageId, String errorMsg) {
+        return IdempotentCheckResult.builder()
+                .messageId(messageId)
+                .status(CheckStatus.PROCESSED_FAILED_RETRY)
+                .statusDesc("消息处理失败可重试")
+                .processResult(errorMsg)
+                .processTime(new Date())
+                .source(SourceType.DATABASE)
+                .responseTime(System.currentTimeMillis())
+                .build();
+    }
+
+    /**
+     * 基于数据库记录构建
+     */
+    public static IdempotentCheckResult fromEntity(MessageIdempotentEntity entity) {
+        CheckStatus status;
+        switch (entity.getStatus()) {
+            case "SUCCESS": status = CheckStatus.PROCESSED_SUCCESS; break;
+            case "FAILED": status = CheckStatus.PROCESSED_FAILED; break;
+            case "PROCESSING": status = CheckStatus.PROCESSING; break;
+            default: status = CheckStatus.NOT_PROCESSED;
+        }
+
+        return IdempotentCheckResult.builder()
+                .messageId(entity.getMessageId())
+                .businessId(entity.getBusinessId())
+                .businessType(entity.getBusinessType())
+                .status(status)
+                .statusDesc("来自数据库记录")
+                .processResult(entity.getProcessResult())
+                .processTime(entity.getProcessTime())
+                .serviceName(entity.getServiceName())
+                .source(SourceType.DATABASE)
+                .responseTime(System.currentTimeMillis())
+                .build();
+    }
 
     // 便捷判断方法
     public boolean shouldProcess() {

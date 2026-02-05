@@ -1,5 +1,6 @@
 package com.wwd.customer.service;
 
+import com.wwd.common.dto.IdempotentCheckResult;
 import com.wwd.customer.entity.MessageIdempotent;
 import com.wwd.customerapi.dto.MessageIdempotentQueryDTO;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public interface MessageIdempotentService extends IService<MessageIdempotent> {
     /**
      * 检查消息是否已处理
      */
-    boolean isMessageProcessed(String messageId);
+    IdempotentCheckResult isMessageProcessed(String messageId);
 
     /**
      * 标记消息为处理中

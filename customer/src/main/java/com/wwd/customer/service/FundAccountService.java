@@ -42,4 +42,7 @@ public interface FundAccountService {
     IPage<FundAccount> queryFundAccountPageByCondition(FundAccountQueryDTO fundAccountQueryDTO);
 
     BusinessResult<String> addBalance(Long accountId, BigDecimal amount);
+
+    BusinessResult<String> deductBalance(Long accountId, BigDecimal amount);
+
 }

@@ -25,9 +25,14 @@ spring:
     port: 5672
     username: guest
     password: guest
-    # 建议开启确认模式，保证消息可靠性
-    publisher-confirms: true
-    publisher-returns: true
+    virtual-host: /
+    listener:
+      simple:
+        missing-queues-fatal: false
+        auto-startup: true  # 确保为true
+        acknowledge-mode: auto
+        prefetch: 1
+        concurrency: 1
 
 mybatis-plus:
   # 类型别名包配置
@@ -47,8 +52,9 @@ mybatis-plus:
 # 日志配置
 logging:
   level:
-    com.example.demo.mapper: DEBUG
+    com.wwd.customer.consumer: DEBUG
     org.springframework.jdbc.datasource: INFO
+    org.springframework.amqp.rabbit.listener: DEBUG
   pattern:
     console: "%d{yyyy-MM-dd HH:mm:ss} - %msg%n"
 
@@ -63,3 +69,7 @@ jwt:
 app:
   default-user-status:
     ACTIVE: 1
+
+lock:
+  expire:
+    time: 30

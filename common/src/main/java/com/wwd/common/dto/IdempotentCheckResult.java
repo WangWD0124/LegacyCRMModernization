@@ -27,154 +27,198 @@ import java.util.Date;
 @AllArgsConstructor
 public class IdempotentCheckResult {
 
-    // 消息信息
+    /**
+     * 消息ID
+      */
     private String messageId;
-    private String businessId;
-    private String businessType;
 
-    // 检查结果
+    /**
+     * 检查结果
+      */
     private CheckStatus status;
-    private String statusDesc;
 
-    // 处理信息（如果已处理）
     private String processResult;
-    private Date processTime;
-    private String serviceName;
 
-    // 来源信息（用于调试和监控）
+    private Integer retryCount;
+
     private SourceType source;
-    private Long responseTime; // 毫秒
 
-    // 枚举定义
+    /**
+     * 枚举定义
+      */
     public enum CheckStatus {
-        NOT_PROCESSED,      // 未处理，可以继续处理
-        PROCESSED_SUCCESS,  // 已处理且成功
-        PROCESSED_FAILED,   // 已处理但失败
-        PROCESSED_FAILED_RETRY,   // 已处理但失败可重试
-        PROCESSING,         // 正在处理中（防止并发）
-        EXPIRED            // 已过期（可重新处理）
+        // 未处理，可以继续处理
+        NOT_PROCESSED,
+        // 已处理且成功
+        SUCCESS,
+        // 已处理但失败可重试，可以继续处理
+        FAILED_CAN_RETRY,
+        // 最终失败
+        FAILED,
+        // 正在处理中（防止并发）
+        PROCESSING,
     }
 
     public enum SourceType {
-        REDIS,      // 来自Redis
-        DATABASE,   // 来自数据库
-        MEMORY,     // 来自内存
-        UNKNOWN     // 未知来源
+        // 来自Redis
+        REDIS,
+        // 来自数据库
+        DATABASE,
+        // 来自内存
+        MEMORY,
+        // 未知来源
+        UNKNOWN
     }
 
     /**
-     * 未处理，可以继续处理
+     * 判断是否可以消费消息的方法
      */
-    public static IdempotentCheckResult notProcessed(String messageId, SourceType sourceType) {
-        return IdempotentCheckResult.builder()
-                .messageId(messageId)
-                .status(CheckStatus.NOT_PROCESSED)
-                .statusDesc("消息未处理，可以继续处理")
-                .source(sourceType)
-                .responseTime(System.currentTimeMillis())
-                .build();
+    public boolean canProcess() {
+        return status == CheckStatus.NOT_PROCESSED || status == CheckStatus.FAILED_CAN_RETRY;
     }
 
-    /**
-     * 已处理且成功
-     */
-    public static IdempotentCheckResult success(
-            String messageId, String result) {
-        return IdempotentCheckResult.builder()
-                .messageId(messageId)
-                .status(CheckStatus.PROCESSED_SUCCESS)
-                .statusDesc("消息已处理成功")
-                .processResult(result)
-                .processTime(new Date())
-                .source(SourceType.DATABASE)
-                .responseTime(System.currentTimeMillis())
-                .build();
+    public boolean isNotProcessed() {
+        return status == CheckStatus.NOT_PROCESSED;
     }
 
-    /**
-     * 正在处理中（用于分布式锁场景）
-     */
-    public static IdempotentCheckResult processing(String messageId, String lockOwner) {
-        return IdempotentCheckResult.builder()
-                .messageId(messageId)
-                .status(CheckStatus.PROCESSING)
-                .statusDesc("消息正在被处理，处理者: " + lockOwner)
-                .processTime(new Date())
-                .source(SourceType.REDIS)
-                .responseTime(System.currentTimeMillis())
-                .build();
+    public boolean isFailedCanRetry() {
+        return status == CheckStatus.FAILED_CAN_RETRY;
     }
 
-    /**
-     * 处理失败
-     */
-    public static IdempotentCheckResult failed(String messageId, String errorMsg) {
-        return IdempotentCheckResult.builder()
-                .messageId(messageId)
-                .status(CheckStatus.PROCESSED_FAILED)
-                .statusDesc("消息处理失败")
-                .processResult(errorMsg)
-                .processTime(new Date())
-                .source(SourceType.DATABASE)
-                .responseTime(System.currentTimeMillis())
-                .build();
-    }
+//    /**
+//     * 未处理，可以继续处理
+//     */
+//    public static IdempotentCheckResult notProcessed(String messageId) {
+//        return IdempotentCheckResult.builder()
+//                .messageId(messageId)
+//                .status(CheckStatus.NOT_PROCESSED)
+//                .statusDesc("消息未处理，可以继续处理")
+//                .source(SourceType.UNKNOWN)
+//                .build();
+//    }
+//
+//    /**
+//     * 已处理且成功
+//     */
+//    public static IdempotentCheckResult success(
+//            String messageId, String result) {
+//        return IdempotentCheckResult.builder()
+//                .messageId(messageId)
+//                .status(CheckStatus.PROCESSED_SUCCESS)
+//                .statusDesc("消息已处理成功")
+//                .processResult(result)
+//                .processTime(new Date())
+//                .source(SourceType.DATABASE)
+//                .responseTime(System.currentTimeMillis())
+//                .build();
+//    }
+//
+//    /**
+//     * 正在处理中（用于分布式锁场景）
+//     */
+//    public static IdempotentCheckResult processing(String messageId, String lockOwner) {
+//        return IdempotentCheckResult.builder()
+//                .messageId(messageId)
+//                .status(CheckStatus.PROCESSING)
+//                .statusDesc("消息正在被处理，处理者: " + lockOwner)
+//                .processTime(new Date())
+//                .source(SourceType.REDIS)
+//                .responseTime(System.currentTimeMillis())
+//                .build();
+//    }
+//
+//    /**
+//     * 处理失败
+//     */
+//    public static IdempotentCheckResult processedFailed(String messageId, String errorMsg) {
+//        return IdempotentCheckResult.builder()
+//                .messageId(messageId)
+//                .status(CheckStatus.PROCESSED_FAILED)
+//                .statusDesc("消息处理失败")
+//                .processResult(errorMsg)
+//                .processTime(new Date())
+//                .source(SourceType.DATABASE)
+//                .responseTime(System.currentTimeMillis())
+//                .build();
+//    }
+//
+//    /**
+//     * 处理失败_可重试
+//     */
+//    public static IdempotentCheckResult processedFailed(String messageId, String errorMsg, SourceType sourceType) {
+//        return IdempotentCheckResult.builder()
+//                .messageId(messageId)
+//                .status(CheckStatus.PROCESSED_FAILED)
+//                .statusDesc("消息处理失败可重试")
+//                .processResult(errorMsg)
+//                .processTime(new Date())
+//                .source(sourceType)
+//                .responseTime(System.currentTimeMillis())
+//                .build();
+//    }
 
-    /**
-     * 处理失败_可重试
-     */
-    public static IdempotentCheckResult failedRetry(String messageId, String errorMsg) {
-        return IdempotentCheckResult.builder()
-                .messageId(messageId)
-                .status(CheckStatus.PROCESSED_FAILED_RETRY)
-                .statusDesc("消息处理失败可重试")
-                .processResult(errorMsg)
-                .processTime(new Date())
-                .source(SourceType.DATABASE)
-                .responseTime(System.currentTimeMillis())
-                .build();
-    }
+//    /**
+//     * 基于Redis记录构建
+//     */
+//    public static IdempotentCheckResult fromString(String messageId, String status) {
+//
+//        CheckStatus checkStatus;
+//        switch (status) {
+//            case "SUCCESS": checkStatus = CheckStatus.PROCESSED_SUCCESS; break;
+//            case "FAILED": checkStatus = CheckStatus.PROCESSED_FAILED; break;
+//            case "PROCESSING": checkStatus = CheckStatus.PROCESSING; break;
+//            default: checkStatus = CheckStatus.NOT_PROCESSED;
+//        }
+//
+//        return IdempotentCheckResult.builder()
+//                .messageId(messageId)
+//                .businessType(entity.getBusinessType())
+//                .status(status)
+//                .statusDesc("来自数据库记录")
+//                .processResult(entity.getProcessResult())
+//                .processTime(entity.getProcessTime())
+//                .serviceName(entity.getServiceName())
+//                .source(SourceType.DATABASE)
+//                .responseTime(System.currentTimeMillis())
+//                .build();
+//    }
+//
+//
+//    /**
+//     * 基于数据库记录构建
+//     */
+//    public static IdempotentCheckResult fromEntity(MessageIdempotentEntity entity) {
+//        CheckStatus status;
+//        switch (entity.getStatus()) {
+//            case "SUCCESS": status = CheckStatus.PROCESSED_SUCCESS; break;
+//            case "FAILED": status = CheckStatus.PROCESSED_FAILED; break;
+//            case "PROCESSING": status = CheckStatus.PROCESSING; break;
+//            default: status = CheckStatus.NOT_PROCESSED;
+//        }
+//
+//        return IdempotentCheckResult.builder()
+//                .messageId(entity.getMessageId())
+//                .businessId(entity.getBusinessId())
+//                .businessType(entity.getBusinessType())
+//                .status(status)
+//                .statusDesc("来自数据库记录")
+//                .processResult(entity.getProcessResult())
+//                .processTime(entity.getProcessTime())
+//                .serviceName(entity.getServiceName())
+//                .source(SourceType.DATABASE)
+//                .responseTime(System.currentTimeMillis())
+//                .build();
+//    }
 
-    /**
-     * 基于数据库记录构建
-     */
-    public static IdempotentCheckResult fromEntity(MessageIdempotentEntity entity) {
-        CheckStatus status;
-        switch (entity.getStatus()) {
-            case "SUCCESS": status = CheckStatus.PROCESSED_SUCCESS; break;
-            case "FAILED": status = CheckStatus.PROCESSED_FAILED; break;
-            case "PROCESSING": status = CheckStatus.PROCESSING; break;
-            default: status = CheckStatus.NOT_PROCESSED;
-        }
 
-        return IdempotentCheckResult.builder()
-                .messageId(entity.getMessageId())
-                .businessId(entity.getBusinessId())
-                .businessType(entity.getBusinessType())
-                .status(status)
-                .statusDesc("来自数据库记录")
-                .processResult(entity.getProcessResult())
-                .processTime(entity.getProcessTime())
-                .serviceName(entity.getServiceName())
-                .source(SourceType.DATABASE)
-                .responseTime(System.currentTimeMillis())
-                .build();
-    }
 
-    // 便捷判断方法
-    public boolean shouldProcess() {
-        return status == CheckStatus.NOT_PROCESSED || status == CheckStatus.EXPIRED;
-    }
+//    public boolean isProcessed() {
+//        return status == CheckStatus.PROCESSED_SUCCESS ||
+//                status == CheckStatus.PROCESSED_FAILED_EXCEED_RETRY;
+//    }
+//
+//    public boolean isProcessing() {
+//        return status == CheckStatus.PROCESSING;
+//    }
 
-    public boolean isSuccessProcessed() {
-        return status == CheckStatus.PROCESSED_SUCCESS;
-    }
-
-    public boolean isFailedProcessed() {
-        return status == CheckStatus.PROCESSED_FAILED;
-    }
-
-    public boolean isProcessing() {
-        return status == CheckStatus.PROCESSING;
-    }
 }

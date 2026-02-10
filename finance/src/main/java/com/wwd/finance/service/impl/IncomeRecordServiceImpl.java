@@ -6,12 +6,10 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wwd.common.message.AccountIncomeExpenseMessage;
 import com.wwd.customerapi.api.FundAccountServiceClient;
 import com.wwd.customerapi.dto.FundAccountDTO;
 import com.wwd.finance.context.UserContext;
-import com.wwd.finance.entity.BudgetItem;
 import com.wwd.finance.entity.IncomeRecord;
 import com.wwd.finance.mapper.IncomeRecordMapper;
 import com.wwd.finance.service.IncomeRecordService;
@@ -19,16 +17,16 @@ import com.wwd.financeapi.dto.IncomeQueryDTO;
 import com.wwd.financeapi.dto.IncomeRecordDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -41,10 +39,12 @@ import java.util.stream.Collectors;
 public class IncomeRecordServiceImpl extends ServiceImpl<IncomeRecordMapper, IncomeRecord> implements IncomeRecordService {
 
     private final IncomeRecordMapper incomeRecordMapper;
-    private final ObjectMapper objectMapper;
 
     @Qualifier
     private FundAccountServiceClient fundAccountServiceClient;
+
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public IPage<IncomeRecordDTO> pageIncome(IncomeQueryDTO incomeQueryDTO) {
@@ -95,17 +95,6 @@ public class IncomeRecordServiceImpl extends ServiceImpl<IncomeRecordMapper, Inc
         // 设置用户ID
         incomeRecord.setUserId(getCurrentUserId());
 
-        // 处理分配规则（JSON字符串）
-//        if (dto.getAllocationRule() != null && !dto.getAllocationRule().isEmpty()) {
-//            try {
-//                String allocationRuleJson = objectMapper.writeValueAsString(dto.getAllocationRule());
-//                incomeRecord.setAllocationRule(allocationRuleJson);
-//            } catch (JsonProcessingException e) {
-//                log.error("分配规则JSON转换失败", e);
-//                throw new RuntimeException("分配规则格式错误");
-//            }
-//        }
-
         // 设置时间
         LocalDateTime now = LocalDateTime.now();
         if (incomeRecord.getIncomeId() == null) {
@@ -116,6 +105,23 @@ public class IncomeRecordServiceImpl extends ServiceImpl<IncomeRecordMapper, Inc
 
             FundAccountDTO fundAccountDTO = new FundAccountDTO();
             fundAccountDTO.setAccountId(incomeRecord.getAccountId());
+
+            //更新账户余额
+            try {
+                AccountIncomeExpenseMessage accountIncomeMessage = new AccountIncomeExpenseMessage();
+                accountIncomeMessage.setMessageId(UUID.randomUUID().toString());
+                accountIncomeMessage.setBusinessId(incomeRecord.getIncomeId().toString());
+                accountIncomeMessage.setUserId(UserContext.getCurrentUserId());
+                accountIncomeMessage.setAccountId(dto.getAccountId());
+                accountIncomeMessage.setAmount(dto.getAmount());
+                accountIncomeMessage.setCreateTime(new Date());
+                rabbitTemplate.convertAndSend("account.add.queue", accountIncomeMessage);
+            } catch (Exception e) {
+                log.error("更新账户余额异常", e);
+                throw e;
+            } finally {
+                log.info("更新账户余额结束");
+            }
         } else {
             // 更新
             incomeRecord.setUpdatedAt(now);
@@ -124,9 +130,6 @@ public class IncomeRecordServiceImpl extends ServiceImpl<IncomeRecordMapper, Inc
                     .eq(IncomeRecord::getUserId, getCurrentUserId());
             this.update(incomeRecord, queryWrapper);
         }
-
-        //更新账户余额
-        fundAccountServiceClient.
 
         return incomeRecord.getIncomeId();
     }

@@ -24,7 +24,9 @@ import lombok.Getter;
 public enum BusinessResultEnun {
 
     SUCCESS(1, "处理成功"),
-    FAILED(-1, "处理失败");
+    FAILED(-1, "处理失败"),
+    FAILED_NULL_ACCOUNT(-2, "处理失败，账户不存在"),
+    FAILED_INSUFFICIENT(-3, "处理失败，余额不足");
 
     private final Integer code;
     private final String desc;

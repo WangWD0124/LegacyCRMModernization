@@ -5,28 +5,26 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.wwd.common.message.AccountIncomeExpenseMessage;
 import com.wwd.finance.context.UserContext;
-import com.wwd.finance.entity.BudgetItem;
 import com.wwd.finance.entity.ExpenseRecord;
 import com.wwd.finance.mapper.ExpenseRecordMapper;
 import com.wwd.finance.service.ExpenseRecordService;
-import com.wwd.financeapi.dto.budget.BudgetItemDTO;
 import com.wwd.financeapi.dto.expense.ExpenseQueryDTO;
 import com.wwd.financeapi.dto.expense.ExpenseRecordDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -38,6 +36,9 @@ import java.util.stream.Collectors;
 public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, ExpenseRecord> implements ExpenseRecordService {
 
     private final ExpenseRecordMapper expenseRecordMapper;
+
+    @Resource
+    private RabbitTemplate rabbitTemplate;
 
     @Override
     public IPage<ExpenseRecordDTO> pageExpense(ExpenseQueryDTO expenseQueryDTO) {
@@ -84,6 +85,23 @@ public class ExpenseRecordServiceImpl extends ServiceImpl<ExpenseRecordMapper, E
             expenseRecord.setCreatedAt(now);
             expenseRecord.setUpdatedAt(now);
             this.save(expenseRecord);
+
+            //更新账户余额
+            try {
+                AccountIncomeExpenseMessage accountExpenseMessage = new AccountIncomeExpenseMessage();
+                accountExpenseMessage.setMessageId(UUID.randomUUID().toString());
+                accountExpenseMessage.setBusinessId(expenseRecord.getExpenseId().toString());
+                accountExpenseMessage.setUserId(UserContext.getCurrentUserId());
+                accountExpenseMessage.setAccountId(dto.getAccountId());
+                accountExpenseMessage.setAmount(dto.getAmount());
+                accountExpenseMessage.setCreateTime(new Date());
+                rabbitTemplate.convertAndSend("account.add.queue", accountExpenseMessage);
+            } catch (Exception e) {
+                log.error("更新账户余额异常", e);
+                throw e;
+            } finally {
+                log.info("更新账户余额结束");
+            }
         } else {
             // 更新
             expenseRecord.setUpdatedAt(now);

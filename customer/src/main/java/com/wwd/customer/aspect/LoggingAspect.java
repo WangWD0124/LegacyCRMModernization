@@ -6,6 +6,7 @@ import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -65,7 +66,16 @@ public class LoggingAspect {
     // 前置通知：记录Service方法调用
     @Before("servicePointcut()")
     public void logServiceMethodCall() {
-        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+        // 检查是否有请求上下文
+        RequestAttributes requestAttributes = RequestContextHolder.getRequestAttributes();
+        if (requestAttributes == null) {
+            // 如果没有请求上下文（比如在消息监听线程中），直接返回
+            return;
+        }
+
+        // 原有的日志记录逻辑...
+        ServletRequestAttributes attributes = (ServletRequestAttributes) requestAttributes;
+        HttpServletRequest request = attributes.getRequest();
         logger.info("Service method called from: {}", request.getRequestURL());
     }
 

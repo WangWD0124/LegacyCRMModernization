@@ -32,19 +32,15 @@ public class BusinessResult<T> implements Serializable {
         this.timestamp = System.currentTimeMillis();
     }
 
-    public static <T> BusinessResult<T> success(BusinessResultEnun result, T data) {
+    public static <T> BusinessResult<T> success(T data) {
         BusinessResult<T> businessResult = new BusinessResult<>();
-        businessResult.setResult(result);
+        businessResult.setResult(BusinessResultEnun.SUCCESS);
         businessResult.setData(data);
         return businessResult;
     }
 
-    public static <T> BusinessResult<T> success(BusinessResultEnun result) {
-        return error(result, null);
-    }
-
     public static <T> BusinessResult<T> success() {
-        return error(BusinessResultEnun.SUCCESS);
+        return success(null);
     }
 
     public static <T> BusinessResult<T> error(BusinessResultEnun result, T data) {

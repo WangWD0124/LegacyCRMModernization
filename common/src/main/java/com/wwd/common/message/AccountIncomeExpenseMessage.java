@@ -1,4 +1,4 @@
-package com.wwd.customer.message;
+package com.wwd.common.message;
 
 import lombok.Data;
 
@@ -8,7 +8,7 @@ import java.util.Date;
 /**
  * Copyright: Copyright (c) 2026 Asiainfo
  *
- * @ClassName: com.wwd.customer.message.AccountAddMessage
+ * @ClassName: com.wwd.common.message.AccountAddMessage
  * @Description:
  * @version: v1.0.0
  * @author: wangwd7
@@ -20,10 +20,10 @@ import java.util.Date;
  * 2026-02-04     wangwd7          v1.0.0               创建
  */
 @Data
-public class AccountAddMessage {
+public class AccountIncomeExpenseMessage {
 
     private String messageId;
-    private Long incomeId;
+    private String businessId;
     private Long accountId;
     private BigDecimal amount;
     private Long userId;

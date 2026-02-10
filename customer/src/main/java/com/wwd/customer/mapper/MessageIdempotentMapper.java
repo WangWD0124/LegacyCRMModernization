@@ -22,6 +22,7 @@ import com.wwd.customerapi.dto.MessageIdempotentQueryDTO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
 
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,7 @@ public interface MessageIdempotentMapper extends BaseMapper<MessageIdempotent> {
     /**
      * 根据消息ID查询
      */
-    @Select("SELECT * FROM message_idempotent WHERE message_id = #{messageId} AND is_deleted = 0")
+    @Select("SELECT * FROM message_idempotent WHERE message_id = #{messageId}")
     MessageIdempotent selectByMessageId(@Param("messageId") String messageId);
 
     /**
@@ -99,4 +100,13 @@ public interface MessageIdempotentMapper extends BaseMapper<MessageIdempotent> {
      * 根据消息ID和版本号更新（乐观锁）
      */
     int updateWithVersion(MessageIdempotent entity);
+
+    @Update("UPDATE message_idempotent " +
+            "SET business_type = #{entity.businessType}, " +
+            "    status = #{entity.status}, " +
+            "    retry_count = #{entity.retryCount}, " +
+            "    process_result = #{entity.processResult}, " +
+            "    updated_time = NOW() " +
+            "WHERE message_id = #{entity.messageId}")
+    int updateByMessageId(@Param("entity") MessageIdempotent entity);
 }

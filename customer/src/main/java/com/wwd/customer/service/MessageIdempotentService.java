@@ -1,9 +1,14 @@
 package com.wwd.customer.service;
 
-import com.wwd.common.dto.IdempotentCheckResult;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.wwd.customer.entity.MessageIdempotent;
 import com.wwd.customerapi.dto.MessageIdempotentQueryDTO;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Copyright: Copyright (c) 2026 Asiainfo
@@ -19,13 +24,6 @@ import org.springframework.stereotype.Service;
  * ---------------------------------------------------------*
  * 2026-02-02     wangwd7          v1.0.0               创建
  */
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.service.IService;
-
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 消息幂等性记录表 Service 接口
@@ -46,7 +44,7 @@ public interface MessageIdempotentService extends IService<MessageIdempotent> {
     /**
      * 检查消息是否已处理
      */
-    IdempotentCheckResult isMessageProcessed(String messageId);
+    boolean isMessageProcessed(String messageId);
 
     /**
      * 标记消息为处理中
@@ -82,4 +80,7 @@ public interface MessageIdempotentService extends IService<MessageIdempotent> {
      * 获取统计信息
      */
     Map<String, Object> getStatistics(String serviceName, String businessType, Date startTime, Date endTime);
+
+    boolean updateByMessageId(MessageIdempotent entity);
+
 }
